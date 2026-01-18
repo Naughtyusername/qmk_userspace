@@ -1,0 +1,10 @@
+{
+    "userspace_version": "1.1",
+    "build_targets": [
+        ["mitosis", "naughtyusername"],
+        ["splitkb/kyria/rev1", "naughtyusername"],
+        ["splitkb/halcyon/corne/rev2", "naughtyusername"],
+        ["splitkb/zima", "naughtyusername"],
+        ["zsa/planck_ez/glow", "naughtyusername"]
+    ]
+}
