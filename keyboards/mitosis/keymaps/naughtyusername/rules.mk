@@ -1,26 +1,15 @@
-# Mitosis rules.mk - Feature enables
+# Copyright 2025 naughtyusername
+# SPDX-License-Identifier: GPL-2.0-or-later
+#
+# Mitosis-specific build rules
+#
+# Most features are enabled in users/naughtyusername/rules.mk
+# Only add Mitosis-specific things here.
 
-# Custom features
-TAP_DANCE_ENABLE = yes
-CAPS_WORD_ENABLE = yes
-EXTRAKEY_ENABLE = yes  # Audio control and System control
-TRI_LAYER_ENABLE = yes
-COMBO_ENABLE = yes
-KEY_OVERRIDE_ENABLE = yes
+# Mouse keys for the Adjust layer
 MOUSEKEY_ENABLE = yes
 
-# Enable NKRO (N-key rollover)
-NKRO_ENABLE = yes
-
-# Bootmagic for easy bootloader access
-BOOTMAGIC_ENABLE = yes
-
-# Space saving options - these can be changed if we need them
-CONSOLE_ENABLE = no  # enable when we need debugging only
-COMMAND_ENABLE = no  # magic debugging - we have this off for caps word
-# SPACE_CADET_ENABLE = no
-# GRAVE_ESC_ENABLE = no
-# MAGIC_ENABLE = no
-
-# Enable link time optimization (saves space)
-LTO_ENABLE = yes
+# The Mitosis doesn't have RGB LEDs on the keyboard itself,
+# just the receiver LED which is controlled differently.
+RGBLIGHT_ENABLE = no
+RGB_MATRIX_ENABLE = no

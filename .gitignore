@@ -1,4 +1,23 @@
+# Build artifacts
+.clang_complete
+.build/
+*.elf
+*.log
+*.lss
+*.lst
+*.map
+*.o
+*.stackdump
+*.sym
 
+# QMK-specific
 *.bin
+*.eep
 *.hex
+*.qmk
 *.uf2
+
+# Secret files
+secrets.c
+secrets.h
+secrets.el
