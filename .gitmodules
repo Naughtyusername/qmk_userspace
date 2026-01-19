@@ -1,0 +1,3 @@
+[submodule "modules/splitkb"]
+	path = modules/splitkb
+	url = https://github.com/splitkb/qmk_userspace

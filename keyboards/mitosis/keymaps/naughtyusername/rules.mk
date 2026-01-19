@@ -2,7 +2,9 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 #
 # Mitosis-specific build rules
-#
+
+USER_NAME := naughtyusername
+
 # Most features are enabled in users/naughtyusername/rules.mk
 # Only add Mitosis-specific things here.
 

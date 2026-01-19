@@ -1,216 +1,165 @@
-// Copyright 2024 Ty (@your-github-username)
-// SPDX-License-Identifier: GPL-2.0-or-later
+/* Copyright 2025 naughtyusername
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ *
+ * Halcyon Corne keymap using userspace wrappers
+ *
+ * Layout: 3x6 + 3 thumbs per side = 42 keys total
+ * Hardware: OLED on left, Cirque trackpad on right
+ */
 
 // clang-format off
 #include QMK_KEYBOARD_H
+#include "naughtyusername.h"
 
-// Layer definitions
-enum layers {
-    _BASE,
-    _LOWER,
-    _RAISE,
-    _ADJUST,
-};
+#ifdef HLC_TFT_DISPLAY
+#include "splitkb/hlc_tft_display/hlc_tft_display.h"
+#endif
 
-// Custom keycodes
-//enum custom_keycodes {
-//    KC_COLN = SAFE_RANGE, // :=
-//};
-//
-//// Tap Dance declarations (optional)
-// enum {
-//     TD_ESC_CAPS,
-// };
-//
-//// Combos (optional - define in combos.def or here)
-// const uint16_t PROGMEM jk_combo[] = {KC_J, KC_K, COMBO_END};
-// combo_t key_combos[] = {
-//     COMBO(jk_combo, KC_ESC),
-// };
+// Include combos, tap dance, key overrides (introspection needs these here)
+#include "keyrecords.c"
 
-/*
- * Base Layer: QWERTY
- *
- * ,-------------------------------------------.                              ,-------------------------------------------.
- * |  Tab   |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |  Bksp  |
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |Ctrl/Esc|   A  |   S  |   D  |   F  |   G  |                              |   H  |   J  |   K  |   L  |   ;  |   '    |
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * | LShift |   Z  |   X  |   C  |   V  |   B  |                              |   N  |   M  |   ,  |   .  |   /  | RShift |
- * `----------------------+------+------+------+------.                ,------+------+------+------+----------------------'
- *                        | LAlt | LGUI |LOWER | Space|                | Enter|RAISE | RGUI | RAlt |
- *                        `---------------------------'                `---------------------------'
+/* ==========================================================================
+ * KEYMAPS
+ * ==========================================================================
+ * Using 6-column wrapper macros (___LAYER_L1_6___, etc.) which expand
+ * the 5-column core with outer columns for the Corne's extra keys.
  */
-
-/*
- * Lower Layer: Symbols & Numbers
- *
- * ,-------------------------------------------.                              ,-------------------------------------------.
- * |   `    |   1  |   2  |   3  |   4  |   5  |                              |   6  |   7  |   8  |   9  |   0  |  Del   |
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |        |   !  |   @  |   #  |   $  |   %  |                              |   ^  |   &  |   *  |   (  |   )  |   |    |
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |        |   =  |   -  |   +  |   {  |   }  |                              |   [  |   ]  |   <  |   >  |   \  |        |
- * `----------------------+------+------+------+------.                ,------+------+------+------+----------------------'
- *                        |      |      |      |      |                |      |ADJUST|      |      |
- *                        `---------------------------'                `---------------------------'
- */
-
-/*
- * Raise Layer: Navigation & Function Keys
- *
- * ,-------------------------------------------.                              ,-------------------------------------------.
- * |  F1    |  F2  |  F3  |  F4  |  F5  |  F6  |                              |  F7  |  F8  |  F9  | F10  | F11  |  F12   |
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |        |      | PgDn | PgUp | Home | End  |                              | Left | Down |  Up  | Right|      |        |
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |        |      |      |      |      |      |                              |      |      |      |      |      |        |
- * `----------------------+------+------+------+------.                ,------+------+------+------+----------------------'
- *                        |      |      |ADJUST|      |                |      |      |      |      |
- *                        `---------------------------'                `---------------------------'
- */
-
-/*
- * Adjust Layer: RGB, Media, System
- *
- * ,-------------------------------------------.                              ,-------------------------------------------.
- * | QK_BOOT|      |      |      |      |      |                              |      |      |      |      |      |        |
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * | RGB_TOG|RGB_HUI|RGB_SAI|RGB_VAI|     |     |                              | Prev | VolDn| VolUp| Next |      |        |
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * | RGB_MOD|RGB_HUD|RGB_SAD|RGB_VAD|     |     |                              | Play | Mute |      |      |      |        |
- * `----------------------+------+------+------+------.                ,------+------+------+------+----------------------'
- *                        |      |      |      |      |                |      |      |      |      |
- *                        `---------------------------'                `---------------------------'
- */
-
-// clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    /*
-     * Base Layer: QWERTY
-     *
-     * ,-------------------------------------------.                              ,-------------------------------------------.
-     * |  Tab   |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |  Bksp  |
-     * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
-     * |Ctrl/Esc|   A  |   S  |   D  |   F  |   G  |                              |   H  |   J  |   K  |   L  |   ;  |   '    |
-     * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
-     * | LShift |   Z  |   X  |   C  |   V  |   B  |                              |   N  |   M  |   ,  |   .  |   /  | RShift |
-     * `----------------------+------+------+------+------.                ,------+------+------+------+----------------------'
-     *                        | LAlt | LGUI |LOWER | Space|                | Enter|RAISE | RGUI | RAlt |
-     *                        `---------------------------'                `---------------------------'
+
+    /* BASE - QWERTY with Home Row Mods
+     * ┌─────┬─────┬─────┬─────┬─────┬─────┐       ┌─────┬─────┬─────┬─────┬─────┬─────┐
+     * │ Tab │  Q  │  W  │  E  │  R  │  T  │       │  Y  │  U  │  I  │  O  │  P  │ Bsp │
+     * ├─────┼─────┼─────┼─────┼─────┼─────┤       ├─────┼─────┼─────┼─────┼─────┼─────┤
+     * │ Esc │A/Gui│S/Alt│D/Ctl│F/Sft│  G  │       │  H  │J/Sft│K/Ctl│L/Alt│;/Gui│  '  │
+     * ├─────┼─────┼─────┼─────┼─────┼─────┤       ├─────┼─────┼─────┼─────┼─────┼─────┤
+     * │Shift│  Z  │  X  │  C  │  V  │  B  │       │  N  │  M  │  ,  │  .  │  /  │Shift│
+     * └─────┴─────┴─────┼─────┼─────┼─────┤       ├─────┼─────┼─────┼─────┴─────┴─────┘
+     *                   │ Esc │ Bsp │Sp/Ra│       │En/Lo│  '  │ Tab │
+     *                   └─────┴─────┴─────┘       └─────┴─────┴─────┘
      */
-    [_BASE] = LAYOUT_split_3x6_3(
-    //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-         KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_BSPC,
-    //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-        QK_GESC,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_QUOT,
-    //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-        _______,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_RSFT,
-    //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                            KC_LGUI,MO(_LOWER), KC_SPC,     KC_ENT,MO(_RAISE), KC_RALT
-                                        //`--------------------------'  `--------------------------'
+    [_BASE] = LAYOUT_corne_wrapper(
+        ___BASE_L1_6___,                    ___BASE_R1_6___,
+        ___BASE_L2_6___,                    ___BASE_R2_6___,
+        ___BASE_L3_6___,                    ___BASE_R3_6___,
+                         ___CORNE_THUMB_BASE___
     ),
 
-    /*
-     * Lower Layer: Symbols & Numbers
-     *
-     * ,-------------------------------------------.                              ,-------------------------------------------.
-     * |   `    |   1  |   2  |   3  |   4  |   5  |                              |   6  |   7  |   8  |   9  |   0  |  Del   |
-     * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
-     * |        |   !  |   @  |   #  |   $  |   %  |                              |   ^  |   &  |   *  |   (  |   )  |   |    |
-     * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
-     * |        |   =  |   -  |   +  |   {  |   }  |                              |   [  |   ]  |   <  |   >  |   \  |        |
-     * `----------------------+------+------+------+------.                ,------+------+------+------+----------------------'
-     *                        |      |      |      |      |                |      |ADJUST|      |      |
-     *                        `---------------------------'                `---------------------------'
-     */
-    [_LOWER] = LAYOUT_split_3x6_3(
-    //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-         KC_GRV,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  KC_DEL,
-    //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-        XXXXXXX, KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC,                      KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_PIPE,
-    //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-        XXXXXXX,  KC_EQL, KC_MINS, KC_PLUS, KC_LCBR, KC_RCBR,                      KC_LBRC, KC_RBRC, KC_LABK, KC_RABK, KC_BSLS, XXXXXXX,
-    //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                            _______, _______, _______,    _______,MO(_ADJUST), _______
-                                        //`--------------------------'  `--------------------------'
+    /* LOWER - Numbers and Media */
+    [_LOWER] = LAYOUT_corne_wrapper(
+        ___LOWER_L1_6___,                   ___LOWER_R1_6___,
+        ___LOWER_L2_6___,                   ___LOWER_R2_6___,
+        ___LOWER_L3_6___,                   ___LOWER_R3_6___,
+                         ___CORNE_THUMB_LOWER___
     ),
 
-    /*
-     * Raise Layer: Navigation & Function Keys
-     *
-     * ,-------------------------------------------.                              ,-------------------------------------------.
-     * |  F1    |  F2  |  F3  |  F4  |  F5  |  F6  |                              |  F7  |  F8  |  F9  | F10  | F11  |  F12   |
-     * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
-     * |        |      | PgDn | PgUp | Home | End  |                              | Left | Down |  Up  | Right|      |        |
-     * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
-     * |        |      |      |      |      |      |                              |      |      |      |      |      |        |
-     * `----------------------+------+------+------+------.                ,------+------+------+------+----------------------'
-     *                        |      |      |ADJUST|      |                |      |      |      |      |
-     *                        `---------------------------'                `---------------------------'
-     */
-    [_RAISE] = LAYOUT_split_3x6_3(
-    //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-          KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,                        KC_F7,   KC_F8,   KC_F9,  KC_F10,  KC_F11,  KC_F12,
-    //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-        XXXXXXX, XXXXXXX, KC_PGDN, KC_PGUP, KC_HOME,  KC_END,                      KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, XXXXXXX, XXXXXXX,
-    //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-    //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                            _______,MO(_ADJUST), _______,    _______, _______, _______
-                                        //`--------------------------'  `--------------------------'
+    /* RAISE - Symbols (Odin/Programming focused) */
+    [_RAISE] = LAYOUT_corne_wrapper(
+        ___RAISE_L1_6___,                   ___RAISE_R1_6___,
+        ___RAISE_L2_6___,                   ___RAISE_R2_6___,
+        ___RAISE_L3_6___,                   ___RAISE_R3_6___,
+                         ___CORNE_THUMB_RAISE___
     ),
 
-    /*
-     * Adjust Layer: RGB, Media, System
-     *
-     * ,-------------------------------------------.                              ,-------------------------------------------.
-     * | QK_BOOT|      |      |      |      |      |                              |      |      |      |      |      |        |
-     * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
-     * | RGB_TOG|RGB_HUI|RGB_SAI|RGB_VAI|     |     |                              | Prev | VolDn| VolUp| Next |      |        |
-     * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
-     * | RGB_MOD|RGB_HUD|RGB_SAD|RGB_VAD|     |     |                              | Play | Mute |      |      |      |        |
-     * `----------------------+------+------+------+------.                ,------+------+------+------+----------------------'
-     *                        |      |      |      |      |                |      |      |      |      |
-     *                        `---------------------------'                `---------------------------'
-     */
-    [_ADJUST] = LAYOUT_split_3x6_3(
-    //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-        QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-    //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, XXXXXXX, XXXXXXX,
-    //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_MPLY, KC_MUTE, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-    //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                            _______, _______, _______,    _______, _______, _______
-                                        //`--------------------------'  `--------------------------'
-    )
+    /* FUNCTION - F-keys and Navigation */
+    [_FUNCTION] = LAYOUT_corne_wrapper(
+        ___FUNC_L1_6___,                    ___FUNC_R1_6___,
+        ___FUNC_L2_6___,                    ___FUNC_R2_6___,
+        ___FUNC_L3_6___,                    ___FUNC_R3_6___,
+                         ___CORNE_THUMB_FUNC___
+    ),
+
+    /* ADJUST - System (Tri-layer: LOWER + RAISE) */
+    [_ADJUST] = LAYOUT_corne_wrapper(
+        ___ADJUST_L1_6___,                  ___ADJUST_R1_6___,
+        ___ADJUST_L2_6___,                  ___ADJUST_R2_6___,
+        ___ADJUST_L3_6___,                  ___ADJUST_R3_6___,
+                         ___CORNE_THUMB_ADJUST___
+    ),
+
+    /* GAMING - No home row mods */
+    [_GAMING] = LAYOUT_corne_wrapper(
+        ___GAMING_L1_6___,                  ___GAMING_R1_6___,
+        ___GAMING_L2_6___,                  ___GAMING_R2_6___,
+        ___GAMING_L3_6___,                  ___GAMING_R3_6___,
+                         ___CORNE_THUMB_GAMING___
+    ),
 };
-// clang-format on
 
-// Custom keycode handling
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case KC_COLN:
-            if (record->event.pressed) {
-                SEND_STRING(":=");
-            }
-            return false;
-            //        case KC_ARRW:
-            //            if (record->event.pressed) {
-            //                SEND_STRING("->");
-            //            }
-            //          return false;
+/* ==========================================================================
+ * CORNE-SPECIFIC OVERRIDES
+ * ==========================================================================
+ * The _keymap functions let us add board-specific behavior while still
+ * using the shared userspace code.
+ */
+
+#ifdef OLED_ENABLE
+/* OLED Display - Left half only
+ * We can customize this later with layer indicators, WPM, etc.
+ */
+oled_rotation_t oled_init_user(oled_rotation_t rotation) {
+    if (!is_keyboard_master()) {
+        return OLED_ROTATION_180;  // Flip for slave side if needed
     }
-    return true;
+    return rotation;
 }
 
-// Tri-layer configuration (optional - uncomment to enable)
-layer_state_t layer_state_set_user(layer_state_t state) {
-    return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
-}
-#include QMK_KEYBOARD_H
+bool oled_task_user(void) {
+    // Show current layer
+    oled_write_P(PSTR("Layer: "), false);
+    switch (get_highest_layer(layer_state)) {
+        case _BASE:
+            oled_write_ln_P(PSTR("Base"), false);
+            break;
+        case _LOWER:
+            oled_write_ln_P(PSTR("Lower"), false);
+            break;
+        case _RAISE:
+            oled_write_ln_P(PSTR("Raise"), false);
+            break;
+        case _FUNCTION:
+            oled_write_ln_P(PSTR("Function"), false);
+            break;
+        case _ADJUST:
+            oled_write_ln_P(PSTR("Adjust"), false);
+            break;
+        case _GAMING:
+            oled_write_ln_P(PSTR("Gaming"), false);
+            break;
+        default:
+            oled_write_ln_P(PSTR("???"), false);
+    }
 
-#if __has_include("keymap.h")
-#    include "keymap.h"
+    // Show mods
+    uint8_t mods = get_mods() | get_oneshot_mods();
+    oled_write_P(PSTR("Mods: "), false);
+    oled_write_P(mods & MOD_MASK_SHIFT ? PSTR("S") : PSTR(" "), false);
+    oled_write_P(mods & MOD_MASK_CTRL  ? PSTR("C") : PSTR(" "), false);
+    oled_write_P(mods & MOD_MASK_ALT   ? PSTR("A") : PSTR(" "), false);
+    oled_write_ln_P(mods & MOD_MASK_GUI   ? PSTR("G") : PSTR(" "), false);
+
+    // Show caps word status
+    if (is_caps_word_on()) {
+        oled_write_ln_P(PSTR("CAPS WORD"), false);
+    }
+
+    return false;
+}
+#endif
+
+#ifdef POINTING_DEVICE_ENABLE
+/* Cirque Trackpad - Right half
+ * This runs after the shared userspace pointing device code (if any).
+ * We can add Corne-specific pointing behavior here.
+ */
+
+// Optional: Custom pointing device behavior
+// void pointing_device_init_keymap(void) {
+//     // Corne-specific trackpad init
+// }
+
+// Optional: Modify reports before sending
+// report_mouse_t pointing_device_task_keymap(report_mouse_t mouse_report) {
+//     // Corne-specific modifications
+//     return mouse_report;
+// }
 #endif
