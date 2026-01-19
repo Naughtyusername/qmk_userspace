@@ -27,7 +27,6 @@ OLED_ENABLE = no
 HLC_TFT_DISPLAY = yes   # If you have a TFT RGB display
 HLC_CIRQUE_TRACKPAD = yes # If you have a Cirque trackpad
 
-
 # Cirque Trackpad (right half)
 POINTING_DEVICE_ENABLE = yes
 POINTING_DEVICE_DRIVER = cirque_pinnacle_spi
@@ -35,19 +34,6 @@ POINTING_DEVICE_DRIVER = cirque_pinnacle_spi
 # RGB Matrix (per-key RGB)
 # The Halcyon Corne has RGB, enable if you want it
 RGB_MATRIX_ENABLE = yes
-
-# ==========================================================================
-# HALCYON MODULES (Optional - Splitkb's module system)
-# ==========================================================================
-# If you want to use Splitkb's halcyon_modules userspace for advanced
-# OLED/Cirque features, uncomment this and follow their setup guide.
-# This would require additional setup - see docs.splitkb.com
-#
-# USER_NAME := halcyon_modules
-#
-# Then compile with:
-#   qmk compile -kb splitkb/halcyon/corne/rev2 -km naughtyusername \
-#       -e HLC_TFT_DISPLAY=1 -e HLC_CIRQUE_TRACKPAD=1
 
 # ==========================================================================
 # FIRMWARE SIZE OPTIMIZATION

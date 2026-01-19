@@ -35,9 +35,6 @@
  *   CS       = GP13
  */
 
-// CS pin MUST be defined unconditionally (the header checks for it)
-#define POINTING_DEVICE_CS_PIN GP13
-
 #ifdef POINTING_DEVICE_ENABLE
 // Trackpad is on the right half
 #define SPLIT_POINTING_ENABLE

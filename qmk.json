@@ -3,8 +3,9 @@
     "build_targets": [
         ["mitosis", "naughtyusername"],
         ["splitkb/kyria/rev1", "naughtyusername"],
-        ["splitkb/halcyon/corne/rev2", "naughtyusername"],
-        ["splitkb/zima", "naughtyusername"],
+        ["splitkb/zima", "naughty_zima"],
         ["zsa/planck_ez/glow", "naughtyusername"]
     ]
 }
+
+
