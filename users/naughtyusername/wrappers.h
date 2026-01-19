@@ -45,9 +45,14 @@
 // Kyria: 3x6 + 5 thumb keys per side + encoders = 50 keys
 #define LAYOUT_kyria_wrapper(...) LAYOUT(__VA_ARGS__)
 
-// Planck: 4x12 ortholinear = 48 keys
-#define LAYOUT_planck_wrapper(...) LAYOUT_ortho_4x12(__VA_ARGS__)
+// #define LAYOUT_planck_wrapper(...) LAYOUT_ortho_4x12(__VA_ARGS__)
+// Planck: 4x12 with 2u center space = 47 keys
+// Two-stage expansion needed so row macros expand before LAYOUT counts args
+#define LAYOUT_planck_1x2uC_wrapper(...) LAYOUT_planck_1x2uC(__VA_ARGS__)
+#define LAYOUT_planck_wrapper(...) LAYOUT_planck_1x2uC_wrapper(__VA_ARGS__)
 
+// Zima:
+#define LAYOUT_zima_wrapper(...) macropad_rename_me(__VA_ARGS__)
 /* ==========================================================================
  * 5-COLUMN MACROS (for 3x5 splits like the core of your layout)
  * ==========================================================================
@@ -294,6 +299,67 @@ _______, _______, _______, _______, _______
 _______, _______, _______, _______, _______,                                   \
 _______, _______, _______, _______, _______
 // clang-format on
+
+/* ==========================================================================
+ * PLANCK BOTTOM
+ * ==========================================================================
+// clang-format off
+// 1u spacebar but physically occupies 2 slots, ie. one less
+// key on that layer 11 instead of 12
+// anyways, TODO expand this for the remaining layers i suppose, spacebar as
+first slot
+// on second row as shown in the base wrapper
+ * ==========================================================================
+ * PLANCK BOTTOM ROW MACROS (11 keys - 2u spacebar takes one slot)
+ * ==========================================================================
+ * The Planck EZ with LAYOUT_planck_1x2uC has 4 rows of 12 keys, but the
+ * bottom row has a 2u spacebar in the center, giving us 11 keys:
+ *
+ * ┌─────┬─────┬─────┬─────┬─────┬───────────┬─────┬─────┬─────┬─────┬─────┐
+ * │  1  │  2  │  3  │  4  │  5  │   SPACE   │  6  │  7  │  8  │  9  │ 10  │
+ * └─────┴─────┴─────┴─────┴─────┴───────────┴─────┴─────┴─────┴─────┴─────┘
+ *
+ * Format: 5 left keys, spacebar, 5 right keys (11 total)
+ *
+ Base layer bottom row
+ * Ctrl  GUI   Alt   CapsW Raise    [Space]    Lower Left  Down  Up   Right
+ */
+// clang-format off
+#define ___PLANCK_BOTTOM_BASE___                                               \
+    KC_LCTL, KC_LGUI, KC_LALT, CW_TOGG, MO(_RAISE),                            \
+    KC_SPC,                                                                    \
+    MO(_LOWER), KC_LEFT, KC_DOWN, KC_UP, KC_RGHT
+
+/* Raise layer bottom row - transparent except layer keys */
+#define ___PLANCK_BOTTOM_RAISE___                                              \
+    _______, _______, _______, _______, _______,                               \
+    _______,                                                                   \
+    MO(_LOWER), _______, _______, _______, _______
+
+/* Lower layer bottom row - transparent except layer keys */
+#define ___PLANCK_BOTTOM_LOWER___                                              \
+    _______, _______, _______, _______, MO(_RAISE),                            \
+    _______,                                                                   \
+    _______, _______, _______, _______, _______
+
+/* Function layer bottom row */
+#define ___PLANCK_BOTTOM_FUNC___                                               \
+    _______, _______, _______, _______, _______,                               \
+    _______,                                                                   \
+    _______, _______, _______, _______, _______
+
+/* Adjust layer bottom row - Gaming toggle on left space position */
+// TODO space should not toggle gaming here.
+#define ___PLANCK_BOTTOM_ADJUST___                                             \
+    _______, _______, _______, _______, _______,                               \
+    TG(_GAMING),                                                               \
+    _______, EE_CLR, QK_BOOT, _______, _______
+
+/* Gaming layer bottom row - no layer taps, direct keys */
+#define ___PLANCK_BOTTOM_GAMING___                                             \
+    KC_LCTL, KC_LALT, KC_LGUI, TG(_GAMING), MO(_RAISE),                        \
+    KC_SPC,                                                                    \
+    MO(_LOWER), KC_LEFT, KC_DOWN, KC_UP, KC_RGHT
 
 /* ==========================================================================
  * 6-COLUMN EXPANSION MACROS

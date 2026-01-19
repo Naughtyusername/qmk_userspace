@@ -91,10 +91,15 @@
  * Tune these if mouse keys feel too fast/slow
  */
 #ifdef MOUSEKEY_ENABLE
-#define MOUSEKEY_INTERVAL 16
-#define MOUSEKEY_DELAY 0
 #define MOUSEKEY_TIME_TO_MAX 60
 #define MOUSEKEY_MAX_SPEED 7
+#endif
+
+#ifndef MOUSEKEY_INTERVAL
+#define MOUSEKEY_INTERVAL 16
+#endif
+
+#ifndef MOUSEKEY_WHEEL_DELAY
 #define MOUSEKEY_WHEEL_DELAY 0
 #endif
 
