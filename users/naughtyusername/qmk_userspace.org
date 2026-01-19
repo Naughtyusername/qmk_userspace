@@ -1,2 +1,69 @@
+* QMK Userspace Summary
 
-* TODO blah blah
+* Project Overview
+This is my QMK userspace that provides a unified typing experience across multiple mechanical keyboards. The userspace contains shared layers, keycodes, and configurations that work consistently on all supported keyboards.
+
+** Supported Keyboards**
+- Mitosis (46 keys) - 3x5 Split ergo with 2x4 thumb clusters
+- Halcyon Corne (42 keys) - Split with TFT display and Cirque trackpad  
+- Kyria (50 keys) - Split with encoders and 5 thumb keys each side
+- Planck EZ Glow (47 keys) - Ortholinear with RGB matrix
+- Zima (12 keys) - Macropad with encoder and OLED
+
+** Core Architecture**
+
+*** Userspace Structure:*
+- naughtyusername.h - Main header with layers, keycodes, home row mods
+- wrappers.h - Layout wrapper macros for different keyboard form factors
+- config.h - Shared configuration (tapping terms, HRM settings)
+- naughtyusername.c - Main implementation (per-key tapping terms, chordal hold)
+- keyrecords.c - Tap dances, combos, key overrides
+- rules.mk - Build configuration for shared features
+
+*** Layer System:*
+- _BASE - QWERTY with GACS home row mods
+- _LOWER - Numbers and media controls  
+- _RAISE - Symbols and programming operators
+- _FUNCTION - F-keys and navigation
+- _ADJUST - System controls and mouse keys (tri-layer)
+- _GAMING - No home row mods for gaming
+
+*** Key Features Implemented**
+- Home Row Mods (GACS: Gui/Alt/Ctrl/Shift)
+- Tap Dance (Q double-tap = Escape)
+- Combos (J+K = Escape)
+- Caps Word with 3s timeout
+- Tri-layer support (LOWER+RAISE = ADJUST)
+- Custom keycodes for programming (:=, ->, ::, ..=)
+- Per-key tapping term tuning
+- Flow tap for fast typing
+
+*** Technical Highlights**
+- Uses QMK userspace feature for code sharing
+- Layout wrapper system with C preprocessor macros
+- 3x5 alpha grid core, adapts to each keyboard's thumb cluster
+- Supports both 5-column and 6-column layouts
+- Weak function pattern for keymap overrides
+- Comprehensive documentation in headers
+
+**Current Status**
+- Well-structured and documented
+- Multiple keyboards supported
+- Advanced features properly configured
+- Good separation of concerns between shared and keyboard-specific code
+
+* TODO Add RGB Matrix animations configuration for Planck EZ
+* TODO Implement Quantum Painter support for Halcyon TFT display
+* TODO Add more tap dances for common shortcuts (eg. double comma for semicolon)
+* TODO Create custom combo sequences for frequently used commands
+* TODO Add EEPROM configuration for storing user preferences
+* TODO Implement rotary encoder support for Kyria
+* TODO Add OLED status display for supported keyboards
+* TODO Create layer indication system (RGB/OLED feedback)
+* TODO Add more custom keycodes for programming languages
+* TODO Implement mouse key acceleration curves
+* TODO Add power management features for wireless keyboards
+* TODO Create documentation for customizing home row mod behavior
+* TODO Add tests for critical tap dance and combo functionality
+* TODO Implement firmware update notifications
+* TODO Add macro system for text expansion
