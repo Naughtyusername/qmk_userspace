@@ -40,10 +40,11 @@
 // Trackpad is on the right half
 #define SPLIT_POINTING_ENABLE
 #define POINTING_DEVICE_RIGHT
+#define CIRQUE_PINNACLE_SECONDARY_TAP_ENABLE
 
 // Cirque trackpad settings
 // The Halcyon uses SPI, not I2C
-#define CIRQUE_PINNACLE_DIAMETER_MM 35 // 35 or 40?
+#define CIRQUE_PINNACLE_DIAMETER_MM 40
 
 // Rotation - adjust if cursor moves wrong direction
 // Try 90, 180, 270 if movement is off
@@ -74,10 +75,11 @@
 // Auto mouse layer - automatically switch to mouse layer when trackpad active
 // Uncomment if you want this behavior
 // #define POINTING_DEVICE_AUTO_MOUSE_ENABLE
-// #define AUTO_MOUSE_DEFAULT_LAYER _ADJUST
+// #define AUTO_MOUSE_DEFAULT_LAYER _LAYERWITHMICE
 // #define AUTO_MOUSE_TIME 650
 
 // SPI pins for Cirque (if not already defined by keyboard)
+// this is defined correctly above this ifdef block.
 // #define SPI_DRIVER SPID0
 // #define SPI_SCK_PIN GP22
 // #define SPI_MOSI_PIN GP23
