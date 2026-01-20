@@ -17,9 +17,9 @@
 // If you plug USB into the right side, comment this out
 // #define MASTER_LEFT
 // #define MASTER_RIGHT
-
 // For EE_HANDS (set via eeprom), don't define MASTER_LEFT/RIGHT
 // The Halcyon uses EE_HANDS by default
+#define EE_HANDS
 
 /* ==========================================================================
  * POINTING DEVICE - Cirque Trackpad (Right Half)

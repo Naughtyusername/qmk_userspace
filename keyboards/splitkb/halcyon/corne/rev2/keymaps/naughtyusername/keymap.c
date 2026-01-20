@@ -28,13 +28,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /* BASE - QWERTY with Home Row Mods
      * ┌─────┬─────┬─────┬─────┬─────┬─────┐       ┌─────┬─────┬─────┬─────┬─────┬─────┐
-     * │ Tab │  Q  │  W  │  E  │  R  │  T  │       │  Y  │  U  │  I  │  O  │  P  │ Bsp │
+     * │ Tab │ESC/Q│  W  │  E  │  R  │  T  │       │  Y  │  U  │  I  │  O  │  P  │ Bsp │
      * ├─────┼─────┼─────┼─────┼─────┼─────┤       ├─────┼─────┼─────┼─────┼─────┼─────┤
      * │ Esc │A/Gui│S/Alt│D/Ctl│F/Sft│  G  │       │  H  │J/Sft│K/Ctl│L/Alt│;/Gui│  '  │
      * ├─────┼─────┼─────┼─────┼─────┼─────┤       ├─────┼─────┼─────┼─────┼─────┼─────┤
      * │Shift│  Z  │  X  │  C  │  V  │  B  │       │  N  │  M  │  ,  │  .  │  /  │Shift│
      * └─────┴─────┴─────┼─────┼─────┼─────┤       ├─────┼─────┼─────┼─────┴─────┴─────┘
-     *                   │ Esc │ Bsp │Sp/Ra│       │En/Lo│  '  │ Tab │
+     *        TODO       │     │ Bsp │Sp/Ra│       │En/Lo│     │     │
      *                   └─────┴─────┴─────┘       └─────┴─────┴─────┘
      */
     [_BASE] = LAYOUT_corne_wrapper(

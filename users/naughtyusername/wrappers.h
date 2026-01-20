@@ -129,19 +129,21 @@
 #define ___FUNC_R3___ KC_PGDN, _______, _______, _______, _______
 
 /* --------------------------------------------------------------------------
- * ADJUST LAYER - System (Tri-layer: LOWER + RAISE)
+ * ADJUST LAYER - System (Tri-layer: LOWER + RAISE) TODO: tweak this, removed
+ * mouse keys from here, dont care for them anwyways. probably do something with
+ * NK tog, we need the bootmagic shit to use kb in bootloaders too, on the list.
  * --------------------------------------------------------------------------
- * Base  Game   _     _     _          MsUp  Btn1  Btn2  Btn3  NKRO
- *  _     _     _     _     _          MsLt  MsDn  MsUp  MsRt   _
- *  _     _     _     _     _          MsDn  WhDn  WhUp   _     _
+ * Base  Game   _     _     _            _     _     _     _  NKRO
+ *  _     _     _     _     _            _     _     _     _    _
+ *  _     _     _     _     _            _     _     _     _    _
  */
 #define ___ADJUST_L1___ TG(_BASE), TG(_GAMING), _______, _______, _______
 #define ___ADJUST_L2___ _______, _______, _______, _______, _______
 #define ___ADJUST_L3___ _______, _______, _______, _______, _______
 
-#define ___ADJUST_R1___ MS_UP, MS_BTN1, MS_BTN2, MS_BTN3, NK_TOGG
-#define ___ADJUST_R2___ MS_LEFT, MS_DOWN, MS_UP, MS_RGHT, _______
-#define ___ADJUST_R3___ MS_DOWN, MS_WHLD, MS_WHLU, _______, _______
+#define ___ADJUST_R1___ _______, _______, _______, _______, NK_TOGG
+#define ___ADJUST_R2___ _______, _______, _______, _______, _______
+#define ___ADJUST_R3___ _______, _______, _______, _______, _______
 
 /* --------------------------------------------------------------------------
  * GAMING LAYER - No home row mods, standard QWERTY

@@ -52,6 +52,7 @@ qmk compile -kb mitosis -km naughtyusername
 qmk compile -kb splitkb/kyria/rev1 -km naughtyusername
 qmk compile -kb zsa/planck_ez/glow -km naughtyusername
 qmk compile -kb splitkb/zima -km naughty_zima
+TODO: add in the system we use for the halcyon board and explain how to build it with 2 different modules for anyone in the future who could use that advice
 
 # Halcyon module builds (with display/encoder/trackpad options)
 qmk compile -kb splitkb/halcyon/kyria/rev4 -km vial_hlc

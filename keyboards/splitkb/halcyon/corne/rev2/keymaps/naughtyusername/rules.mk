@@ -41,8 +41,7 @@ RGB_MATRIX_ENABLE = yes
 # The RP2040 has plenty of flash (16MB on Halcyon), but if you hit limits:
 
 # Disable features you don't use
-# MOUSEKEY_ENABLE = no      # We use pointing device instead
-# SPACE_CADET_ENABLE = no
+MOUSEKEY_ENABLE = no      # We use pointing device instead
 # GRAVE_ESCAPE_ENABLE = no
 
 # Link-time optimization (usually already enabled)
