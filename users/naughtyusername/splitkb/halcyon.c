@@ -29,18 +29,17 @@ display_module_housekeeping_task_user(bool second_display) {
 }
 
 module_t module_master;
-module_t module;
-#ifdef HLC_NONE
+
+#if defined(HLC_CIRQUE_TRACKPAD)
+module_t module = hlc_cirque_trackpad;
+#elif defined(HLC_ENCODER)
+module_t module = hlc_encoder;
+#elif defined(HLC_TFT_DISPLAY)
+module_t module = hlc_tft_display;
+#elif defined(HLC_NONE)
 module_t module = hlc_none;
-#endif
-#ifdef HLC_CIRQUE_TRACKPAD
-module_t module_trackpad = hlc_cirque_trackpad;
-#endif
-#ifdef HLC_ENCODER
-module_t module_encoder = hlc_encoder;
-#endif
-#ifdef HLC_TFT_DISPLAY
-module_t module_display = hlc_tft_display;
+#else
+module_t module = none;
 #endif
 
 bool backlight_off = false;

@@ -34,7 +34,8 @@
  *   SPI_MISO = GP12
  *   CS       = GP13
  */
-
+// this is important, we need this to compile
+#define CIRQUE_PINNACLE_SPI_CS_PIN GP13
 #ifdef POINTING_DEVICE_ENABLE
 // Trackpad is on the right half
 #define SPLIT_POINTING_ENABLE

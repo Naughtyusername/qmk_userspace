@@ -13,12 +13,12 @@
 USER_NAME := naughtyusername
 
 # Enable halcyon modules for this keyboard
-HALCYON_KEYBOARD = yes
+# HALCYON_KEYBOARD = yes i dont think this does anything
 
 # TFT Display (left half) - NOTE: This is NOT an OLED!
 # The Halcyon uses a TFT LCD which requires Quantum Painter, not OLED_ENABLE
 # For now, leave display support disabled unless you want to implement Quantum Painter
-# QUANTUM_PAINTER_ENABLE = yes  # Requires significant additional configuration
+QUANTUM_PAINTER_ENABLE = yes  # Requires significant additional configuration
 # OLED Display (left half) cant use here, tft display not usual oled. below is the correct way for this board
 OLED_ENABLE = no
 

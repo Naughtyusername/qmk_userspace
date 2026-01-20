@@ -52,10 +52,16 @@ build_kb "splitkb/kyria/rev1" "naughtyusername"
 build_kb "splitkb/zima" "naughty_zima"
 build_kb "zsa/planck_ez/glow" "naughtyusername"
 
-# Halcyon Corne - needs special flags for modules
+# Halcyon Corne - needs separate builds for each half
+# Left half: TFT Display
 build_kb "splitkb/halcyon/corne/rev2" "naughtyusername" \
     -e HLC_TFT_DISPLAY=1 \
-    -e HLC_CIRQUE_TRACKPAD=1
+    -e TARGET=corne_left_display
+
+# Right half: Cirque Trackpad
+build_kb "splitkb/halcyon/corne/rev2" "naughtyusername" \
+    -e HLC_CIRQUE_TRACKPAD=1 \
+    -e TARGET=corne_right_trackpad
 
 # Results
 echo -e "\n${YELLOW}=======================================${NC}"
