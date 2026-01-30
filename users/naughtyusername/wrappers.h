@@ -88,11 +88,11 @@
  * --------------------------------------------------------------------------
  *  \     $     |     -     [          ]     +     #     ;     ::
  *  ~     &     *     =     (          )     ^     _     %     :
- * ..=    !     '     "     {          }     @     <     >     ?
+ *  `     !     '     "     {          }     @     <     >     ?
  */
 #define ___RAISE_L1___ KC_BSLS, KC_DLR, KC_PIPE, KC_MINS, KC_LBRC
 #define ___RAISE_L2___ KC_TILD, KC_AMPR, KC_ASTR, KC_EQL, KC_LPRN
-#define ___RAISE_L3___ KC_RANGE, KC_EXLM, KC_QUOT, KC_DQT, KC_LCBR
+#define ___RAISE_L3___ KC_GRV, KC_EXLM, KC_QUOT, KC_DQT, KC_LCBR
 
 #define ___RAISE_R1___ KC_RBRC, KC_PLUS, KC_HASH, KC_SCLN, KC_DCLN
 #define ___RAISE_R2___ KC_RPRN, KC_CIRC, KC_UNDS, KC_PERC, KC_COLN
@@ -244,6 +244,7 @@
  * Left:  Esc    Bksp   Spc/Rai
  * Right: Ent/Lo  '     Tab
  */
+
 #define ___CORNE_THUMB_BASE___ KC_ESC, KC_BSPC, SP_RAI, ENT_LOW, KC_QUOT, KC_TAB
 
 #define ___CORNE_THUMB_RAISE___                                                \

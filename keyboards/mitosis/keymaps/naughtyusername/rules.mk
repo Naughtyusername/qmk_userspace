@@ -9,7 +9,7 @@ USER_NAME := naughtyusername
 # Only add Mitosis-specific things here.
 
 # Mouse keys for the Adjust layer
-MOUSEKEY_ENABLE = yes
+MOUSEKEY_ENABLE = no
 
 # The Mitosis doesn't have RGB LEDs on the keyboard itself,
 # just the receiver LED which is controlled differently.

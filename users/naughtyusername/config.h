@@ -22,7 +22,7 @@
  *   - Activated by pressing both shifts together
  */
 #define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
-#define CAPS_WORD_IDLE_TIMEOUT 3000 // Turn off after 3 seconds of no typing
+#define CAPS_WORD_IDLE_TIMEOUT 2000 // Turn off after 2 seconds of no typing
 
 /* ==========================================================================
  * HOME ROW MODS CONFIGURATION
@@ -40,7 +40,7 @@
 // Flow Tap prevents misfires during fast typing
 // Lower = more aggressive (may miss intended holds)
 // Higher = less aggressive (may have more misfires)
-#define FLOW_TAP_TERM 100
+#define FLOW_TAP_TERM 125
 
 /* ==========================================================================
  * TAPPING TERMS
@@ -56,7 +56,7 @@
 
 // Quick tap: If you tap a key twice rapidly, the second tap is always a tap
 // This prevents accidental holds when double-tapping
-#define QUICK_TAP_TERM 120
+#define QUICK_TAP_TERM 150
 
 /* ==========================================================================
  * TRI-LAYER
