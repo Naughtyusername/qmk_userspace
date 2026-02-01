@@ -212,13 +212,13 @@
  * Acl0  MsL   MsD   MsU   MsR        MsL   MsD   MsU   MsR   Acl0
  * Acl1  Acl2  Btn1  Btn2  Btn3        _    Btn1  Btn2  Acl2  Acl1
  */
-#define ___MOUSE_L1___ KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______
-#define ___MOUSE_L2___ KC_ACL0, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R
-#define ___MOUSE_L3___ KC_ACL1, KC_ACL2, KC_BTN1, KC_BTN2, KC_BTN3
+#define ___MOUSE_L1___ MS_WHLL, MS_WHLD, MS_WHLU, MS_WHLR, _______
+#define ___MOUSE_L2___ MS_ACL0, MS_LEFT, MS_DOWN, MS_UP, MS_RGHT
+#define ___MOUSE_L3___ MS_ACL1, MS_ACL2, MS_BTN1, MS_BTN2, MS_BTN3
 
-#define ___MOUSE_R1___ _______, KC_BTN1, KC_BTN2, KC_BTN3, _______
-#define ___MOUSE_R2___ KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, KC_ACL0
-#define ___MOUSE_R3___ _______, KC_BTN1, KC_BTN2, KC_ACL2, KC_ACL1
+#define ___MOUSE_R1___ _______, MS_BTN1, MS_BTN2, MS_BTN3, _______
+#define ___MOUSE_R2___ MS_LEFT, MS_DOWN, MS_UP, MS_RGHT, MS_ACL0
+#define ___MOUSE_R3___ _______, MS_BTN1, MS_BTN2, MS_ACL2, MS_ACL1
 
 /* --------------------------------------------------------------------------
  * BLANK TEMPLATE - For new layers
@@ -319,10 +319,10 @@
 
 /* Mouse layer thumbs */
 #define ___MITOSIS_THUMB_MOUSE_L1___ _______, _______, _______, _______
-#define ___MITOSIS_THUMB_MOUSE_L2___ _______, _______, KC_BTN1, KC_BTN2
+#define ___MITOSIS_THUMB_MOUSE_L2___ _______, _______, MS_BTN1, MS_BTN2
 
 #define ___MITOSIS_THUMB_MOUSE_R1___ _______, _______, _______, _______
-#define ___MITOSIS_THUMB_MOUSE_R2___ KC_BTN1, KC_BTN2, _______, _______
+#define ___MITOSIS_THUMB_MOUSE_R2___ MS_BTN1, MS_BTN2, _______, _______
 
 /* ==========================================================================
  * CORNE THUMBS (3 keys per side)
@@ -361,7 +361,7 @@
     _______, _______, _______, _______, _______, _______
 
 #define ___CORNE_THUMB_MOUSE___                                                \
-    _______, KC_BTN2, KC_BTN1, KC_BTN1, KC_BTN2, _______
+    _______, MS_BTN2, MS_BTN1, MS_BTN1, MS_BTN2, _______
 
 /*
  * ==========================================================================
@@ -418,8 +418,8 @@ _______, _______, _______, _______, _______,                                   \
 _______, _______, _______, _______, _______
 
 #define ___KYRIA_THUMB_MOUSE___                                                \
-_______, _______, _______, KC_BTN2, KC_BTN1,                                   \
-KC_BTN1, KC_BTN2, _______, _______, _______
+_______, _______, _______, MS_BTN2, MS_BTN1,                                   \
+MS_BTN1, MS_BTN2, _______, _______, _______
 // clang-format on
 
 /* ==========================================================================
@@ -493,9 +493,9 @@ KC_BTN1, KC_BTN2, _______, _______, _______
 
 /* Mouse layer bottom row */
 #define ___PLANCK_BOTTOM_MOUSE___                                              \
-    _______, _______, _______, KC_BTN2, KC_BTN1,                               \
-    KC_BTN1,                                                                   \
-    KC_BTN2, _______, _______, _______, _______
+    _______, _______, _______, MS_BTN2, MS_BTN1,                               \
+    MS_BTN1,                                                                   \
+    MS_BTN2, _______, _______, _______, _______
 
 /* ==========================================================================
  * 6-COLUMN EXPANSION MACROS

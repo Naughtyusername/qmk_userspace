@@ -51,6 +51,7 @@ enum combo_names {
     COMBO_FG_UNDS,     // F + G = Underscore
     COMBO_SD_BSPC,     // S + D = Backspace
     COMBO_DF_TAB,      // D + F = Tab
+    COMBO_VB_MINS,     // V + B = Minus
 
     // ===== AUTO-PAIR COMBOS (bottom row) =====
     COMBO_NM_PARENS,        // N + M = () with cursor inside
@@ -111,6 +112,7 @@ const uint16_t PROGMEM combo_lscln[] = {HM_L, HM_SCLN, COMBO_END};
 const uint16_t PROGMEM combo_fg[] = {HM_F, KC_G, COMBO_END};
 const uint16_t PROGMEM combo_sd[] = {HM_S, HM_D, COMBO_END};
 const uint16_t PROGMEM combo_df[] = {HM_D, HM_F, COMBO_END};
+const uint16_t PROGMEM combo_vb[] = {KC_V, KC_B, COMBO_END};
 
 // ----- Auto-Pair Combos -----
 const uint16_t PROGMEM combo_nm[] = {KC_N, KC_M, COMBO_END};
@@ -359,6 +361,7 @@ bool combo_should_trigger(uint16_t combo_index, combo_t *combo,
     case COMBO_FG_UNDS:
     case COMBO_SD_BSPC:
     case COMBO_DF_TAB:
+    case COMBO_VB_MINS:
     case COMBO_NM_PARENS:
     case COMBO_MCOMM_BRACES:
     case COMBO_COMMDOT_BRACKETS:

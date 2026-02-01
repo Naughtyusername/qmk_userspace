@@ -81,6 +81,38 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         ___GAMING_L3_8___,                  ___GAMING_R3_8___,
                          ___KYRIA_THUMB_GAMING___
     ),
+
+    /* ROGUELIKE - Numpad for 8-directional movement */
+    [_ROGUELIKE] = LAYOUT_kyria_wrapper(
+        ___ROGUELIKE_L1_6___,               ___ROGUELIKE_R1_6___,
+        ___ROGUELIKE_L2_6___,               ___ROGUELIKE_R2_6___,
+        ___ROGUELIKE_L3_8___,               ___ROGUELIKE_R3_8___,
+                         ___KYRIA_THUMB_ROGUELIKE___
+    ),
+
+    /* VIM - Plain QWERTY without home row mods */
+    [_VIM] = LAYOUT_kyria_wrapper(
+        ___VIM_L1_6___,                     ___VIM_R1_6___,
+        ___VIM_L2_6___,                     ___VIM_R2_6___,
+        ___VIM_L3_8___,                     ___VIM_R3_8___,
+                         ___KYRIA_THUMB_VIM___
+    ),
+
+    /* SYS - System settings */
+    [_SYS] = LAYOUT_kyria_wrapper(
+        ___SYS_L1_6___,                     ___SYS_R1_6___,
+        ___SYS_L2_6___,                     ___SYS_R2_6___,
+        ___SYS_L3_8___,                     ___SYS_R3_8___,
+                         ___KYRIA_THUMB_SYS___
+    ),
+
+    /* MOUSE - Mouse movement and buttons */
+    [_MOUSE] = LAYOUT_kyria_wrapper(
+        ___MOUSE_L1_6___,                   ___MOUSE_R1_6___,
+        ___MOUSE_L2_6___,                   ___MOUSE_R2_6___,
+        ___MOUSE_L3_8___,                   ___MOUSE_R3_8___,
+                         ___KYRIA_THUMB_MOUSE___
+    ),
 };
 
 /* ==========================================================================
@@ -122,6 +154,18 @@ bool oled_task_user(void) {
             break;
         case _GAMING:
             oled_write_ln_P(PSTR("Gaming"), false);
+            break;
+        case _ROGUELIKE:
+            oled_write_ln_P(PSTR("Roguelike"), false);
+            break;
+        case _VIM:
+            oled_write_ln_P(PSTR("Vim"), false);
+            break;
+        case _SYS:
+            oled_write_ln_P(PSTR("System"), false);
+            break;
+        case _MOUSE:
+            oled_write_ln_P(PSTR("Mouse"), false);
             break;
         default:
             oled_write_ln_P(PSTR("???"), false);

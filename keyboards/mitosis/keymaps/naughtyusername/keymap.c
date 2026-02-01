@@ -90,6 +90,42 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         ___MITOSIS_THUMB_GAMING_L1___,      ___MITOSIS_THUMB_GAMING_R1___,
         ___MITOSIS_THUMB_GAMING_L2___,      ___MITOSIS_THUMB_GAMING_R2___
     ),
+
+    /* ROGUELIKE - Numpad for 8-directional movement */
+    [_ROGUELIKE] = LAYOUT_mitosis_wrapper(
+        ___ROGUELIKE_L1___,                 ___ROGUELIKE_R1___,
+        ___ROGUELIKE_L2___,                 ___ROGUELIKE_R2___,
+        ___ROGUELIKE_L3___,                 ___ROGUELIKE_R3___,
+        ___MITOSIS_THUMB_ROGUELIKE_L1___,   ___MITOSIS_THUMB_ROGUELIKE_R1___,
+        ___MITOSIS_THUMB_ROGUELIKE_L2___,   ___MITOSIS_THUMB_ROGUELIKE_R2___
+    ),
+
+    /* VIM - Plain QWERTY without home row mods */
+    [_VIM] = LAYOUT_mitosis_wrapper(
+        ___VIM_L1___,                       ___VIM_R1___,
+        ___VIM_L2___,                       ___VIM_R2___,
+        ___VIM_L3___,                       ___VIM_R3___,
+        ___MITOSIS_THUMB_VIM_L1___,         ___MITOSIS_THUMB_VIM_R1___,
+        ___MITOSIS_THUMB_VIM_L2___,         ___MITOSIS_THUMB_VIM_R2___
+    ),
+
+    /* SYS - System settings */
+    [_SYS] = LAYOUT_mitosis_wrapper(
+        ___SYS_L1___,                       ___SYS_R1___,
+        ___SYS_L2___,                       ___SYS_R2___,
+        ___SYS_L3___,                       ___SYS_R3___,
+        ___MITOSIS_THUMB_SYS_L1___,         ___MITOSIS_THUMB_SYS_R1___,
+        ___MITOSIS_THUMB_SYS_L2___,         ___MITOSIS_THUMB_SYS_R2___
+    ),
+
+    /* MOUSE - Mouse movement and buttons */
+    [_MOUSE] = LAYOUT_mitosis_wrapper(
+        ___MOUSE_L1___,                     ___MOUSE_R1___,
+        ___MOUSE_L2___,                     ___MOUSE_R2___,
+        ___MOUSE_L3___,                     ___MOUSE_R3___,
+        ___MITOSIS_THUMB_MOUSE_L1___,       ___MITOSIS_THUMB_MOUSE_R1___,
+        ___MITOSIS_THUMB_MOUSE_L2___,       ___MITOSIS_THUMB_MOUSE_R2___
+    ),
 };
 
 // clang-format on
@@ -125,6 +161,18 @@ layer_state_t layer_state_set_keymap(layer_state_t state) {
         break;
     case _GAMING:
         set_led_white;
+        break;
+    case _ROGUELIKE:
+        set_led_red;
+        break;
+    case _VIM:
+        set_led_green;
+        break;
+    case _SYS:
+        set_led_magenta;
+        break;
+    case _MOUSE:
+        set_led_cyan;
         break;
     default:
         set_led_off;
