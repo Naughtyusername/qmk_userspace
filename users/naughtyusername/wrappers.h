@@ -15,7 +15,7 @@
  * C preprocessor macros are expanded in multiple passes. This lets us do:
  *
  *   LAYOUT_mitosis_wrapper(
- *       ___BASE_L1___, ___BASE_R1___,   // Expands to: TD(TD_Q_ESC), KC_W, ...
+ *       ___BASE_L1___, ___BASE_R1___,   // Expands to: KC_Q, KC_W, ...
  *       ...
  *   )
  *
@@ -43,9 +43,8 @@
 #define LAYOUT_corne_wrapper(...) LAYOUT_split_3x6_3(__VA_ARGS__)
 
 // Kyria: 3x6 + 5 thumb keys per side + encoders = 50 keys
-#define LAYOUT_kyria_wrapper(...) LAYOUT(__VA_ARGS__)
+#define LAYOUT_kyria_wrapper(...) LAYOUT_split_3x6_5(__VA_ARGS__)
 
-// #define LAYOUT_planck_wrapper(...) LAYOUT_ortho_4x12(__VA_ARGS__)
 // Planck: 4x12 with 2u center space = 47 keys
 // Two-stage expansion needed so row macros expand before LAYOUT counts args
 #define LAYOUT_planck_1x2uC_wrapper(...) LAYOUT_planck_1x2uC(__VA_ARGS__)
@@ -53,6 +52,7 @@
 
 // Zima:
 #define LAYOUT_zima_wrapper(...) macropad_rename_me(__VA_ARGS__)
+
 /* ==========================================================================
  * 5-COLUMN MACROS (for 3x5 splits like the core of your layout)
  * ==========================================================================
@@ -75,7 +75,7 @@
  * A/Gui S/Alt D/Ctl F/Sft  G          H    J/Sft K/Ctl L/Alt ;/Gui
  *  Z     X     C     V     B          N     M     ,     .     /
  */
-#define ___BASE_L1___ TD(TD_Q_ESC), KC_W, KC_E, KC_R, KC_T
+#define ___BASE_L1___ KC_Q, KC_W, KC_E, KC_R, KC_T
 #define ___BASE_L2___ HM_A, HM_S, HM_D, HM_F, KC_G
 #define ___BASE_L3___ KC_Z, KC_X, KC_C, KC_V, KC_B
 
@@ -103,7 +103,7 @@
  * --------------------------------------------------------------------------
  *  1     2     3     4     5          6     7     8     9     0
  *  _     _    Vol+  Vol-  Mute        .     4     5     6     0
- *  _     _    Prev  Play  Next        _     1     2     3     _
+ *  _     _    Prev  Play  Next        +     1     2     3     -
  */
 #define ___LOWER_L1___ KC_1, KC_2, KC_3, KC_4, KC_5
 #define ___LOWER_L2___ _______, _______, KC_VOLU, KC_VOLD, KC_MUTE
@@ -111,12 +111,12 @@
 
 #define ___LOWER_R1___ KC_6, KC_7, KC_8, KC_9, KC_0
 #define ___LOWER_R2___ KC_DOT, KC_4, KC_5, KC_6, KC_0
-#define ___LOWER_R3___ _______, KC_1, KC_2, KC_3, _______
+#define ___LOWER_R3___ KC_PLUS, KC_1, KC_2, KC_3, KC_MINS
 
 /* --------------------------------------------------------------------------
- * FUNCTION LAYER - F-keys and Navigation
+ * FUNC LAYER - F-keys and Navigation
  * --------------------------------------------------------------------------
- *  F9   F10   F11   F12   PrtSc       PgUp  Home  End   Ins    _
+ *  F9   F10   F11   F12   PrtSc       PgUp  Home  End   Ins   Del
  *  F5   F6    F7    F8     _          Left  Down  Up    Right  _
  *  F1   F2    F3    F4     _          PgDn   _     _     _      _
  */
@@ -124,21 +124,19 @@
 #define ___FUNC_L2___ KC_F5, KC_F6, KC_F7, KC_F8, _______
 #define ___FUNC_L3___ KC_F1, KC_F2, KC_F3, KC_F4, _______
 
-#define ___FUNC_R1___ KC_PGUP, KC_HOME, KC_END, KC_INS, _______
+#define ___FUNC_R1___ KC_PGUP, KC_HOME, KC_END, KC_INS, KC_DEL
 #define ___FUNC_R2___ KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, _______
 #define ___FUNC_R3___ KC_PGDN, _______, _______, _______, _______
 
 /* --------------------------------------------------------------------------
- * ADJUST LAYER - System (Tri-layer: LOWER + RAISE) TODO: tweak this, removed
- * mouse keys from here, dont care for them anwyways. probably do something with
- * NK tog, we need the bootmagic shit to use kb in bootloaders too, on the list.
+ * ADJUST LAYER - System (Tri-layer: LOWER + RAISE)
  * --------------------------------------------------------------------------
- * Base  Game   _     _     _            _     _     _     _  NKRO
- *  _     _     _     _     _            _     _     _     _    _
- *  _     _     _     _     _            _     _     _     _    _
+ * Base  Game   _     _    Caps        _     _     _     _    NKRO
+ *  _     _     _     _    NumLk       _     _     _     _     _
+ *  _     _     _     _     _          _     _     _     _     _
  */
-#define ___ADJUST_L1___ TG(_BASE), TG(_GAMING), _______, _______, _______
-#define ___ADJUST_L2___ _______, _______, _______, _______, _______
+#define ___ADJUST_L1___ TG(_BASE), TG(_GAMING), _______, _______, KC_CAPS
+#define ___ADJUST_L2___ _______, _______, _______, _______, KC_NUM
 #define ___ADJUST_L3___ _______, _______, _______, _______, _______
 
 #define ___ADJUST_R1___ _______, _______, _______, _______, NK_TOGG
@@ -159,6 +157,68 @@
 #define ___GAMING_R1___ KC_Y, KC_U, KC_I, KC_O, KC_P
 #define ___GAMING_R2___ KC_H, KC_J, KC_K, KC_L, KC_SCLN
 #define ___GAMING_R3___ KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH
+
+/* --------------------------------------------------------------------------
+ * ROGUELIKE LAYER - For diagonal movement roguelikes
+ * Numpad on right for 8-directional movement, shifted alphas on left
+ * --------------------------------------------------------------------------
+ *  Q     W     E     R     T          _    KP7   KP8   KP9    _
+ *  A     S     D     F     G          .    KP4   KP5   KP6    _
+ *  Z     X     C     V     B          _    KP1   KP2   KP3    _
+ */
+#define ___ROGUELIKE_L1___ KC_Q, KC_W, KC_E, KC_R, KC_T
+#define ___ROGUELIKE_L2___ KC_A, KC_S, KC_D, KC_F, KC_G
+#define ___ROGUELIKE_L3___ KC_Z, KC_X, KC_C, KC_V, KC_B
+
+#define ___ROGUELIKE_R1___ _______, KC_P7, KC_P8, KC_P9, _______
+#define ___ROGUELIKE_R2___ KC_PDOT, KC_P4, KC_P5, KC_P6, _______
+#define ___ROGUELIKE_R3___ _______, KC_P1, KC_P2, KC_P3, _______
+
+/* --------------------------------------------------------------------------
+ * VIM LAYER - Plain QWERTY without home row mods (for Vimium, etc.)
+ * Combos: GACS mods on QW WE ER RT (left), YU UI IO OP (right)
+ * --------------------------------------------------------------------------
+ *  Q     W     E     R     T          Y     U     I     O     P
+ *  A     S     D     F     G          H     J     K     L     ;
+ *  Z     X     C     V     B          N     M     ,     .     /
+ */
+#define ___VIM_L1___ KC_Q, KC_W, KC_E, KC_R, KC_T
+#define ___VIM_L2___ KC_A, KC_S, KC_D, KC_F, KC_G
+#define ___VIM_L3___ KC_Z, KC_X, KC_C, KC_V, KC_B
+
+#define ___VIM_R1___ KC_Y, KC_U, KC_I, KC_O, KC_P
+#define ___VIM_R2___ KC_H, KC_J, KC_K, KC_L, KC_SCLN
+#define ___VIM_R3___ KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH
+
+/* --------------------------------------------------------------------------
+ * SYS LAYER - System settings (hold Z and / for 1 sec to access)
+ * --------------------------------------------------------------------------
+ *  _    Base  Game   _     _          _     _     _     _    NKRO
+ * Boot Reset   _     _     _          _     _     _   Reset Boot
+ * hold   _     _     _     _          _     _     _     _   hold
+ */
+#define ___SYS_L1___ _______, TG(_BASE), TG(_GAMING), _______, _______
+#define ___SYS_L2___ QK_BOOT, EE_CLR, _______, _______, _______
+#define ___SYS_L3___ _______, _______, _______, _______, _______
+
+#define ___SYS_R1___ _______, _______, _______, _______, NK_TOGG
+#define ___SYS_R2___ _______, _______, _______, EE_CLR, QK_BOOT
+#define ___SYS_R3___ _______, _______, _______, _______, _______
+
+/* --------------------------------------------------------------------------
+ * MOUSE LAYER - Mouse movement and buttons
+ * --------------------------------------------------------------------------
+ * WhlL  WhlD  WhlU  WhlR   _          _    Btn1  Btn2  Btn3   _
+ * Acl0  MsL   MsD   MsU   MsR        MsL   MsD   MsU   MsR   Acl0
+ * Acl1  Acl2  Btn1  Btn2  Btn3        _    Btn1  Btn2  Acl2  Acl1
+ */
+#define ___MOUSE_L1___ KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______
+#define ___MOUSE_L2___ KC_ACL0, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R
+#define ___MOUSE_L3___ KC_ACL1, KC_ACL2, KC_BTN1, KC_BTN2, KC_BTN3
+
+#define ___MOUSE_R1___ _______, KC_BTN1, KC_BTN2, KC_BTN3, _______
+#define ___MOUSE_R2___ KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, KC_ACL0
+#define ___MOUSE_R3___ _______, KC_BTN1, KC_BTN2, KC_ACL2, KC_ACL1
 
 /* --------------------------------------------------------------------------
  * BLANK TEMPLATE - For new layers
@@ -208,7 +268,7 @@
 #define ___MITOSIS_THUMB_RAISE_R1___ KC_ARROP, KC_ASSIGN, KC_SLSH, _______
 #define ___MITOSIS_THUMB_RAISE_R2___ SP_LOW, _______, _______, _______
 
-/* Lower layer thumbs - all transparent */
+/* Lower layer thumbs */
 #define ___MITOSIS_THUMB_LOWER_L1___ _______, _______, _______, _______
 #define ___MITOSIS_THUMB_LOWER_L2___ _______, _______, _______, _______
 
@@ -229,12 +289,40 @@
 #define ___MITOSIS_THUMB_ADJUST_R1___ _______, _______, _______, _______
 #define ___MITOSIS_THUMB_ADJUST_R2___ _______, _______, _______, _______
 
-/* Gaming layer thumbs - direct keys, no layer taps */
+/* Gaming layer thumbs */
 #define ___MITOSIS_THUMB_GAMING_L1___ KC_LSFT, KC_ESC, KC_TAB, KC_1
 #define ___MITOSIS_THUMB_GAMING_L2___ KC_LCTL, KC_LALT, KC_BSPC, KC_SPC
 
 #define ___MITOSIS_THUMB_GAMING_R1___ KC_2, KC_3, KC_4, KC_5
 #define ___MITOSIS_THUMB_GAMING_R2___ KC_ENT, KC_DEL, MO(_FUNCTION), TG(_BASE)
+
+/* Roguelike layer thumbs */
+#define ___MITOSIS_THUMB_ROGUELIKE_L1___ KC_LSFT, KC_ESC, KC_TAB, KC_1
+#define ___MITOSIS_THUMB_ROGUELIKE_L2___ KC_LCTL, KC_LALT, KC_BSPC, KC_SPC
+
+#define ___MITOSIS_THUMB_ROGUELIKE_R1___ KC_2, KC_3, KC_4, KC_5
+#define ___MITOSIS_THUMB_ROGUELIKE_R2___ KC_ENT, KC_P0, MO(_FUNCTION), TG(_BASE)
+
+/* VIM layer thumbs - transparent to allow RAISE/LOWER access */
+#define ___MITOSIS_THUMB_VIM_L1___ _______, _______, _______, _______
+#define ___MITOSIS_THUMB_VIM_L2___ _______, _______, _______, _______
+
+#define ___MITOSIS_THUMB_VIM_R1___ _______, _______, _______, _______
+#define ___MITOSIS_THUMB_VIM_R2___ _______, _______, _______, _______
+
+/* SYS layer thumbs */
+#define ___MITOSIS_THUMB_SYS_L1___ _______, _______, _______, _______
+#define ___MITOSIS_THUMB_SYS_L2___ _______, _______, _______, _______
+
+#define ___MITOSIS_THUMB_SYS_R1___ _______, _______, _______, _______
+#define ___MITOSIS_THUMB_SYS_R2___ _______, _______, _______, _______
+
+/* Mouse layer thumbs */
+#define ___MITOSIS_THUMB_MOUSE_L1___ _______, _______, _______, _______
+#define ___MITOSIS_THUMB_MOUSE_L2___ _______, _______, KC_BTN1, KC_BTN2
+
+#define ___MITOSIS_THUMB_MOUSE_R1___ _______, _______, _______, _______
+#define ___MITOSIS_THUMB_MOUSE_R2___ KC_BTN1, KC_BTN2, _______, _______
 
 /* ==========================================================================
  * CORNE THUMBS (3 keys per side)
@@ -262,12 +350,24 @@
 #define ___CORNE_THUMB_GAMING___                                               \
     KC_LCTL, KC_LALT, KC_SPC, KC_ENT, MO(_FUNCTION), TG(_BASE)
 
+#define ___CORNE_THUMB_ROGUELIKE___                                            \
+    KC_LCTL, KC_LALT, KC_SPC, KC_ENT, KC_P0, TG(_BASE)
+
+/* VIM layer thumbs - transparent to allow RAISE/LOWER access */
+#define ___CORNE_THUMB_VIM___                                                  \
+    _______, _______, _______, _______, _______, _______
+
+#define ___CORNE_THUMB_SYS___                                                  \
+    _______, _______, _______, _______, _______, _______
+
+#define ___CORNE_THUMB_MOUSE___                                                \
+    _______, KC_BTN2, KC_BTN1, KC_BTN1, KC_BTN2, _______
+
 /*
  * ==========================================================================
- * KYRIA THUMBS (5 keys per side, plus the extra two on row 3, will handle those
- * below)
+ * KYRIA THUMBS (5 keys per side, plus the extra two on row 3)
  * ==========================================================================
- * The Kyria has too many thumb keys hard to use em all similar to mitosis
+ * The Kyria has many thumb keys
  *
  *                    +-------------.  ,-------------+
  *                    |      |      |  |      |      |
@@ -275,16 +375,18 @@
  |encode|      |      |      |      |  |      |      |      |      |encode|
  |      |      |      |      |      |  |      |      |      |      |      |
  `----------------------------------'  `----------------------------------'
-**Left : *Right : */
+ * Left:  ___   ___   ___   ___   ___
+ * Right: ___   ___   ___   ___   ___
+ */
 
 // clang-format off
 #define ___KYRIA_THUMB_BASE___                                                 \
-_______, _______, _______, _______, _______,                                   \
-_______, _______, _______, _______, _______
+_______, _______, KC_ESC, KC_BSPC, SP_RAI,                                     \
+ENT_LOW, KC_QUOT, KC_TAB, _______, _______
 
 #define ___KYRIA_THUMB_RAISE___                                                \
-_______, _______, _______, _______, _______,                                   \
-_______, _______, _______, _______, _______
+_______, _______, _______, KC_HMDR, _______,                                   \
+SP_LOW, KC_ASSIGN, KC_ARROP, _______, _______
 
 #define ___KYRIA_THUMB_LOWER___                                                \
 _______, _______, _______, _______, _______,                                   \
@@ -292,27 +394,35 @@ _______, _______, _______, _______, _______
 
 #define ___KYRIA_THUMB_FUNC___                                                 \
 _______, _______, _______, _______, _______,                                   \
-_______, _______, _______, _______, _______
+_______, TO(_BASE), _______, _______, _______
 
 #define ___KYRIA_THUMB_ADJUST___                                               \
-_______, _______, _______, _______, _______,                                   \
+_______, _______, EE_CLR, QK_BOOT, _______,                                    \
 _______, _______, _______, _______, _______
 
 #define ___KYRIA_THUMB_GAMING___                                               \
+_______, _______, KC_LCTL, KC_LALT, KC_SPC,                                    \
+KC_ENT, MO(_FUNCTION), TG(_BASE), _______, _______
+
+#define ___KYRIA_THUMB_ROGUELIKE___                                            \
+_______, _______, KC_LCTL, KC_LALT, KC_SPC,                                    \
+KC_ENT, KC_P0, TG(_BASE), _______, _______
+
+/* VIM layer thumbs - transparent to allow RAISE/LOWER access */
+#define ___KYRIA_THUMB_VIM___                                                  \
 _______, _______, _______, _______, _______,                                   \
 _______, _______, _______, _______, _______
+
+#define ___KYRIA_THUMB_SYS___                                                  \
+_______, _______, _______, _______, _______,                                   \
+_______, _______, _______, _______, _______
+
+#define ___KYRIA_THUMB_MOUSE___                                                \
+_______, _______, _______, KC_BTN2, KC_BTN1,                                   \
+KC_BTN1, KC_BTN2, _______, _______, _______
 // clang-format on
 
 /* ==========================================================================
- * PLANCK BOTTOM
- * ==========================================================================
-// clang-format off
-// 1u spacebar but physically occupies 2 slots, ie. one less
-// key on that layer 11 instead of 12
-// anyways, TODO expand this for the remaining layers i suppose, spacebar as
-first slot
-// on second row as shown in the base wrapper
- * ==========================================================================
  * PLANCK BOTTOM ROW MACROS (11 keys - 2u spacebar takes one slot)
  * ==========================================================================
  * The Planck EZ with LAYOUT_planck_1x2uC has 4 rows of 12 keys, but the
@@ -324,7 +434,7 @@ first slot
  *
  * Format: 5 left keys, spacebar, 5 right keys (11 total)
  *
- Base layer bottom row
+ * Base layer bottom row:
  * Ctrl  GUI   Alt   CapsW Raise    [Space]    Lower Left  Down  Up   Right
  */
 // clang-format off
@@ -333,13 +443,13 @@ first slot
     KC_SPC,                                                                    \
     MO(_LOWER), KC_LEFT, KC_DOWN, KC_UP, KC_RGHT
 
-/* Raise layer bottom row - transparent except layer keys */
+/* Raise layer bottom row */
 #define ___PLANCK_BOTTOM_RAISE___                                              \
     _______, _______, _______, _______, _______,                               \
     _______,                                                                   \
     MO(_LOWER), _______, _______, _______, _______
 
-/* Lower layer bottom row - transparent except layer keys */
+/* Lower layer bottom row */
 #define ___PLANCK_BOTTOM_LOWER___                                              \
     _______, _______, _______, _______, MO(_RAISE),                            \
     _______,                                                                   \
@@ -351,18 +461,41 @@ first slot
     _______,                                                                   \
     _______, _______, _______, _______, _______
 
-/* Adjust layer bottom row - Gaming toggle on left space position */
-// TODO space should not toggle gaming here.
+/* Adjust layer bottom row */
 #define ___PLANCK_BOTTOM_ADJUST___                                             \
     _______, _______, _______, _______, _______,                               \
-    TG(_GAMING),                                                               \
+    _______,                                                                   \
     _______, EE_CLR, QK_BOOT, _______, _______
 
-/* Gaming layer bottom row - no layer taps, direct keys */
+/* Gaming layer bottom row */
 #define ___PLANCK_BOTTOM_GAMING___                                             \
     KC_LCTL, KC_LALT, KC_LGUI, TG(_GAMING), MO(_RAISE),                        \
     KC_SPC,                                                                    \
     MO(_LOWER), KC_LEFT, KC_DOWN, KC_UP, KC_RGHT
+
+/* Roguelike layer bottom row */
+#define ___PLANCK_BOTTOM_ROGUELIKE___                                          \
+    KC_LCTL, KC_LALT, KC_LGUI, TG(_ROGUELIKE), _______,                        \
+    KC_SPC,                                                                    \
+    KC_P0, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT
+
+/* VIM layer bottom row - transparent to allow RAISE/LOWER access */
+#define ___PLANCK_BOTTOM_VIM___                                                \
+    _______, _______, _______, _______, _______,                               \
+    _______,                                                                   \
+    _______, _______, _______, _______, _______
+
+/* SYS layer bottom row */
+#define ___PLANCK_BOTTOM_SYS___                                                \
+    _______, _______, _______, _______, _______,                               \
+    _______,                                                                   \
+    _______, _______, _______, _______, _______
+
+/* Mouse layer bottom row */
+#define ___PLANCK_BOTTOM_MOUSE___                                              \
+    _______, _______, _______, KC_BTN2, KC_BTN1,                               \
+    KC_BTN1,                                                                   \
+    KC_BTN2, _______, _______, _______, _______
 
 /* ==========================================================================
  * 6-COLUMN EXPANSION MACROS
@@ -373,8 +506,7 @@ first slot
  * Format: OUTER_LEFT, <5 col macro>, OUTER_RIGHT
  */
 
-// Base layer with outer columns: Tab on left, Backspace on right
-// used on corne and kyria
+// Base layer with outer columns
 #define ___BASE_L1_6___ KC_TAB, ___BASE_L1___
 #define ___BASE_L2_6___ KC_ESC, ___BASE_L2___
 #define ___BASE_L3_6___ KC_LSFT, ___BASE_L3___
@@ -428,34 +560,103 @@ first slot
 #define ___GAMING_R2_6___ ___GAMING_R2___, KC_QUOT
 #define ___GAMING_R3_6___ ___GAMING_R3___, KC_ENT
 
-// Inner extra thumbs on kyria
-/*                    +-------------.  ,-------------+
-                      |these |these |  |these |these |
- +------+------+------+------+------|  |------+------+------+------+------+
- |encodr|      |      |      |      |  |      |      |      |      |encodr|
- |      |      |      |      |      |  |      |      |      |      |      |
- `----------------------------------'  `----------------------------------'
-*/
+// Roguelike layer with outer columns
+#define ___ROGUELIKE_L1_6___ KC_TAB, ___ROGUELIKE_L1___
+#define ___ROGUELIKE_L2_6___ KC_ESC, ___ROGUELIKE_L2___
+#define ___ROGUELIKE_L3_6___ KC_LSFT, ___ROGUELIKE_L3___
+
+#define ___ROGUELIKE_R1_6___ ___ROGUELIKE_R1___, _______
+#define ___ROGUELIKE_R2_6___ ___ROGUELIKE_R2___, _______
+#define ___ROGUELIKE_R3_6___ ___ROGUELIKE_R3___, _______
+
+// VIM layer with outer columns
+#define ___VIM_L1_6___ KC_TAB, ___VIM_L1___
+#define ___VIM_L2_6___ KC_ESC, ___VIM_L2___
+#define ___VIM_L3_6___ KC_LSFT, ___VIM_L3___
+
+#define ___VIM_R1_6___ ___VIM_R1___, KC_BSPC
+#define ___VIM_R2_6___ ___VIM_R2___, KC_QUOT
+#define ___VIM_R3_6___ ___VIM_R3___, KC_RSFT
+
+// SYS layer with outer columns
+#define ___SYS_L1_6___ _______, ___SYS_L1___
+#define ___SYS_L2_6___ _______, ___SYS_L2___
+#define ___SYS_L3_6___ _______, ___SYS_L3___
+
+#define ___SYS_R1_6___ ___SYS_R1___, _______
+#define ___SYS_R2_6___ ___SYS_R2___, _______
+#define ___SYS_R3_6___ ___SYS_R3___, _______
+
+// Mouse layer with outer columns
+#define ___MOUSE_L1_6___ _______, ___MOUSE_L1___
+#define ___MOUSE_L2_6___ _______, ___MOUSE_L2___
+#define ___MOUSE_L3_6___ _______, ___MOUSE_L3___
+
+#define ___MOUSE_R1_6___ ___MOUSE_R1___, _______
+#define ___MOUSE_R2_6___ ___MOUSE_R2___, _______
+#define ___MOUSE_R3_6___ ___MOUSE_R3___, _______
+
+// Blank layer with outer columns
+#define ___BLANK_L1_6___ _______, ___BLANK_L1___
+#define ___BLANK_L2_6___ _______, ___BLANK_L2___
+#define ___BLANK_L3_6___ _______, ___BLANK_L3___
+
+#define ___BLANK_R1_6___ ___BLANK_R1___, _______
+#define ___BLANK_R2_6___ ___BLANK_R2___, _______
+#define ___BLANK_R3_6___ ___BLANK_R3___, _______
+
+/* ==========================================================================
+ * KYRIA ROW 3 EXPANSION (8 keys - adds inner keys beside thumb cluster)
+ * ==========================================================================
+ * Inner extra keys on Kyria row 3:
+ *                    +-------------.  ,-------------+
+ *                    |these |these |  |these |these |
+ * +------+------+------+------+------|  |------+------+------+------+------+
+ * |encodr|      |      |      |      |  |      |      |      |      |encodr|
+ * `----------------------------------'  `----------------------------------'
+ */
+
 // Base
-#define ___BASE_L3_8___ ___BASE_L3___, _______, _______, _______
-#define ___BASE_R3_8___ _______, _______, _______, ___BASE_R3___
+#define ___BASE_L3_8___ ___BASE_L3_6___, _______, _______
+#define ___BASE_R3_8___ _______, _______, ___BASE_R3_6___
 
 // Lower
-#define ___LOWER_L3_8___ ___LOWER_L3___, _______, _______, _______
-#define ___LOWER_R3_8___ _______, _______, _______, ___LOWER_R3___
+#define ___LOWER_L3_8___ ___LOWER_L3_6___, _______, _______
+#define ___LOWER_R3_8___ _______, _______, ___LOWER_R3_6___
 
 // Raise
-#define ___RAISE_L3_8___ ___RAISE_L3___, _______, _______, _______
-#define ___RAISE_R3_8___ _______, _______, _______, ___RAISE_R3___
+#define ___RAISE_L3_8___ ___RAISE_L3_6___, _______, _______
+#define ___RAISE_R3_8___ _______, _______, ___RAISE_R3_6___
 
 // Adjust
-#define ___ADJUST_L3_8___ ___ADJUST_L3___, _______, _______, _______
-#define ___ADJUST_R3_8___ _______, _______, _______, ___ADJUST_R3___
+#define ___ADJUST_L3_8___ ___ADJUST_L3_6___, _______, _______
+#define ___ADJUST_R3_8___ _______, _______, ___ADJUST_R3_6___
 
 // Func
-#define ___FUNC_L3_8___ ___FUNC_L3___, _______, _______, _______
-#define ___FUNC_R3_8___ _______, _______, _______, ___FUNC_R3___
+#define ___FUNC_L3_8___ ___FUNC_L3_6___, _______, _______
+#define ___FUNC_R3_8___ _______, _______, ___FUNC_R3_6___
 
 // Gaming
-#define ___GAMING_L3_8___ ___GAMING_L3___, _______, _______, _______
-#define ___GAMING_R3_8___ _______, _______, _______, ___GAMING_R3___
+#define ___GAMING_L3_8___ ___GAMING_L3_6___, _______, _______
+#define ___GAMING_R3_8___ _______, _______, ___GAMING_R3_6___
+
+// Gaming2
+#define ___GAMING2_L3_8___ ___GAMING2_L3_6___, _______, _______
+#define ___GAMING2_R3_8___ _______, _______, ___GAMING2_R3_6___
+
+// Roguelike
+#define ___ROGUELIKE_L3_8___ ___ROGUELIKE_L3_6___, _______, _______
+#define ___ROGUELIKE_R3_8___ _______, _______, ___ROGUELIKE_R3_6___
+
+// VIM
+#define ___VIM_L3_8___ ___VIM_L3_6___, _______, _______
+#define ___VIM_R3_8___ _______, _______, ___VIM_R3_6___
+
+// SYS
+#define ___SYS_L3_8___ ___SYS_L3_6___, _______, _______
+#define ___SYS_R3_8___ _______, _______, ___SYS_R3_6___
+
+// Mouse
+#define ___MOUSE_L3_8___ ___MOUSE_L3_6___, _______, _______
+#define ___MOUSE_R3_8___ _______, _______, ___MOUSE_R3_6___
+// clang-format on

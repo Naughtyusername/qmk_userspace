@@ -18,6 +18,10 @@
 #ifndef KEYRECORDS_INCLUDED
 #define KEYRECORDS_INCLUDED
 
+#ifdef COMBO_ENABLE
+#include "combos.h"
+#endif
+
 /* ==========================================================================
  * TAP DANCE DEFINITIONS
  * ==========================================================================
@@ -27,23 +31,6 @@
 tap_dance_action_t tap_dance_actions[] = {
     [TD_Q_ESC] = ACTION_TAP_DANCE_DOUBLE(KC_Q, KC_ESC),
     // Add more tap dances here
-};
-#endif
-
-/* ==========================================================================
- * COMBOS
- * ==========================================================================
- * J+K = Escape (vim classic!)
- *
- * Note: We use HM_J and HM_K (the mod-tap versions) so the combo works
- * with home row mods. If you used KC_J and KC_K, the combo wouldn't trigger.
- */
-#ifdef COMBO_ENABLE
-const uint16_t PROGMEM jk_combo[] = {HM_J, HM_K, COMBO_END};
-
-combo_t key_combos[] = {
-    COMBO(jk_combo, KC_ESC),
-    // Add more combos here
 };
 #endif
 

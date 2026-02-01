@@ -74,7 +74,13 @@
  * COMBO_TERM: Time window to press both keys for a combo to trigger
  * Too short = hard to hit combos, too long = accidental triggers
  */
-#define COMBO_TERM 50
+#define COMBO_ONLY_FROM_LAYER                                                  \
+    0 // this doesnt know base exists, but base is layer 0 so this shoudld work
+#define COMBO_TERM 30
+#define COMBO_TERM_PER_COMBO
+#define COMBO_MUST_HOLD_PER_COMBO
+#define COMBO_MUST_TAP_PER_COMBO
+#define COMBO_SHOULD_TRIGGER
 
 /* ==========================================================================
  * ONE-SHOT KEYS

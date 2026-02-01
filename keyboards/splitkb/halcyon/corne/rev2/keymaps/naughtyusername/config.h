@@ -44,7 +44,7 @@
 
 // Cirque trackpad settings
 // The Halcyon uses SPI, not I2C
-#define CIRQUE_PINNACLE_DIAMETER_MM 40
+#define CIRQUE_PINNACLE_DIAMETER_MM 35
 
 // Rotation - adjust if cursor moves wrong direction
 // Try 90, 180, 270 if movement is off

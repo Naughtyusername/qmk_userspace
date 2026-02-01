@@ -105,18 +105,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // clang-format on
 
 /* ==========================================================================
- * PLANCK-SPECIFIC: Combo sound
- * ==========================================================================
- */
-void process_combo_event(uint16_t combo_index, bool pressed) {
-    if (pressed && combo_index == 0) { // JK escape combo
-#ifdef AUDIO_ENABLE
-        PLAY_SONG(combo_song);
-#endif
-    }
-}
-
-/* ==========================================================================
  * PLANCK-SPECIFIC: Layer state with audio feedback
  * ==========================================================================
  * This overrides the weak layer_state_set_keymap() from naughtyusername.c

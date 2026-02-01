@@ -28,6 +28,11 @@ enum userspace_layers {
     _FUNCTION, // F-keys, navigation
     _ADJUST,   // System controls, mouse (tri-layer: LOWER + RAISE)
     _GAMING,   // No home row mods, direct keys for gaming
+    _GAMING2,
+    _ROGUELIKE,
+    _VIM,
+    _SYS,
+    _MOUSE,
 };
 
 /* ==========================================================================
