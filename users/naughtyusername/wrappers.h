@@ -246,20 +246,19 @@
  * The Mitosis has 2x4 thumb clusters (8 keys per side, 16 total).
  */
 
+// clang-format off
 /* --------------------------------------------------------------------------
  * MITOSIS THUMBS (2 rows of 4 keys per side)
  * --------------------------------------------------------------------------
  * Left:                          Right:
- * OSShft OSCtl OSAlt  Tab        CapsWd OSL(FN) OSL(ADJ) ___
- * Esc    Ctrl  Bksp   Spc/Rai    Ent/Lo  '       "       ___
+ * OSShft OSCtl OSAlt  ___        CapsWd OSL(FN) OSL(ADJ) ___
+ * Esc    Ctrl  Bksp   Spc/Rai    Ent/Lo TAB/Fn  ___       ___
  */
-#define ___MITOSIS_THUMB_BASE_L1___                                            \
-    OSM(MOD_LSFT), OSM(MOD_LCTL), OSM(MOD_LALT), KC_TAB
+#define ___MITOSIS_THUMB_BASE_L1___ OSM(MOD_LSFT), OSM(MOD_LCTL), OSM(MOD_LALT), _______
 #define ___MITOSIS_THUMB_BASE_L2___ KC_ESC, KC_LCTL, KC_BSPC, SP_RAI
 
-#define ___MITOSIS_THUMB_BASE_R1___                                            \
-    CW_TOGG, OSL(_FUNCTION), OSL(_ADJUST), _______
-#define ___MITOSIS_THUMB_BASE_R2___ ENT_LOW, KC_QUOT, KC_DQT, _______
+#define ___MITOSIS_THUMB_BASE_R1___ _______, _______, _______, _______
+#define ___MITOSIS_THUMB_BASE_R2___ ENT_LOW, FUN_TAB, _______, _______
 
 /* Raise layer thumbs */
 #define ___MITOSIS_THUMB_RAISE_L1___ _______, _______, KC_HMDR, KC_GRV

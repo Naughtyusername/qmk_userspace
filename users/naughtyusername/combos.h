@@ -52,6 +52,7 @@ enum combo_names {
     COMBO_SD_BSPC,     // S + D = Backspace
     COMBO_DF_TAB,      // D + F = Tab
     COMBO_VB_MINS,     // V + B = Minus
+    COMBO_KL_SQT,      // QUOT// K + L = Single Quote
 
     // ===== AUTO-PAIR COMBOS (bottom row) =====
     COMBO_NM_PARENS,        // N + M = () with cursor inside
@@ -113,6 +114,7 @@ const uint16_t PROGMEM combo_fg[] = {HM_F, KC_G, COMBO_END};
 const uint16_t PROGMEM combo_sd[] = {HM_S, HM_D, COMBO_END};
 const uint16_t PROGMEM combo_df[] = {HM_D, HM_F, COMBO_END};
 const uint16_t PROGMEM combo_vb[] = {KC_V, KC_B, COMBO_END};
+const uint16_t PROGMEM combo_kl[] = {KC_K, KC_L, COMBO_END};
 
 // ----- Auto-Pair Combos -----
 const uint16_t PROGMEM combo_nm[] = {KC_N, KC_M, COMBO_END};
@@ -158,6 +160,8 @@ combo_t key_combos[COMBO_LENGTH] = {
     [COMBO_FG_UNDS] = COMBO(combo_fg, KC_UNDS),
     [COMBO_SD_BSPC] = COMBO(combo_sd, KC_BSPC),
     [COMBO_DF_TAB] = COMBO(combo_df, KC_TAB),
+    [COMBO_VB_MINS] = COMBO(combo_vb, KC_MINS),
+    [COMBO_KL_SQT] = COMBO(combo_kl, KC_QUOT),
 
     // ===== AUTO-PAIR COMBOS (use COMBO_ACTION for macros) =====
     [COMBO_NM_PARENS] = COMBO_ACTION(combo_nm),

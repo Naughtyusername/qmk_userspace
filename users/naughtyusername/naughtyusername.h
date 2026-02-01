@@ -23,16 +23,16 @@
  */
 enum userspace_layers {
     _BASE = 0,
-    _LOWER,    // Numbers, numpad, media controls
-    _RAISE,    // Symbols, programming operators
-    _FUNCTION, // F-keys, navigation
-    _ADJUST,   // System controls, mouse (tri-layer: LOWER + RAISE)
-    _GAMING,   // No home row mods, direct keys for gaming
-    _GAMING2,
-    _ROGUELIKE,
-    _VIM,
-    _SYS,
-    _MOUSE,
+    _LOWER,     // Numbers, numpad, media controls
+    _RAISE,     // Symbols, programming operators
+    _FUNCTION,  // F-keys, navigation
+    _ADJUST,    // System controls, mouse (tri-layer: LOWER + RAISE)
+    _GAMING,    // No home row mods, direct keys for gaming
+    _GAMING2,   // Function keys and numbers.
+    _ROGUELIKE, // numpad for the rl's that hate vim :(
+    _VIM,       // no home row mods, top row combo GACS mods tho.
+    _SYS,   // bootloader and other shit that i dont like accessible. NKRO etc.
+    _MOUSE, // For halcyon corne cirque trackpad
 };
 
 /* ==========================================================================
@@ -97,7 +97,8 @@ enum userspace_keycodes {
 #define SP_RAI LT(_RAISE, KC_SPC) // Space on tap, Raise on hold
 #define SP_LOW                                                                 \
     LT(_LOWER, KC_SPC) // Space on tap, Lower on hold (for use on Raise layer)
-#define ENT_LOW LT(_LOWER, KC_ENT) // Enter on tap, Lower on hold
+#define ENT_LOW LT(_LOWER, KC_ENT)    // Enter on tap, Lower on hold
+#define FUN_TAB LT(_FUNCTION, KC_TAB) // Tab on tap, Func on hold
 
 /* ==========================================================================
  * TAP DANCE DECLARATIONS
