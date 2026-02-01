@@ -46,19 +46,39 @@ The userspace uses QMK's modular architecture to share code across keyboards:
 
 ## Build Targets
 
+This userspace provides a unified experience across various keyboards. To compile your firmware, use the `qmk compile` command with the appropriate keyboard and keymap.
+
+### Main Userspace Builds
+
+These commands compile the firmware for each supported keyboard using the `naughtyusername` keymap, inheriting all shared features from `users/naughtyusername/`.
+
 ```bash
-# Main userspace builds
 qmk compile -kb mitosis -km naughtyusername
 qmk compile -kb splitkb/kyria/rev1 -km naughtyusername
 qmk compile -kb zsa/planck_ez/glow -km naughtyusername
-qmk compile -kb splitkb/zima -km naughty_zima
-TODO: add in the system we use for the halcyon board and explain how to build it with 2 different modules for anyone in the future who could use that advice
-
-# Halcyon module builds (with display/encoder/trackpad options)
-qmk compile -kb splitkb/halcyon/kyria/rev4 -km vial_hlc
-qmk compile -kb splitkb/halcyon/corne/rev2 -km vial_hlc
-# ... and other Halcyon variants
+qmk compile -kb splitkb/zima -km naughty_zima # Note: Zima uses 'naughty_zima' keymap due to its standalone nature
 ```
+
+### Halcyon Module Builds
+
+Halcyon keyboards (e.g., Corne, Kyria, Elora, Lily58) can leverage modular components like TFT displays, encoders, and Cirque trackpads. These modules are enabled by passing environment variables during the `qmk compile` command. The base Halcyon keymap will automatically include the necessary userspace modules.
+
+To enable specific modules, use the `-e` flag with `HLC_TFT_DISPLAY=yes`, `HLC_ENCODER=yes`, or `HLC_CIRQUE_TRACKPAD=yes`. You can combine multiple modules.
+
+For example, to build for a Halcyon Corne with a TFT display and a Cirque trackpad:
+
+```bash
+qmk compile -kb splitkb/halcyon/corne/rev2 -km naughtyusername -e HLC_TFT_DISPLAY=yes -e HLC_CIRQUE_TRACKPAD=yes
+```
+
+To build for a Halcyon Kyria with only an encoder:
+
+```bash
+qmk compile -kb splitkb/halcyon/kyria/rev4 -km naughtyusername -e HLC_ENCODER=yes
+```
+
+Make sure to specify the correct keyboard (`-kb`) for your Halcyon variant.
+
 
 ## Key Technical Highlights
 

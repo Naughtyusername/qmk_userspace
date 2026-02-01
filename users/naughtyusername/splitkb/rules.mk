@@ -1,3 +1,13 @@
+# Copyright 2025 naughtyusername
+# SPDX-License-Identifier: GPL-2.0-or-later
+#
+# rules.mk - Halcyon Modules build configuration
+#
+# This file is included when building for Halcyon keyboards and handles
+# the conditional inclusion of specific Halcyon modules (e.g., Cirque trackpad,
+# TFT display, encoder). It also sets up common paths and source files
+# for Halcyon module integration.
+
 # May need to be changed when adding more pointing devices
 POINTING_DEVICE_ENABLE = yes
 POINTING_DEVICE_DRIVER = cirque_pinnacle_spi
