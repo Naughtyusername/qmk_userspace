@@ -1,0 +1,30 @@
+
+blank test
+* Tasks
+
+** TODO add a comma on lower layer QMK/ZMK would be nice for numbers while coding
+it also fits in well on n i belive
+
+also maybe make / work for caps word continue lists
+[2026-02-04 Wed 01:47]
+
+** TODO add - onto the lower layer, would be handy to have 25-56 etc.
+- [ ]  / was also suggested. at this point it is worth considering plus
+times, etc. also, there should be just enough room. combos should still
+ - [ ] pass through also if i were to unlock them from base and vim, worth considering also
+
+[2026-02-04 Wed 04:22]
+
+** TODO Dynamic macros
+zmk doesnt have these yet (iirc, double check)
+but qmk does, might as well set up the framework for it, i use them in emacs
+all the time, but i could see use outside and in games for sure
+simple combos to toggle them
+- [ ]  Record / Stop recording combo
+- [ ]  Play recorded macro
+- [ ]  then im not sure if they get overwritten or if there is an amount that are stored? figure that out
+- [ ]  do we need a delete macro function?
+
+
+Food for thought, would come in handy sometimes, not pressing tho.
+[2026-02-04 Wed 08:24]
