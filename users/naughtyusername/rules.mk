@@ -12,6 +12,7 @@
 # =============================================================================
 # Tell QMK to compile our userspace C file
 SRC += naughtyusername.c
+SRC += $(USER_PATH)/numword.c
 
 # =============================================================================
 # SHARED FEATURES

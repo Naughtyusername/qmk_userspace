@@ -51,6 +51,8 @@ enum userspace_keycodes {
     KC_RANGE,            // ..= (Odin range operator)
     KC_HMDR,             // ~/  (Home directory shortcut)
 
+    NUMWORD,       // Num Word - combo-activated numbers layer lock
+
     // Add more shared keycodes above this line
     NEW_SAFE_RANGE // Keymaps can use this for their own keycodes
 };

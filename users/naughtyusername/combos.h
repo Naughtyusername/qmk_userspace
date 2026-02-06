@@ -46,6 +46,7 @@
 enum combo_names {
     // ===== UTILITY COMBOS (home row) =====
     COMBO_HJ_CAPSWORD, // H + J = Caps Word
+    COMBO_YH_NUMWORD,  // Y + H = Num Word (numbers layer lock)
     COMBO_JK_ESC,      // J + K = Escape
     COMBO_LSCLN_ENT,   // L + ; = Enter
     COMBO_FG_UNDS,     // F + G = Underscore
@@ -115,6 +116,7 @@ const uint16_t PROGMEM combo_sd[] = {HM_S, HM_D, COMBO_END};
 const uint16_t PROGMEM combo_df[] = {HM_D, HM_F, COMBO_END};
 const uint16_t PROGMEM combo_vb[] = {KC_V, KC_B, COMBO_END};
 const uint16_t PROGMEM combo_kl[] = {KC_K, KC_L, COMBO_END};
+const uint16_t PROGMEM combo_yh[] = {KC_Y, KC_H, COMBO_END};
 
 // ----- Auto-Pair Combos -----
 const uint16_t PROGMEM combo_nm[] = {KC_N, KC_M, COMBO_END};
@@ -162,6 +164,7 @@ combo_t key_combos[COMBO_LENGTH] = {
     [COMBO_DF_TAB] = COMBO(combo_df, KC_TAB),
     [COMBO_VB_MINS] = COMBO(combo_vb, KC_MINS),
     [COMBO_KL_SQT] = COMBO(combo_kl, KC_QUOT),
+    [COMBO_YH_NUMWORD] = COMBO(combo_yh, NUMWORD),
 
     // ===== AUTO-PAIR COMBOS (use COMBO_ACTION for macros) =====
     [COMBO_NM_PARENS] = COMBO_ACTION(combo_nm),
@@ -371,6 +374,7 @@ bool combo_should_trigger(uint16_t combo_index, combo_t *combo,
     case COMBO_COMMDOT_BRACKETS:
     case COMBO_KCOMM_DQUOTES:
     case COMBO_JM_SQUOTES:
+    case COMBO_YH_NUMWORD:
         return layer_state_is(_BASE) || layer_state_is(_VIM);
 
     // ===== ONE-SHOT MOD COMBOS =====

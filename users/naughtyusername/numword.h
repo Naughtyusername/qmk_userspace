@@ -15,9 +15,7 @@
  */
 
 #pragma once
-#include QMK_KEYBOARD_H
-#include "rj_keycodes.h"
-#include "rj_layers.h"
+#include "naughtyusername.h"
 
 bool is_num_word_enabled(void);
 void enable_num_word(void);

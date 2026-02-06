@@ -14,9 +14,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "num_word.h"
+#include "numword.h"
 
-static uint16_t num_word_timer = 0;
 static bool is_num_word_on = false;
 
 bool is_num_word_enabled(void) { return is_num_word_on; }
@@ -25,14 +24,14 @@ void enable_num_word(void) {
     if (is_num_word_on)
         return;
     is_num_word_on = true;
-    layer_on(L_NUMBERS);
+    layer_on(_LOWER);
 }
 
 void disable_num_word(void) {
     if (!is_num_word_on)
         return;
     is_num_word_on = false;
-    layer_off(L_NUMBERS);
+    layer_off(_LOWER);
 }
 
 void toggle_num_word(void) {
@@ -77,21 +76,11 @@ bool should_terminate_num_word(uint16_t keycode, const keyrecord_t *record) {
 }
 
 bool process_record_num_word(uint16_t keycode, const keyrecord_t *record) {
-    // Handle the custom keycodes that go with this feature
     if (keycode == NUMWORD) {
         if (record->event.pressed) {
             enable_num_word();
-            num_word_timer = timer_read();
-            return false;
-        } else {
-            if (timer_elapsed(num_word_timer) > TAPPING_TERM) {
-                // If the user held the key longer than TAPPING_TERM,
-                // consider it a hold, and disable the behavior on
-                // key release.
-                disable_num_word();
-                return false;
-            }
         }
+        return false;
     }
 
     // Other than the custom keycodes, nothing else in this feature will

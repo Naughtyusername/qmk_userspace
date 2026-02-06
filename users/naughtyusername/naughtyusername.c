@@ -20,6 +20,7 @@ before compilation. Required for arrays that QMK's introspection needs to find
  */
 
 #include "naughtyusername.h"
+#include "numword.h"
 
 /* ==========================================================================
  * TAPPING TERM PER KEY
@@ -140,6 +141,10 @@ __attribute__((weak)) void keyboard_post_init_keymap(void) {
  *   4. Return true to continue normal processing
  */
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (!process_record_num_word(keycode, record)) {
+        return false;
+    }
+
     // Only act on key press, not release
     if (record->event.pressed) {
         switch (keycode) {
