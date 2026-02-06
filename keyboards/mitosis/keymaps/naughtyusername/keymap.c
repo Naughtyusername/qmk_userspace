@@ -46,6 +46,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         ___MITOSIS_THUMB_BASE_L2___,        ___MITOSIS_THUMB_BASE_R2___
     ),
 
+    /* VIM - Plain QWERTY without home row mods */
+    [_VIM] = LAYOUT_mitosis_wrapper(
+        ___VIM_L1___,                       ___VIM_R1___,
+        ___VIM_L2___,                       ___VIM_R2___,
+        ___VIM_L3___,                       ___VIM_R3___,
+        ___MITOSIS_THUMB_VIM_L1___,         ___MITOSIS_THUMB_VIM_R1___,
+        ___MITOSIS_THUMB_VIM_L2___,         ___MITOSIS_THUMB_VIM_R2___
+    ),
+
     /* LOWER - Numbers and Media */
     [_LOWER] = LAYOUT_mitosis_wrapper(
         ___LOWER_L1___,                     ___LOWER_R1___,
@@ -98,15 +107,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         ___ROGUELIKE_L3___,                 ___ROGUELIKE_R3___,
         ___MITOSIS_THUMB_ROGUELIKE_L1___,   ___MITOSIS_THUMB_ROGUELIKE_R1___,
         ___MITOSIS_THUMB_ROGUELIKE_L2___,   ___MITOSIS_THUMB_ROGUELIKE_R2___
-    ),
-
-    /* VIM - Plain QWERTY without home row mods */
-    [_VIM] = LAYOUT_mitosis_wrapper(
-        ___VIM_L1___,                       ___VIM_R1___,
-        ___VIM_L2___,                       ___VIM_R2___,
-        ___VIM_L3___,                       ___VIM_R3___,
-        ___MITOSIS_THUMB_VIM_L1___,         ___MITOSIS_THUMB_VIM_R1___,
-        ___MITOSIS_THUMB_VIM_L2___,         ___MITOSIS_THUMB_VIM_R2___
     ),
 
     /* SYS - System settings */

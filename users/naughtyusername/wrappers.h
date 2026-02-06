@@ -84,6 +84,22 @@
 #define ___BASE_R3___ KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH
 
 /* --------------------------------------------------------------------------
+ * VIM LAYER - Plain QWERTY without home row mods (for Vimium, etc.)
+ * Combos: GACS mods on QW WE ER RT (left), YU UI IO OP (right)
+ * --------------------------------------------------------------------------
+ *  Q     W     E     R     T          Y     U     I     O     P
+ *  A     S     D     F     G          H     J     K     L     ;
+ *  Z     X     C     V     B          N     M     ,     .     /
+ */
+#define ___VIM_L1___ KC_Q, KC_W, KC_E, KC_R, KC_T
+#define ___VIM_L2___ KC_A, KC_S, KC_D, KC_F, KC_G
+#define ___VIM_L3___ KC_Z, KC_X, KC_C, KC_V, KC_B
+
+#define ___VIM_R1___ KC_Y, KC_U, KC_I, KC_O, KC_P
+#define ___VIM_R2___ KC_H, KC_J, KC_K, KC_L, KC_SCLN
+#define ___VIM_R3___ KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH
+
+/* --------------------------------------------------------------------------
  * RAISE LAYER - Symbols (Odin/Programming focused)
  * --------------------------------------------------------------------------
  *  \     $     |     -     [          ]     +     #     ;     ::
@@ -173,22 +189,6 @@
 #define ___ROGUELIKE_R1___ _______, KC_P7, KC_P8, KC_P9, _______
 #define ___ROGUELIKE_R2___ KC_PDOT, KC_P4, KC_P5, KC_P6, _______
 #define ___ROGUELIKE_R3___ _______, KC_P1, KC_P2, KC_P3, _______
-
-/* --------------------------------------------------------------------------
- * VIM LAYER - Plain QWERTY without home row mods (for Vimium, etc.)
- * Combos: GACS mods on QW WE ER RT (left), YU UI IO OP (right)
- * --------------------------------------------------------------------------
- *  Q     W     E     R     T          Y     U     I     O     P
- *  A     S     D     F     G          H     J     K     L     ;
- *  Z     X     C     V     B          N     M     ,     .     /
- */
-#define ___VIM_L1___ KC_Q, KC_W, KC_E, KC_R, KC_T
-#define ___VIM_L2___ KC_A, KC_S, KC_D, KC_F, KC_G
-#define ___VIM_L3___ KC_Z, KC_X, KC_C, KC_V, KC_B
-
-#define ___VIM_R1___ KC_Y, KC_U, KC_I, KC_O, KC_P
-#define ___VIM_R2___ KC_H, KC_J, KC_K, KC_L, KC_SCLN
-#define ___VIM_R3___ KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH
 
 /* --------------------------------------------------------------------------
  * SYS LAYER - System settings (hold Z and / for 1 sec to access)
@@ -332,7 +332,8 @@
  * Right: Ent/Lo  '     Tab
  */
 
-#define ___CORNE_THUMB_BASE___ KC_ESC, KC_BSPC, SP_RAI, ENT_LOW, KC_QUOT, KC_TAB
+#define ___CORNE_THUMB_BASE___                                                 \
+    KC_ESC, KC_BSPC, SP_RAI, ENT_LOW, KC_QUOT, KC_TAB
 
 #define ___CORNE_THUMB_RAISE___                                                \
     _______, KC_HMDR, _______, SP_LOW, KC_ASSIGN, KC_ARROP

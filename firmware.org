@@ -2,16 +2,16 @@
 blank test
 * Tasks
 
-** TODO add a comma on lower layer QMK/ZMK would be nice for numbers while coding
+** DONE add a comma on lower layer QMK/ZMK would be nice for numbers while coding
 it also fits in well on n i belive
 
 also maybe make / work for caps word continue lists
 [2026-02-04 Wed 01:47]
 
-** TODO add - onto the lower layer, would be handy to have 25-56 etc.
-- [ ]  / was also suggested. at this point it is worth considering plus
+** DONE add - onto the lower layer, would be handy to have 25-56 etc.
+- [X]  / was also suggested. at this point it is worth considering plus
 times, etc. also, there should be just enough room. combos should still
- - [ ] pass through also if i were to unlock them from base and vim, worth considering also
+ - [X] pass through also if i were to unlock them from base and vim, worth considering also
 
 [2026-02-04 Wed 04:22]
 
@@ -24,7 +24,8 @@ simple combos to toggle them
 - [ ]  Play recorded macro
 - [ ]  then im not sure if they get overwritten or if there is an amount that are stored? figure that out
 - [ ]  do we need a delete macro function?
-
-
 Food for thought, would come in handy sometimes, not pressing tho.
 [2026-02-04 Wed 08:24]
+
+** DONE for the symbols layer, maybe have tab be spacebar? and for the numbers layer also have tab be spaacebar? or look into smart numbers, honestly if we could do caps word but for numbers that would fix all my number greivances
+[2026-02-05 Thu 07:58]
