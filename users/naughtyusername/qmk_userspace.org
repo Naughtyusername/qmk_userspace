@@ -52,6 +52,10 @@ This is my QMK userspace that provides a unified typing experience across multip
 - Advanced features properly configured
 - Good separation of concerns between shared and keyboard-specific code
 
+* TODO add gaming 2 and any special thumb layers in to the keymaps (mitosis is done) that need it still
+* TODO Dynamic macros (waiting for zmk to get an implementation of this.)
+* TODO
+* TODO
 * TODO Add RGB Matrix animations configuration for Planck EZ
 * TODO Implement Quantum Painter support for Halcyon TFT display
 * TODO Add more tap dances for common shortcuts (eg. double comma for semicolon)

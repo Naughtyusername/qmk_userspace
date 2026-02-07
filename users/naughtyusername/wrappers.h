@@ -118,15 +118,15 @@
  * LOWER LAYER - Numbers and Media
  * --------------------------------------------------------------------------
  *  1     2     3     4     5          6     7     8     9     0
- *  _     _    Vol+  Vol-  Mute        .     4     5     6     0
- *  _     _    Prev  Play  Next        +     1     2     3     -
+ *  _     %    Vol+  Vol-  Mute        .     4     5     6     ,
+ *  *     /    Prev  Play  Next        +     1     2     3     -
  */
 #define ___LOWER_L1___ KC_1, KC_2, KC_3, KC_4, KC_5
-#define ___LOWER_L2___ _______, _______, KC_VOLU, KC_VOLD, KC_MUTE
-#define ___LOWER_L3___ _______, _______, KC_MPRV, KC_MPLY, KC_MNXT
+#define ___LOWER_L2___ KC_UNDS, KC_PERC, KC_VOLU, KC_VOLD, KC_MUTE
+#define ___LOWER_L3___ KC_ASTR, KC_SLSH, KC_MPRV, KC_MPLY, KC_MNXT
 
 #define ___LOWER_R1___ KC_6, KC_7, KC_8, KC_9, KC_0
-#define ___LOWER_R2___ KC_DOT, KC_4, KC_5, KC_6, KC_0
+#define ___LOWER_R2___ KC_DOT, KC_4, KC_5, KC_6, KC_COMM
 #define ___LOWER_R3___ KC_PLUS, KC_1, KC_2, KC_3, KC_MINS
 
 /* --------------------------------------------------------------------------
@@ -175,20 +175,35 @@
 #define ___GAMING_R3___ KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH
 
 /* --------------------------------------------------------------------------
+ * GAMING2 LAYER - Number/F-key overlay for gaming
+ * --------------------------------------------------------------------------
+ *  1     2     3     4     5          6     7     8     9     0
+ *  F1    F2    F3    F4    F5         F6    F7    F8    F9    F10
+ *  F11   F12    _     _   PrtSc       _     _     _     _     _
+ */
+#define ___GAMING2_L1___ KC_1, KC_2, KC_3, KC_4, KC_5
+#define ___GAMING2_L2___ KC_F1, KC_F2, KC_F3, KC_F4, KC_F5
+#define ___GAMING2_L3___ KC_F11, KC_F12, _______, _______, KC_PSCR
+
+#define ___GAMING2_R1___ KC_6, KC_7, KC_8, KC_9, KC_0
+#define ___GAMING2_R2___ KC_F6, KC_F7, KC_F8, KC_F9, KC_F10
+#define ___GAMING2_R3___ _______, _______, _______, _______, _______
+
+/* --------------------------------------------------------------------------
  * ROGUELIKE LAYER - For diagonal movement roguelikes
  * Numpad on right for 8-directional movement, shifted alphas on left
  * --------------------------------------------------------------------------
- *  Q     W     E     R     T          _    KP7   KP8   KP9    _
+ *  Q     W     E     R     T          Y    KP7   KP8   KP9    _
  *  A     S     D     F     G          .    KP4   KP5   KP6    _
- *  Z     X     C     V     B          _    KP1   KP2   KP3    _
+ *  Z     X     C     V     B          N    KP1   KP2   KP3    _
  */
 #define ___ROGUELIKE_L1___ KC_Q, KC_W, KC_E, KC_R, KC_T
 #define ___ROGUELIKE_L2___ KC_A, KC_S, KC_D, KC_F, KC_G
 #define ___ROGUELIKE_L3___ KC_Z, KC_X, KC_C, KC_V, KC_B
 
-#define ___ROGUELIKE_R1___ _______, KC_P7, KC_P8, KC_P9, _______
+#define ___ROGUELIKE_R1___ KC_Y, KC_P7, KC_P8, KC_P9, _______
 #define ___ROGUELIKE_R2___ KC_PDOT, KC_P4, KC_P5, KC_P6, _______
-#define ___ROGUELIKE_R3___ _______, KC_P1, KC_P2, KC_P3, _______
+#define ___ROGUELIKE_R3___ KC_N, KC_P1, KC_P2, KC_P3, _______
 
 /* --------------------------------------------------------------------------
  * SYS LAYER - System settings (hold Z and / for 1 sec to access)
@@ -294,6 +309,13 @@
 
 #define ___MITOSIS_THUMB_GAMING_R1___ KC_2, KC_3, KC_4, KC_5
 #define ___MITOSIS_THUMB_GAMING_R2___ KC_ENT, KC_DEL, MO(_FUNCTION), TG(_BASE)
+
+/* Gaming2 layer thumbs */
+#define ___MITOSIS_THUMB_GAMING2_L1___ KC_LSFT, KC_ESC, KC_TAB, KC_1
+#define ___MITOSIS_THUMB_GAMING2_L2___ KC_LCTL, KC_LALT, KC_BSPC, KC_SPC
+
+#define ___MITOSIS_THUMB_GAMING2_R1___ KC_2, KC_3, KC_4, KC_5
+#define ___MITOSIS_THUMB_GAMING2_R2___ KC_ENT, KC_DEL, MO(_FUNCTION), TG(_BASE)
 
 /* Roguelike layer thumbs */
 #define ___MITOSIS_THUMB_ROGUELIKE_L1___ KC_LSFT, KC_ESC, KC_TAB, KC_1
@@ -507,29 +529,29 @@ MS_BTN1, MS_BTN2, _______, _______, _______
  */
 
 // Base layer with outer columns
-#define ___BASE_L1_6___ KC_TAB, ___BASE_L1___
-#define ___BASE_L2_6___ KC_ESC, ___BASE_L2___
-#define ___BASE_L3_6___ KC_LSFT, ___BASE_L3___
+#define ___BASE_L1_6___ KC_ESC, ___BASE_L1___
+#define ___BASE_L2_6___ KC_TAB, ___BASE_L2___
+#define ___BASE_L3_6___ OSM(MOD_LGUI), ___BASE_L3___
 
 #define ___BASE_R1_6___ ___BASE_R1___, KC_BSPC
 #define ___BASE_R2_6___ ___BASE_R2___, KC_QUOT
-#define ___BASE_R3_6___ ___BASE_R3___, KC_RSFT
+#define ___BASE_R3_6___ ___BASE_R3___, OSM(MOD_RGUI)
 
 // Raise layer with outer columns
-#define ___RAISE_L1_6___ KC_GRV, ___RAISE_L1___
+#define ___RAISE_L1_6___ _______, ___RAISE_L1___
 #define ___RAISE_L2_6___ _______, ___RAISE_L2___
 #define ___RAISE_L3_6___ _______, ___RAISE_L3___
 
-#define ___RAISE_R1_6___ ___RAISE_R1___, KC_BSPC
+#define ___RAISE_R1_6___ ___RAISE_R1___, KC_BSLS
 #define ___RAISE_R2_6___ ___RAISE_R2___, _______
 #define ___RAISE_R3_6___ ___RAISE_R3___, _______
 
 // Lower layer with outer columns
-#define ___LOWER_L1_6___ KC_GRV, ___LOWER_L1___
+#define ___LOWER_L1_6___ _______, ___LOWER_L1___
 #define ___LOWER_L2_6___ _______, ___LOWER_L2___
 #define ___LOWER_L3_6___ _______, ___LOWER_L3___
 
-#define ___LOWER_R1_6___ ___LOWER_R1___, KC_BSPC
+#define ___LOWER_R1_6___ ___LOWER_R1___, KC_BSLS
 #define ___LOWER_R2_6___ ___LOWER_R2___, _______
 #define ___LOWER_R3_6___ ___LOWER_R3___, _______
 
@@ -554,29 +576,38 @@ MS_BTN1, MS_BTN2, _______, _______, _______
 // Gaming layer with outer columns
 #define ___GAMING_L1_6___ KC_TAB, ___GAMING_L1___
 #define ___GAMING_L2_6___ KC_ESC, ___GAMING_L2___
-#define ___GAMING_L3_6___ KC_LSFT, ___GAMING_L3___
+#define ___GAMING_L3_6___ _______, ___GAMING_L3___
 
-#define ___GAMING_R1_6___ ___GAMING_R1___, KC_BSPC
+#define ___GAMING_R1_6___ ___GAMING_R1___, KC_BSLS
 #define ___GAMING_R2_6___ ___GAMING_R2___, KC_QUOT
 #define ___GAMING_R3_6___ ___GAMING_R3___, KC_ENT
 
+// Gaming2 layer with outer columns
+#define ___GAMING2_L1_6___ KC_ESC, ___GAMING2_L1___
+#define ___GAMING2_L2_6___ _______, ___GAMING2_L2___
+#define ___GAMING2_L3_6___ _______, ___GAMING2_L3___
+
+#define ___GAMING2_R1_6___ ___GAMING2_R1___, _______
+#define ___GAMING2_R2_6___ ___GAMING2_R2___, _______
+#define ___GAMING2_R3_6___ ___GAMING2_R3___, _______
+
 // Roguelike layer with outer columns
-#define ___ROGUELIKE_L1_6___ KC_TAB, ___ROGUELIKE_L1___
-#define ___ROGUELIKE_L2_6___ KC_ESC, ___ROGUELIKE_L2___
-#define ___ROGUELIKE_L3_6___ KC_LSFT, ___ROGUELIKE_L3___
+#define ___ROGUELIKE_L1_6___ _______, ___ROGUELIKE_L1___
+#define ___ROGUELIKE_L2_6___ _______, ___ROGUELIKE_L2___
+#define ___ROGUELIKE_L3_6___ _______, ___ROGUELIKE_L3___
 
 #define ___ROGUELIKE_R1_6___ ___ROGUELIKE_R1___, _______
 #define ___ROGUELIKE_R2_6___ ___ROGUELIKE_R2___, _______
 #define ___ROGUELIKE_R3_6___ ___ROGUELIKE_R3___, _______
 
 // VIM layer with outer columns
-#define ___VIM_L1_6___ KC_TAB, ___VIM_L1___
-#define ___VIM_L2_6___ KC_ESC, ___VIM_L2___
-#define ___VIM_L3_6___ KC_LSFT, ___VIM_L3___
+#define ___VIM_L1_6___ KC_ESC, ___VIM_L1___
+#define ___VIM_L2_6___ KC_TAB, ___VIM_L2___
+#define ___VIM_L3_6___ _______, ___VIM_L3___
 
 #define ___VIM_R1_6___ ___VIM_R1___, KC_BSPC
 #define ___VIM_R2_6___ ___VIM_R2___, KC_QUOT
-#define ___VIM_R3_6___ ___VIM_R3___, KC_RSFT
+#define ___VIM_R3_6___ ___VIM_R3___, KC_ENT
 
 // SYS layer with outer columns
 #define ___SYS_L1_6___ _______, ___SYS_L1___

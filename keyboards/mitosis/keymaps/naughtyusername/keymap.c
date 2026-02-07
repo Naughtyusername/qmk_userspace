@@ -100,6 +100,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         ___MITOSIS_THUMB_GAMING_L2___,      ___MITOSIS_THUMB_GAMING_R2___
     ),
 
+    /* GAMING2 - No home row mods */
+    [_GAMING2] = LAYOUT_mitosis_wrapper(
+        ___GAMING2_L1___,                    ___GAMING2_R1___,
+        ___GAMING2_L2___,                    ___GAMING2_R2___,
+        ___GAMING2_L3___,                    ___GAMING2_R3___,
+        ___MITOSIS_THUMB_GAMING2_L1___,      ___MITOSIS_THUMB_GAMING2_R1___,
+        ___MITOSIS_THUMB_GAMING2_L2___,      ___MITOSIS_THUMB_GAMING2_R2___
+    ),
+
     /* ROGUELIKE - Numpad for 8-directional movement */
     [_ROGUELIKE] = LAYOUT_mitosis_wrapper(
         ___ROGUELIKE_L1___,                 ___ROGUELIKE_R1___,
@@ -160,6 +169,9 @@ layer_state_t layer_state_set_keymap(layer_state_t state) {
         set_led_green;
         break;
     case _GAMING:
+        set_led_white;
+        break;
+    case _GAMING2:
         set_led_white;
         break;
     case _ROGUELIKE:
