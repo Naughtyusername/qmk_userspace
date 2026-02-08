@@ -42,3 +42,42 @@ would be nice to have a combo trigger a leader then we
 - [ ] leader_combo
 - [ ]
 [2026-02-07 Sat 02:50]
+
+** TODO something we could add but we would have to tweak qmk
+this is a wild and weird idea and actually might be a burdern on qmk becuase the fall through on there is actually super handy, but zmk doesnt have the fall through unless we remove the layer locks on each combo
+
+but what we could do for the lower layer is add a bunch of unique to that layer combos. might not be worth it but just thought about it
+[2026-02-08 Sun 02:23]
+
+** TODO change some lower layer symbols
+having comma on the right hand but not in the right spot is to hard to remember, it has to be on a non pinky ring finger, put it under . we dont seem to have an issues
+remembering to use that one. so do that and shift the other symbols around to a more logical position
+[2026-02-08 Sun 03:14]
+
+** TODO weird idea but it would be useful
+since spacebar cant be accessed and we never remember to use N and this wouldnt be great on n anyways, a combo that hits a macro for : ^
+i end up needing this all the time in function declrations and its awkward to hit as is, this is more useful that :: on symbol layer at this point too, could go on tab thumb key also if we wanna go that route.
+[2026-02-08 Sun 03:59]
+
+** TODO we could also change
+fg _ and
+vb - to be one shifted to the left to make those more ergo
+then
+cv for '
+and vb for "
+
+then we have the quotes in a nice logical spots to hit since we use those somewhat often. that still leaves logical positioning for math operators on the left hand as well. and then for the more macro intresting things like the previious todo suggested of
+: space ^ e.g. : ^
+for proc(game: ^Game)
+
+we could have on a 3 finger combo somewhere maybe
+[2026-02-08 Sun 04:11]
+
+** TODO timing issue on qmk having more misfires on qmk than zmk
+but maybe im just lazy typing or not used to the big keys rn but keep an eye out
+misfiring yh numword a couple times now too
+[2026-02-08 Sun 07:29]
+
+** TODO timing for chordal quick tap or flow tap i forget the qmk setting
+but we need to reduce it, the one that lets you hit home row mod key and then akey on the other hand and send the key super+a instantly, we need a delay, its the reason we misfire when typing to fast. >100 wpm triggers it.
+[2026-02-08 Sun 08:53]
