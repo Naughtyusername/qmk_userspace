@@ -29,3 +29,16 @@ Food for thought, would come in handy sometimes, not pressing tho.
 
 ** DONE for the symbols layer, maybe have tab be spacebar? and for the numbers layer also have tab be spaacebar? or look into smart numbers, honestly if we could do caps word but for numbers that would fix all my number greivances
 [2026-02-05 Thu 07:58]
+
+** TODO jkl combo
+- [ ] for double quote  "
+ [2026-02-06 Fri 22:15]
+
+** TODO leader key maybe finally?
+would be nice to have a combo trigger a leader then we
+- [ ] leader_combo s e send email
+- [ ] leader_combo s g send github url github.com/naughtyusername/
+- [ ] leader_combo
+- [ ] leader_combo
+- [ ]
+[2026-02-07 Sat 02:50]
