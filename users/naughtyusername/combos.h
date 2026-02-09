@@ -37,6 +37,7 @@
 #define COMBO_MED 30  // Standard utility combos
 #define COMBO_SLOW 50 // Three-finger layer switches - more forgiving
 
+// clang-format off
 /* ==========================================================================
  * COMBO INDEX ENUM
  * ==========================================================================
@@ -46,14 +47,25 @@
 enum combo_names {
     // ===== UTILITY COMBOS (home row) =====
     COMBO_HJ_CAPSWORD, // H + J = Caps Word
-    COMBO_YH_NUMWORD,  // Y + H = Num Word (numbers layer lock)
-    COMBO_JK_ESC,      // J + K = Escape
-    COMBO_LSCLN_ENT,   // L + ; = Enter
-    COMBO_FG_UNDS,     // F + G = Underscore
-    COMBO_SD_BSPC,     // S + D = Backspace
-    COMBO_DF_TAB,      // D + F = Tab
-    COMBO_VB_MINS,     // V + B = Minus
-    COMBO_KL_SQT,      // QUOT// K + L = Single Quote
+    COMBO_YH_NUMWORD,  // Y + H        = Num Word (numbers layer lock)
+
+    COMBO_JK_ESC,      // J + K        = Escape
+    COMBO_LSCLN_ENT,   // L + ;        = Enter
+    COMBO_AS_BSPC,     // A + S        = Backspace
+
+    COMBO_KL_SQT,      // K + L        = Single Quote
+    COMBO_FG_TAB,      // F + G        = TAB
+    COMBO_DF_UNDS,     // D + F        = Underscore
+    COMBO_CV_MINS,     // C + V        = Minus
+
+    // COMBO_ZX_XXX,      // Z + X        = LEADER START
+    // COMBO_XC_XXX,      // X + C        =
+    // COMBO_VB_XXX,      // V + B        =
+
+    // Three Finger
+    COMBO_JKL_DQT,     // J + K + L    = Double Quote
+    COMBO_KL_SCLN_OCSC,// K + L + ;    = : ^ colon space caret combo - very
+                       // useful in odin
 
     // ===== AUTO-PAIR COMBOS (bottom row) =====
     COMBO_NM_PARENS,        // N + M = () with cursor inside
@@ -111,12 +123,16 @@ enum combo_names {
 const uint16_t PROGMEM combo_hj[] = {KC_H, HM_J, COMBO_END};
 const uint16_t PROGMEM combo_jk[] = {HM_J, HM_K, COMBO_END};
 const uint16_t PROGMEM combo_lscln[] = {HM_L, HM_SCLN, COMBO_END};
-const uint16_t PROGMEM combo_fg[] = {HM_F, KC_G, COMBO_END};
 const uint16_t PROGMEM combo_sd[] = {HM_S, HM_D, COMBO_END};
 const uint16_t PROGMEM combo_df[] = {HM_D, HM_F, COMBO_END};
-const uint16_t PROGMEM combo_vb[] = {KC_V, KC_B, COMBO_END};
+const uint16_t PROGMEM combo_cv[] = {KC_C, KC_V, COMBO_END};
+
 const uint16_t PROGMEM combo_kl[] = {KC_K, KC_L, COMBO_END};
 const uint16_t PROGMEM combo_yh[] = {KC_Y, KC_H, COMBO_END};
+
+// ----- Three Finger Utility Combos
+const uint16_t PROGMEM combo_jkl[] = {HM_J, HM_K, HM_L, COMBO_END};
+const uint16_t PROGMEM combo_kl_scln[] = {HM_K, HM_L, HM_SCLN, COMBO_END};
 
 // ----- Auto-Pair Combos -----
 const uint16_t PROGMEM combo_nm[] = {KC_N, KC_M, COMBO_END};
@@ -157,14 +173,16 @@ const uint16_t PROGMEM combo_nm_comm[] = {KC_N, KC_M, KC_COMM, COMBO_END};
 combo_t key_combos[COMBO_LENGTH] = {
     // ===== UTILITY COMBOS =====
     [COMBO_HJ_CAPSWORD] = COMBO(combo_hj, CW_TOGG),
+    [COMBO_YH_NUMWORD] = COMBO(combo_yh, NUMWORD),
     [COMBO_JK_ESC] = COMBO(combo_jk, KC_ESC),
     [COMBO_LSCLN_ENT] = COMBO(combo_lscln, KC_ENT),
-    [COMBO_FG_UNDS] = COMBO(combo_fg, KC_UNDS),
-    [COMBO_SD_BSPC] = COMBO(combo_sd, KC_BSPC),
-    [COMBO_DF_TAB] = COMBO(combo_df, KC_TAB),
-    [COMBO_VB_MINS] = COMBO(combo_vb, KC_MINS),
+    [COMBO_DF_UNDS] = COMBO(combo_df, KC_UNDS),
+    [COMBO_AS_BSPC] = COMBO(combo_as, KC_BSPC),
+    [COMBO_CV_MINS] = COMBO(combo_cv, KC_MINS),
     [COMBO_KL_SQT] = COMBO(combo_kl, KC_QUOT),
-    [COMBO_YH_NUMWORD] = COMBO(combo_yh, NUMWORD),
+
+    [COMBO_JKL_DQT] = COMBO_ACTION(combo_jkl),
+    [COMBO_KL_SCLN_OCSC] = COMBO_ACTION(combo_kl_scln),
 
     // ===== AUTO-PAIR COMBOS (use COMBO_ACTION for macros) =====
     [COMBO_NM_PARENS] = COMBO_ACTION(combo_nm),
@@ -232,6 +250,14 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
     case COMBO_KCOMM_DQUOTES:
         // Type "" and move cursor inside
         SEND_STRING("\"\"" SS_TAP(X_LEFT));
+        break;
+    case COMBO_JKL_DQT:
+        // Type "
+        SEND_STRING("\"");
+        break;
+    case COMBO_KL_SCLN_OCSC:
+        // Type "
+        SEND_STRING(": ^");
         break;
     case COMBO_JM_SQUOTES:
         // Type '' and move cursor inside
@@ -365,16 +391,17 @@ bool combo_should_trigger(uint16_t combo_index, combo_t *combo,
     case COMBO_HJ_CAPSWORD:
     case COMBO_JK_ESC:
     case COMBO_LSCLN_ENT:
-    case COMBO_FG_UNDS:
-    case COMBO_SD_BSPC:
-    case COMBO_DF_TAB:
-    case COMBO_VB_MINS:
+    case COMBO_DF_UNDS:
+    case COMBO_AS_BSPC:
+    case COMBO_CV_MINS:
     case COMBO_NM_PARENS:
     case COMBO_MCOMM_BRACES:
     case COMBO_COMMDOT_BRACKETS:
     case COMBO_KCOMM_DQUOTES:
     case COMBO_JM_SQUOTES:
     case COMBO_YH_NUMWORD:
+    case COMBO_JKL_DQT:
+    case COMBO_KL_SCLN_OCSC:
         return layer_state_is(_BASE) || layer_state_is(_VIM);
 
     // ===== ONE-SHOT MOD COMBOS =====

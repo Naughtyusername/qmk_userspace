@@ -171,7 +171,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             SEND_STRING("..=");
             return false;
 
-        // Home directory shortcut ~/
+        // Home directory shortcut ~/ TODO delete pretty much all of these old
+        // ones.
         case KC_HMDR:
             SEND_STRING("~/");
             return false;
