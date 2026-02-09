@@ -1,17 +1,5 @@
 * Tasks
 
-** DONE we could also change
-fg _ and
-vb - to be one shifted to the left to make those more ergo
-then
-
-then we have the quotes in a nice logical spots to hit since we use those somewhat often. that still leaves logical positioning for math operators on the left hand as well. and then for the more macro intresting things like the previious todo suggested of
-: space ^ e.g. : ^
-for proc(game: ^Game)
-
-we could have on a 3 finger combo somewhere maybe
-[2026-02-08 Sun 04:11]
-
 ** TODO timing issue on qmk having more misfires on qmk than zmk
 but maybe im just lazy typing or not used to the big keys rn but keep an eye out
 misfiring yh numword a couple times now too
@@ -53,6 +41,18 @@ would be nice to have a combo trigger a leader then we
 - [ ]
 [2026-02-07 Sat 02:50]
 
+** DONE we could also change
+fg _ and
+vb - to be one shifted to the left to make those more ergo
+then
+
+then we have the quotes in a nice logical spots to hit since we use those somewhat often. that still leaves logical positioning for math operators on the left hand as well. and then for the more macro intresting things like the previious todo suggested of
+: space ^ e.g. : ^
+for proc(game: ^Game)
+
+we could have on a 3 finger combo somewhere maybe
+[2026-02-08 Sun 04:11]
+
 ** DONE jkl combo
 - [X] for double quote  "
  [2026-02-06 Fri 22:15]
@@ -72,3 +72,7 @@ times, etc. also, there should be just enough room. combos should still
  - [X] pass through also if i were to unlock them from base and vim, worth considering also
 
 [2026-02-04 Wed 04:22]
+
+** TODO modifier key plus bs_del doesnt send modified version
+similar to other issues we encoutered with hrm's, this may be fixed on our next flash tho with that change we made
+[2026-02-09 Mon 05:54]
