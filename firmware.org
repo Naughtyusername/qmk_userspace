@@ -1,5 +1,9 @@
 * Tasks
 
+* TODO zx DEL?
+odd but maybe? or then key next to it is much easier to hit for leader
+xc , consider
+
 ** TODO timing issue on qmk having more misfires on qmk than zmk
 but maybe im just lazy typing or not used to the big keys rn but keep an eye out
 misfiring yh numword a couple times now too

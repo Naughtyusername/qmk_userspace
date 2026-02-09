@@ -127,10 +127,10 @@ const uint16_t PROGMEM combo_jk[] = {HM_J, HM_K, COMBO_END};
 const uint16_t PROGMEM combo_lscln[] = {HM_L, HM_SCLN, COMBO_END};
 const uint16_t PROGMEM combo_df[] = {HM_D, HM_F, COMBO_END};
 const uint16_t PROGMEM combo_cv[] = {KC_C, KC_V, COMBO_END};
-const uint16_t PROGMEM combo_fg[] = {KC_F, KC_G, COMBO_END};
-const uint16_t PROGMEM combo_as[] = {KC_A, KC_S, COMBO_END};
+const uint16_t PROGMEM combo_fg[] = {HM_F, KC_G, COMBO_END};
+const uint16_t PROGMEM combo_as[] = {HM_A, HM_S, COMBO_END};
 
-const uint16_t PROGMEM combo_kl[] = {KC_K, KC_L, COMBO_END};
+const uint16_t PROGMEM combo_kl[] = {HM_K, HM_L, COMBO_END};
 const uint16_t PROGMEM combo_yh[] = {KC_Y, KC_H, COMBO_END};
 
 // ----- Three Finger Utility Combos
@@ -180,7 +180,7 @@ combo_t key_combos[COMBO_LENGTH] = {
     [COMBO_JK_ESC] = COMBO(combo_jk, KC_ESC),
     [COMBO_LSCLN_ENT] = COMBO(combo_lscln, KC_ENT),
     [COMBO_DF_UNDS] = COMBO(combo_df, KC_UNDS),
-    [COMBO_FG_TAB] = COMBO(combo_fg, KC_UNDS),
+    [COMBO_FG_TAB] = COMBO(combo_fg, KC_TAB),
     [COMBO_AS_BSPC] = COMBO(combo_as, KC_BSPC),
     [COMBO_CV_MINS] = COMBO(combo_cv, KC_MINS),
     [COMBO_KL_SQT] = COMBO(combo_kl, KC_QUOT),
@@ -399,6 +399,7 @@ bool combo_should_trigger(uint16_t combo_index, combo_t *combo,
     case COMBO_FG_TAB:
     case COMBO_AS_BSPC:
     case COMBO_CV_MINS:
+    case COMBO_KL_SQT:
     case COMBO_NM_PARENS:
     case COMBO_MCOMM_BRACES:
     case COMBO_COMMDOT_BRACKETS:
