@@ -58,6 +58,8 @@ enum combo_names {
     COMBO_DF_UNDS,     // D + F        = Underscore
     COMBO_CV_MINS,     // C + V        = Minus
 
+    // COMBO_SD_MINS,     // C + V        = Minus
+
     // COMBO_ZX_XXX,      // Z + X        = LEADER START
     // COMBO_XC_XXX,      // X + C        =
     // COMBO_VB_XXX,      // V + B        =
@@ -123,9 +125,10 @@ enum combo_names {
 const uint16_t PROGMEM combo_hj[] = {KC_H, HM_J, COMBO_END};
 const uint16_t PROGMEM combo_jk[] = {HM_J, HM_K, COMBO_END};
 const uint16_t PROGMEM combo_lscln[] = {HM_L, HM_SCLN, COMBO_END};
-const uint16_t PROGMEM combo_sd[] = {HM_S, HM_D, COMBO_END};
 const uint16_t PROGMEM combo_df[] = {HM_D, HM_F, COMBO_END};
 const uint16_t PROGMEM combo_cv[] = {KC_C, KC_V, COMBO_END};
+const uint16_t PROGMEM combo_fg[] = {KC_F, KC_G, COMBO_END};
+const uint16_t PROGMEM combo_as[] = {KC_A, KC_S, COMBO_END};
 
 const uint16_t PROGMEM combo_kl[] = {KC_K, KC_L, COMBO_END};
 const uint16_t PROGMEM combo_yh[] = {KC_Y, KC_H, COMBO_END};
@@ -177,6 +180,7 @@ combo_t key_combos[COMBO_LENGTH] = {
     [COMBO_JK_ESC] = COMBO(combo_jk, KC_ESC),
     [COMBO_LSCLN_ENT] = COMBO(combo_lscln, KC_ENT),
     [COMBO_DF_UNDS] = COMBO(combo_df, KC_UNDS),
+    [COMBO_FG_TAB] = COMBO(combo_fg, KC_UNDS),
     [COMBO_AS_BSPC] = COMBO(combo_as, KC_BSPC),
     [COMBO_CV_MINS] = COMBO(combo_cv, KC_MINS),
     [COMBO_KL_SQT] = COMBO(combo_kl, KC_QUOT),
@@ -392,6 +396,7 @@ bool combo_should_trigger(uint16_t combo_index, combo_t *combo,
     case COMBO_JK_ESC:
     case COMBO_LSCLN_ENT:
     case COMBO_DF_UNDS:
+    case COMBO_FG_TAB:
     case COMBO_AS_BSPC:
     case COMBO_CV_MINS:
     case COMBO_NM_PARENS:

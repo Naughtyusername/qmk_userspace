@@ -40,7 +40,7 @@
 // Flow Tap prevents misfires during fast typing
 // Lower = more aggressive (may miss intended holds)
 // Higher = less aggressive (may have more misfires)
-#define FLOW_TAP_TERM 125
+#define FLOW_TAP_TERM 150
 
 /* ==========================================================================
  * TAPPING TERMS
