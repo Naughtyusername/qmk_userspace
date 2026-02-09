@@ -37,13 +37,84 @@
 #define COMBO_MED 30  // Standard utility combos
 #define COMBO_SLOW 50 // Three-finger layer switches - more forgiving
 
-// clang-format off
 /* ==========================================================================
- * COMBO INDEX ENUM
+ *                      COMBO REFERENCE & EDITING GUIDE
  * ==========================================================================
- * Naming: COMBO_<keys>_<action>
- * Order: Utility, Auto-pair, One-shot mods, Layer switches
+ *
+ *  HOW THIS WORKS
+ *  COMBO_ONLY_FROM_LAYER 0 means all combos match by physical position,
+ *  checked against BASE layer keycodes. Use HM_ macros for home row mod
+ *  positions (HM_A, HM_F, HM_J, etc.) in key arrays — plain KC_ won't match.
+ *
+ *  TO ADD A NEW COMBO
+ *  1. Add enum entry to combo_names (before COMBO_LENGTH)
+ *  2. Add PROGMEM key array (use HM_ for home row mod positions)
+ *  3. Add entry to key_combos[] — COMBO() for keycodes, COMBO_ACTION() for macros
+ *  4. If COMBO_ACTION: add case to process_combo_event()
+ *  5. Add timing in get_combo_term() if not MED (default 30ms)
+ *  6. Add to get_combo_must_hold() if it needs hold-to-activate (OSM combos)
+ *  7. Add layer filter in combo_should_trigger()
+ *
+ *  TIMING TIERS
+ *  FAST 18ms — one-shot mods (tight to avoid misfires on common bigrams)
+ *  MED  30ms — utility combos (default, most combos use this)
+ *  SLOW 50ms — three-finger layer switches (forgiving for 3 keys)
+ *
+ *  COMBO INDEX
+ *  ┌────────────────────────┬──────┬────────────┬─────────┬──────────────────┐
+ *  │ Enum                   │ Keys │ Output     │ Timing  │ Layers           │
+ *  ├────────────────────────┼──────┼────────────┼─────────┼──────────────────┤
+ *  │ UTILITY                │      │            │         │                  │
+ *  │  COMBO_HJ_CAPSWORD     │ H+J  │ CW_TOGG    │ MED     │ BASE VIM         │
+ *  │  COMBO_YH_NUMWORD      │ Y+H  │ NUMWORD    │ MED     │ BASE VIM         │
+ *  │  COMBO_JK_ESC          │ J+K  │ KC_ESC     │ MED     │ BASE VIM         │
+ *  │  COMBO_LSCLN_ENT       │ L+;  │ KC_ENT     │ MED     │ BASE VIM         │
+ *  │  COMBO_FG_TAB          │ F+G  │ KC_TAB     │ MED     │ BASE VIM         │
+ *  │  COMBO_DF_UNDS         │ D+F  │ KC_UNDS    │ MED     │ BASE VIM         │
+ *  │  COMBO_CV_MINS         │ C+V  │ KC_MINS    │ MED     │ BASE VIM         │
+ *  │  COMBO_AS_BSPC         │ A+S  │ KC_BSPC    │ MED     │ BASE VIM         │
+ *  │  COMBO_KL_SQT          │ K+L  │ KC_QUOT    │ MED     │ BASE VIM         │
+ *  │  COMBO_JKL_DQT         │ JKL  │ "          │ MED     │ BASE VIM         │
+ *  │  COMBO_KL_SCLN_OCSC    │ KL;  │ : ^        │ MED     │ BASE VIM         │
+ *  ├────────────────────────┼──────┼────────────┼─────────┼──────────────────┤
+ *  │ AUTO-PAIR              │      │            │         │                  │
+ *  │  COMBO_NM_PARENS       │ N+M  │ () + ←     │ MED     │ BASE VIM         │
+ *  │  COMBO_MCOMM_BRACES    │ M+,  │ {} + ←     │ MED     │ BASE VIM         │
+ *  │  COMBO_COMMDOT_BRACKETS│ ,+.  │ [] + ←     │ MED     │ BASE VIM         │
+ *  │  COMBO_KCOMM_DQUOTES   │ K+,  │ "" + ←     │ MED     │ BASE VIM         │
+ *  │  COMBO_JM_SQUOTES      │ J+M  │ '' + ←     │ MED     │ BASE VIM         │
+ *  ├────────────────────────┼──────┼────────────┼─────────┼──────────────────┤
+ *  │ ONE-SHOT MODS (GACS)   │      │            │         │ must-hold        │
+ *  │  COMBO_QW_OSM_LGUI     │ Q+W  │ OSM GUI    │ FAST    │ BASE VIM         │
+ *  │  COMBO_WE_OSM_LALT     │ W+E  │ OSM ALT    │ FAST    │ BASE VIM         │
+ *  │  COMBO_ER_OSM_LCTL     │ E+R  │ OSM CTRL   │ FAST    │ BASE VIM         │
+ *  │  COMBO_RT_OSM_LSFT     │ R+T  │ OSM SHIFT  │ FAST    │ BASE VIM         │
+ *  │  COMBO_YU_OSM_RSFT     │ Y+U  │ OSM SHIFT  │ FAST    │ BASE VIM         │
+ *  │  COMBO_UI_OSM_RCTL     │ U+I  │ OSM CTRL   │ FAST    │ BASE VIM         │
+ *  │  COMBO_IO_OSM_RALT     │ I+O  │ OSM ALT    │ FAST    │ BASE VIM         │
+ *  │  COMBO_OP_OSM_RGUI     │ O+P  │ OSM GUI    │ FAST    │ BASE VIM         │
+ *  ├────────────────────────┼──────┼────────────┼─────────┼──────────────────┤
+ *  │ LAYER SWITCHING        │      │            │         │                  │
+ *  │  COMBO_QWE_TO_BASE     │ QWE  │ TO(BASE)   │ SLOW    │ !BASE (anywhere) │
+ *  │  COMBO_ASD_TO_GAMING   │ ASD  │ TO(GAMING) │ SLOW    │ BASE             │
+ *  │  COMBO_NM_COMM_TO_VIM  │ NM,  │ TO(VIM)    │ SLOW    │ BASE             │
+ *  │  COMBO_YUI_TO_GAMING2  │ YUI  │ TO(GAMING2)│ SLOW    │ GAMING           │
+ *  │  COMBO_HJK_TO_ROGUELIKE│ HJK  │ TO(ROGUE)  │ SLOW    │ GAMING           │
+ *  │  COMBO_YUI_TO_GAMING   │ YUI  │ TO(GAMING) │ SLOW    │ GAMING2          │
+ *  │  COMBO_HJK_TO_GAMING   │ HJK  │ TO(GAMING) │ SLOW    │ ROGUELIKE        │
+ *  │  COMBO_NM_COMM_TO_BASE │ NM,  │ TO(BASE)   │ SLOW    │ VIM              │
+ *  └────────────────────────┴──────┴────────────┴─────────┴──────────────────┘
+ *
+ *  OPEN SLOTS (no combo assigned):
+ *    2-key:  ZX, XC, VB, SD       (left hand)
+ *    2-key:  .+/                   (right bottom — <>  exists in ZMK, not here yet)
+ *    3-key:  ZXC, ERT, DFG, CVB, IOP, KL;, ,./
+ *    vert:   QA, WS, ED, RF, TG, UJ, IK, OL, P;, HN, L., ;/
+ *    cross:  A;, SL, DK, FJ
+ *
+ * ==========================================================================
  */
+// clang-format off
 enum combo_names {
     // ===== UTILITY COMBOS (home row) =====
     COMBO_HJ_CAPSWORD, // H + J = Caps Word

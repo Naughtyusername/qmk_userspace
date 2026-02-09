@@ -2,6 +2,11 @@
 # build_all.sh - Build all keyboards in external userspace
 #
 # Run from your qmk_userspace directory
+#
+# To regenerate compile_commands.json for clangd/LSP (kills uint16_t errors):
+#   qmk compile -kb <keyboard> -km <keymap> --compiledb
+# Only needed when adding new keyboards or after QMK updates.
+# The .clangd file in this repo points at ~/qmk/qmk_firmware/ for the database.
 
 set -e
 

@@ -1,5 +1,7 @@
 # Build artifacts
 .clang_complete
+.clangd
+compile_commands.json
 .build/
 *.elf
 *.log
