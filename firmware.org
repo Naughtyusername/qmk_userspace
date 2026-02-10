@@ -1,5 +1,26 @@
 * Tasks
 
+** TODO slightly bump sweep timeout or
+look into why it randomly disconnects mid type, it cant be any key combo we are htiting but it is odd, does feel like crashing the micro-controller sometimes.
+[2026-02-09 Mon 22:52]
+
+** TODO combo keys i think i got it!
+as is backspace,
+zx is del
+
+fg is tab,
+vb could be Leader
+
+xc is still left open for some handy dandy deal, but i like this idea. with top row one shot mods this is super handy to have! makes an even smaller board very possible to use, though im not sure id give up thumb keys easily.
+[2026-02-10 Tue 00:15]
+
+** TODO debounce might still be too low on the sweep, there is a bit of chatter sometimes still, 5ms more on each value?
+[2026-02-10 Tue 12:40]
+
+** TODO our combo for delete (probably on both qmk and zmk, zmk for sure)
+isnt using bs_del, we do need to make a style choice on that. honestly im 5050 on it still, i misfire it all the time, having seperate del on zx is fine which we already wrote about. but make a choice or add in del soon, i do use it somewhat often
+[2026-02-10 Tue 12:45]
+
 * TODO zx DEL?
 odd but maybe? or then key next to it is much easier to hit for leader
 xc , consider
