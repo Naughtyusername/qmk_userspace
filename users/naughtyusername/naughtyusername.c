@@ -34,14 +34,15 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     case HM_A:
     case HM_SCLN:
         return 185;
-    // Other home row mods - slightly shorter
+
+    // All other home row mods - consistent 200ms timing
     case HM_S:
     case HM_D:
     case HM_F:
     case HM_J:
     case HM_K:
     case HM_L:
-        return 175;
+        return 200;
     default:
         return TAPPING_TERM; // Use default from config.h
     }

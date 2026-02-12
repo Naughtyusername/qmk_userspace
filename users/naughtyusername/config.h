@@ -35,7 +35,7 @@
  */
 #define CHORDAL_HOLD
 #define PERMISSIVE_HOLD
-#define SPECULATIVE_HOLD
+// #define SPECULATIVE_HOLD  // Disabled to prevent Ctrl misfires during fast typing (kt → Ctrl+T)
 
 // Flow Tap prevents misfires during fast typing
 // Lower = more aggressive (may miss intended holds)
