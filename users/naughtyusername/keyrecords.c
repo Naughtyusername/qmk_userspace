@@ -29,7 +29,6 @@
  */
 #ifdef TAP_DANCE_ENABLE
 tap_dance_action_t tap_dance_actions[] = {
-    [TD_Q_ESC] = ACTION_TAP_DANCE_DOUBLE(KC_Q, KC_ESC),
     // Add more tap dances here
 };
 #endif

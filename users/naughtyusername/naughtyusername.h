@@ -23,6 +23,7 @@
  */
 enum userspace_layers {
     _BASE = 0,
+    _VIM,       // no home row mods, top row combo GACS mods tho.
     _LOWER,     // Numbers, numpad, media controls
     _RAISE,     // Symbols, programming operators
     _FUNCTION,  // F-keys, navigation
@@ -30,7 +31,6 @@ enum userspace_layers {
     _GAMING,    // No home row mods, direct keys for gaming
     _GAMING2,   // Function keys and numbers.
     _ROGUELIKE, // numpad for the rl's that hate vim :(
-    _VIM,       // no home row mods, top row combo GACS mods tho.
     _SYS,   // bootloader and other shit that i dont like accessible. NKRO etc.
     _MOUSE, // For halcyon corne cirque trackpad
 };
@@ -51,7 +51,7 @@ enum userspace_keycodes {
     KC_RANGE,            // ..= (Odin range operator)
     KC_HMDR,             // ~/  (Home directory shortcut)
 
-    NUMWORD,       // Num Word - combo-activated numbers layer lock
+    NUMWORD, // Num Word - combo-activated numbers layer lock
 
     // Add more shared keycodes above this line
     NEW_SAFE_RANGE // Keymaps can use this for their own keycodes
@@ -108,10 +108,6 @@ enum userspace_keycodes {
  * The actual tap_dance_actions[] array is defined in naughtyusername.c
  * We just declare the enum here so keymaps can reference TD(TD_Q_ESC) etc.
  */
-enum userspace_tapdances {
-    TD_Q_ESC, // Tap: Q, Double-tap: Escape
-    // Add more tap dances above this line
-};
 
 /* ==========================================================================
  * WRAPPER INCLUDES

@@ -21,7 +21,7 @@ SRC += $(USER_PATH)/numword.c
 # Board-specific features should be enabled in the keymap's rules.mk instead.
 
 # Core features we use everywhere
-TAP_DANCE_ENABLE = yes      # For TD_Q_ESC
+TAP_DANCE_ENABLE = no       # Probs remove
 CAPS_WORD_ENABLE = yes      # Better than Caps Lock
 COMBO_ENABLE = yes          # For J+K = Escape
 KEY_OVERRIDE_ENABLE = yes   # For Shift+Bksp = Delete

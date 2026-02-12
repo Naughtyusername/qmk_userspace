@@ -21,6 +21,9 @@ xc is still left open for some handy dandy deal, but i like this idea. with top 
 isnt using bs_del, we do need to make a style choice on that. honestly im 5050 on it still, i misfire it all the time, having seperate del on zx is fine which we already wrote about. but make a choice or add in del soon, i do use it somewhat often
 [2026-02-10 Tue 12:45]
 
+** TODO lol we forgot kl l ' SQT! in qmk..! jkl DQT works just fine tho.
+[2026-02-11 Wed 20:41]
+
 * TODO zx DEL?
 odd but maybe? or then key next to it is much easier to hit for leader
 xc , consider
