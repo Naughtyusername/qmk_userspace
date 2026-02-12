@@ -4,6 +4,7 @@
 compile_commands.json
 .build/
 *.elf
+*.idx
 *.log
 *.lss
 *.lst

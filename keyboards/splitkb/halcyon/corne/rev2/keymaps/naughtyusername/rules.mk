@@ -23,9 +23,9 @@ QUANTUM_PAINTER_ENABLE = yes  # Requires significant additional configuration
 OLED_ENABLE = no
 
 # Enable specific modules (examples)
-# HLC_ENCODER = yes       # If you have an encoder module
-HLC_TFT_DISPLAY = yes   # If you have a TFT RGB display
-HLC_CIRQUE_TRACKPAD = yes # If you have a Cirque trackpad
+# HLC_ENCODER = 1       # If you have an encoder module
+HLC_TFT_DISPLAY = 1   # If you have a TFT RGB display
+HLC_CIRQUE_TRACKPAD = 1 # If you have a Cirque trackpad
 
 # Cirque Trackpad (right half)
 POINTING_DEVICE_ENABLE = yes

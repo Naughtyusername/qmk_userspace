@@ -3,17 +3,16 @@
 #
 # kyria/rev1-specific build rules
 
-# TODO clean this up. but also kyria is broke so whatever
 USER_NAME := naughtyusername
 
-OLED_ENABLE = no
-ENCODER_ENABLE = yes       # Enables the use of one or more encoders
-RGB_MATRIX_ENABLE = no    # Disable keyboard RGB matrix, as it is enabled by default on rev3
-RGBLIGHT_ENABLE = no      # Enable keyboard RGB underglow
+OLED_ENABLE = yes          # Enable OLED display
+ENCODER_ENABLE = no        # Disabled to save ~150 bytes (only used for audio)
+RGB_MATRIX_ENABLE = no     # Disable keyboard RGB matrix, as it is enabled by default on rev3
+RGBLIGHT_ENABLE = yes      # Enable keyboard RGB underglow
 
 # Custom changes - above is the defaults - 2026, first time back into qmk in 6 years!
 SPLIT_KEYBOARD = yes
-SPLIT_OLED_ENABLE = yes
+# SPLIT_OLED_ENABLE = yes  # Not needed - OLED_ENABLE handles both halves
 SPLIT_WPM_ENABLE = no      # Disabled to save space (~500 bytes)
 
 EXTRAKEY_ENABLE = yes					 # Audio control and System control
@@ -27,10 +26,10 @@ KEY_OVERRIDE_ENABLE = no   # Disabled to save space (~300 bytes)
 MOUSEKEY_ENABLE = no
 
 # Enable NKRO (N-key rollover)
-NKRO_ENABLE = yes
+NKRO_ENABLE = no
 
 # Bootmagic for easy bootloader access (lite version saves ~200 bytes)
-BOOTMAGIC_ENABLE = lite
+BOOTMAGIC_ENABLE = no  # Temporarily disabled to save ~400 bytes for RGB+OLED
 
 # Space saving options - these can be changed if we need them
 CONSOLE_ENABLE = no  # enable when we need debugging only
@@ -42,3 +41,6 @@ UNICODE_ENABLE = no
 SWAP_HANDS_ENABLE = no
 # Enable link time optimization (saves space)
 LTO_ENABLE = yes
+
+# Use minimal printf implementation (saves ~400 bytes)
+AVR_USE_MINIMAL_PRINTF = yes

@@ -106,13 +106,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                          ___KYRIA_THUMB_SYS___
     ),
 
-    /* MOUSE - Mouse movement and buttons */
-    [_MOUSE] = LAYOUT_kyria_wrapper(
-        ___MOUSE_L1_6___,                   ___MOUSE_R1_6___,
-        ___MOUSE_L2_6___,                   ___MOUSE_R2_6___,
-        ___MOUSE_L3_8___,                   ___MOUSE_R3_8___,
-                         ___KYRIA_THUMB_MOUSE___
-    ),
+    // MOUSE layer removed - only needed on Corne (with trackpad)
 };
 
 /* ==========================================================================
@@ -164,9 +158,7 @@ bool oled_task_user(void) {
         case _SYS:
             oled_write_ln_P(PSTR("System"), false);
             break;
-        case _MOUSE:
-            oled_write_ln_P(PSTR("Mouse"), false);
-            break;
+        // No MOUSE layer on Kyria
         default:
             oled_write_ln_P(PSTR("???"), false);
     }

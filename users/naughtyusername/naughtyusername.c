@@ -149,33 +149,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // Only act on key press, not release
     if (record->event.pressed) {
         switch (keycode) {
-        // Odin/Go assignment operator :=
-        case KC_ASSIGN:
-            tap_code16(KC_COLON);
-            tap_code16(KC_EQUAL);
-            return false;
-
-        // Arrow operator -> (Odin, C, etc.)
-        case KC_ARROP:
-            tap_code(KC_MINS);
-            tap_code16(KC_GT);
-            return false;
-
         // Double colon :: (C++, Odin, Rust)
         case KC_DCLN:
             tap_code16(KC_COLON);
             tap_code16(KC_COLON);
-            return false;
-
-        // Odin range operator ..=
-        case KC_RANGE:
-            SEND_STRING("..=");
-            return false;
-
-        // Home directory shortcut ~/ TODO delete pretty much all of these old
-        // ones.
-        case KC_HMDR:
-            SEND_STRING("~/");
             return false;
         }
     }
