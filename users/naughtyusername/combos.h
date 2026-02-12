@@ -389,12 +389,13 @@ bool get_combo_must_hold(uint16_t combo_index, combo_t *combo) {
     case COMBO_QW_OSM_LGUI:
     case COMBO_WE_OSM_LALT:
     case COMBO_ER_OSM_LCTL:
-    case COMBO_RT_OSM_LSFT:
-    case COMBO_YU_OSM_RSFT:
     case COMBO_UI_OSM_RCTL:
     case COMBO_IO_OSM_RALT:
     case COMBO_OP_OSM_RGUI:
         return true;
+    case COMBO_RT_OSM_LSFT:
+    case COMBO_YU_OSM_RSFT:
+        return false;
     default:
         return false;
     }

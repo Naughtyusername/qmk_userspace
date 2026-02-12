@@ -6,7 +6,7 @@
 USER_NAME := naughtyusername
 
 OLED_ENABLE = yes          # Enable OLED display
-ENCODER_ENABLE = no        # Disabled to save ~150 bytes (only used for audio)
+ENCODER_ENABLE = no       # Enabled - we have enough space now!
 RGB_MATRIX_ENABLE = no     # Disable keyboard RGB matrix, as it is enabled by default on rev3
 RGBLIGHT_ENABLE = yes      # Enable keyboard RGB underglow
 
