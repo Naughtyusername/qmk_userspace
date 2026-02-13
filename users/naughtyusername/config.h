@@ -51,7 +51,7 @@
  *
  * TAPPING_TERM_PER_KEY: Enables get_tapping_term() function for per-key tuning
  */
-#define TAPPING_TERM 175
+#define TAPPING_TERM 185
 #define TAPPING_TERM_PER_KEY
 
 // Quick tap: If you tap a key twice rapidly, the second tap is always a tap

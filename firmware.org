@@ -24,6 +24,29 @@ isnt using bs_del, we do need to make a style choice on that. honestly im 5050 o
 ** TODO lol we forgot kl l ' SQT! in qmk..! jkl DQT works just fine tho.
 [2026-02-11 Wed 20:41]
 
+** TODO maybe 200 is to much on timing, 185 maybe?
+[2026-02-11 Wed 22:59]
+
+** TODO maybe change the spacebar timer or something. also control blocks space from registering and its tight, we should probably look into that.
+[2026-02-11 Wed 23:38]
+
+** TODO also volume controls are backwards from what makes sense.
+[2026-02-11 Wed 23:41]
+
+** TODO we still dont really use the vim layer ever, keeping it around for awhile just to see, but if we end up removing it, we have a full open top row for combos.
+[2026-02-12 Thu 00:38]
+
+** TODO := would be  good combo at this ponit lmao. = also. maybe its nearing time to kill the experimental vim layers...
+[2026-02-12 Thu 01:55]
+
+** TODO IGNORE_MOD_TAP_INTERRUPT might be worth having, then we could maybe uesr speculative again and go down to 175ms again?
+[2026-02-12 Thu 02:12]
+
+** TODO Some things to test to figure out why QMK feels worse than zmk...
+increase tap term 25ms to give slightly more time to release cleanly.
+HOLD_ON_OTHER_KEY_PRESS for spacebar for sure, that should remove the mod+space annoyance entirely.
+[2026-02-12 Thu 15:46]
+
 * TODO zx DEL?
 odd but maybe? or then key next to it is much easier to hit for leader
 xc , consider
