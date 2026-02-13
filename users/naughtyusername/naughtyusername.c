@@ -33,16 +33,16 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     // Pinkies get longer tapping term (weaker fingers)
     case HM_A:
     case HM_SCLN:
-        return 185;
+        return 175;
 
-    // All other home row mods - consistent 200ms timing
+    // All other home row mods - consistent 175ms timing
     case HM_S:
     case HM_D:
     case HM_F:
     case HM_J:
     case HM_K:
     case HM_L:
-        return 185;
+        return 175;
     default:
         return TAPPING_TERM; // Use default from config.h
     }
