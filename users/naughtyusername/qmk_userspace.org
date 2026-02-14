@@ -52,20 +52,17 @@ This is my QMK userspace that provides a unified typing experience across multip
 - Advanced features properly configured
 - Good separation of concerns between shared and keyboard-specific code
 
-* TODO add gaming 2 and any special thumb layers in to the keymaps (mitosis is done) that need it still
+* DONE add gaming 2 and any special thumb layers in to the keymaps (mitosis is done) that need it still
 * TODO Dynamic macros (waiting for zmk to get an implementation of this.)
-* TODO
-* TODO
 * TODO Add RGB Matrix animations configuration for Planck EZ
 * TODO Implement Quantum Painter support for Halcyon TFT display
-* TODO Add more tap dances for common shortcuts (eg. double comma for semicolon)
-* TODO Create custom combo sequences for frequently used commands
+* DONE Create custom combo sequences for frequently used commands
 * TODO Add EEPROM configuration for storing user preferences
-* TODO Implement rotary encoder support for Kyria
-* TODO Add OLED status display for supported keyboards
+* DONE Implement rotary encoder support for Kyria
+* DONE Add OLED status display for supported keyboards
 * TODO Create layer indication system (RGB/OLED feedback)
-* TODO Add more custom keycodes for programming languages
-* TODO Implement mouse key acceleration curves
+* DONE Add more custom keycodes for programming languages
+* DONE Implement mouse key acceleration curves
 * TODO Add power management features for wireless keyboards
 * TODO Create documentation for customizing home row mod behavior
 * TODO Add tests for critical tap dance and combo functionality

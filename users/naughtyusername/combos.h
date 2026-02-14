@@ -49,7 +49,8 @@
  *  TO ADD A NEW COMBO
  *  1. Add enum entry to combo_names (before COMBO_LENGTH)
  *  2. Add PROGMEM key array (use HM_ for home row mod positions)
- *  3. Add entry to key_combos[] — COMBO() for keycodes, COMBO_ACTION() for macros
+ *  3. Add entry to key_combos[] — COMBO() for keycodes, COMBO_ACTION() for
+ macros
  *  4. If COMBO_ACTION: add case to process_combo_event()
  *  5. Add timing in get_combo_term() if not MED (default 30ms)
  *  6. Add to get_combo_must_hold() if it needs hold-to-activate (OSM combos)
@@ -71,8 +72,16 @@
  *  │  COMBO_LSCLN_ENT       │ L+;  │ KC_ENT     │ MED     │ BASE VIM         │
  *  │  COMBO_FG_TAB          │ F+G  │ KC_TAB     │ MED     │ BASE VIM         │
  *  │  COMBO_DF_UNDS         │ D+F  │ KC_UNDS    │ MED     │ BASE VIM         │
- *  │  COMBO_CV_MINS         │ C+V  │ KC_MINS    │ MED     │ BASE VIM         │
+ *  │  COMBO_VB_SPACE        │ V+B  │ KC_SPACE   │ MED     │ BASE VIM         │
  *  │  COMBO_AS_BSPC         │ A+S  │ KC_BSPC    │ MED     │ BASE VIM         │
+ *  │  COMBO_ZX_DEL          │ Z+X  │ KC_DEL     │ MED     │ BASE VIM         │
+ *  │                        │      │            │         │                  │
+ *  │  COMBO_CV_MINS         │ C+V  │ KC_MINS    │ MED     │ BASE VIM         │
+ *  │  COMBO_FV_EQUAL        │ F+V  │ KC_EQUAL   │ MED     │ BASE VIM         │
+ *  │  COMBO_DC_ASSEQL       │ D+C  │ ASSEQL  := │ MED     │ BASE VIM         │
+ *  │// TODO Make this macro │      │            │         │                  │
+ *  │  COMBO_XC_             │ X+C  │ KC_        │ MED     │ BASE VIM         │
+ *  │                        │      │            │         │                  │
  *  │  COMBO_KL_SQT          │ K+L  │ KC_QUOT    │ MED     │ BASE VIM         │
  *  │  COMBO_JKL_DQT         │ JKL  │ "          │ MED     │ BASE VIM         │
  *  │  COMBO_KL_SCLN_OCSC    │ KL;  │ : ^        │ MED     │ BASE VIM         │
@@ -84,7 +93,7 @@
  *  │  COMBO_KCOMM_DQUOTES   │ K+,  │ "" + ←     │ MED     │ BASE VIM         │
  *  │  COMBO_JM_SQUOTES      │ J+M  │ '' + ←     │ MED     │ BASE VIM         │
  *  ├────────────────────────┼──────┼────────────┼─────────┼──────────────────┤
- *  │ ONE-SHOT MODS (GACS)   │      │            │         │ must-hold        │
+ *  │ ONE-SHOT MODS (GACS)   │      │            │         │                  │
  *  │  COMBO_QW_OSM_LGUI     │ Q+W  │ OSM GUI    │ FAST    │ BASE VIM         │
  *  │  COMBO_WE_OSM_LALT     │ W+E  │ OSM ALT    │ FAST    │ BASE VIM         │
  *  │  COMBO_ER_OSM_LCTL     │ E+R  │ OSM CTRL   │ FAST    │ BASE VIM         │
@@ -104,11 +113,18 @@
  *  │  COMBO_HJK_TO_GAMING   │ HJK  │ TO(GAMING) │ SLOW    │ ROGUELIKE        │
  *  │  COMBO_NM_COMM_TO_BASE │ NM,  │ TO(BASE)   │ SLOW    │ VIM              │
  *  └────────────────────────┴──────┴────────────┴─────────┴──────────────────┘
+    // For personal formatting use, templating etc.
+ *  ┌────────────────────────┬──────┬────────────┬─────────┬──────────────────┐
+ *  │                        │      │            │         │                  │
+ *  ├────────────────────────┼──────┼────────────┼─────────┼──────────────────┤
+ *  ├────────────────────────┼──────┼────────────┼─────────┼──────────────────┤
+ *  └────────────────────────┴──────┴────────────┴─────────┴──────────────────┘
+ *  │                        │      │            │         │                  │
  *
  *  OPEN SLOTS (no combo assigned):
  *    2-key:  ZX, XC, VB, SD       (left hand)
- *    2-key:  .+/                   (right bottom — <>  exists in ZMK, not here yet)
- *    3-key:  ZXC, ERT, DFG, CVB, IOP, KL;, ,./
+ yet)
+ *    3-key:  ZXC, ERT, DFG, CVB, IOP, ,./
  *    vert:   QA, WS, ED, RF, TG, UJ, IK, OL, P;, HN, L., ;/
  *    cross:  A;, SL, DK, FJ
  *
