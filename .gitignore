@@ -24,3 +24,6 @@ compile_commands.json
 secrets.c
 secrets.h
 secrets.el
+
+# Secret files (private information)
+users/naughtyusername/secrets.h

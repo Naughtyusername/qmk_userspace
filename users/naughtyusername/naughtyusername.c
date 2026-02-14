@@ -21,6 +21,7 @@ before compilation. Required for arrays that QMK's introspection needs to find
 
 #include "naughtyusername.h"
 #include "numword.h"
+#include "secrets.h"
 
 #ifdef LEADER_ENABLE
 #    include "process_leader.h"
@@ -254,7 +255,7 @@ void leader_end_user(void) {
 
     // E + M = Email address
     if (leader_sequence_two_keys(KC_E, KC_M)) {
-        SEND_STRING("whatsahardscope@gmail.com");
+        SEND_STRING(SECRET_EMAIL);
     }
 
     // G + H + N = GitHub username (GHN to distinguish from other GH* sequences)

@@ -1,36 +1,10 @@
 * Tasks
 
-** TODO slightly bump sweep timeout or
-look into why it randomly disconnects mid type, it cant be any key combo we are htiting but it is odd, does feel like crashing the micro-controller sometimes.
-[2026-02-09 Mon 22:52]
-
 ** TODO debounce might still be too low on the sweep, there is a bit of chatter sometimes still, 5ms more on each value?
 [2026-02-10 Tue 12:40]
 
-** TODO our combo for delete (probably on both qmk and zmk, zmk for sure)
-isnt using bs_del, we do need to make a style choice on that. honestly im 5050 on it still, i misfire it all the time, having seperate del on zx is fine which we already wrote about. but make a choice or add in del soon, i do use it somewhat often
-[2026-02-10 Tue 12:45]
-
-** TODO also volume controls are backwards from what makes sense.
-[2026-02-11 Wed 23:41]
-
-** TODO we still dont really use the vim layer ever, keeping it around for awhile just to see, but if we end up removing it, we have a full open top row for combos.
-[2026-02-12 Thu 00:38]
-
-** TODO IGNORE_MOD_TAP_INTERRUPT might be worth having, then we could maybe uesr speculative again and go down to 175ms again?
-[2026-02-12 Thu 02:12]
-
-** TODO big change but overall i think would be good.
-currently we have media controls and such on the lower layer but realistically thats not something i need super easy access to, it can wait a few more ms.
-so the idea being use symbols on the left side that i miss when im on the numbers layer that drives me crazy to have to layer juggle to hit. and things like , . < > etc. <> not even on that layer, but the ,. are really hard to change the brain from realizing which keys they are on, putting those on the left side should omit that issue and make the numbers layer overall feel so much better i think, should have made this change a long time ago honestly.
-
 also in qmk we have it set up so the key positions fall through on layers, we can do that in zmk if we just change the layers that are layer locked. so we could make ({[<>]}) work in lower layer by adding lower to that i think.. worth consideration, niche but handy and i see hopefully no drawbacks to that.
 [2026-02-13 Fri 15:17]
-
-** TODO change some lower layer symbols
-having comma on the right hand but not in the right spot is to hard to remember, it has to be on a non pinky ring finger, put it under . we dont seem to have an issues
-remembering to use that one. so do that and shift the other symbols around to a more logical position
-[2026-02-08 Sun 03:14]
 
 ** TODO Dynamic macros
 zmk doesnt have these yet (iirc, double check)
@@ -49,19 +23,3 @@ this is a wild and weird idea and actually might be a burdern on qmk becuase the
 
 but what we could do for the lower layer is add a bunch of unique to that layer combos. might not be worth it but just thought about it
 [2026-02-08 Sun 02:23]
-
-** TODO leader key maybe finally?
-would be nice to have a combo trigger a leader then we
-- [ ] leader_sequence s e send email
-- [ ] leader_sequence s g send github url github.com/naughtyusername/
-- [ ] leader_sequence
-- [ ] leader_sequence
-- [ ]
-[2026-02-07 Sat 02:50]
-
-** TODO modifier key plus bs_del doesnt send modified version
-similar to other issues we encoutered with hrm's, this may be fixed on our next flash tho with that change we made
-[2026-02-09 Mon 05:54]
-
-* TODO we need to set up auto mouse layer for the corne
-we also need to refine the keybinds to make them probably more useful
