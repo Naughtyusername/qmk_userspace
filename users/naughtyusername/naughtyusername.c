@@ -267,7 +267,7 @@ void leader_end_user(void) {
 
     // D + D = Delete line (vim dd)
     // Cmd+Backspace works on macOS, Ctrl+Shift+K on most editors
-    if (leader_sequence_two_keys(KC_D, KC_D)) {
+    if (leader_sequence_two_keys(HM_D, HM_D)) {
         tap_code16(LGUI(KC_BSPC));  // macOS line delete
         // For Linux/Windows: tap_code16(C(S(KC_K)));
     }
@@ -275,7 +275,7 @@ void leader_end_user(void) {
     // ===== PROGRAMMING SHORTCUTS =====
 
     // S + H = Shebang for bash scripts
-    if (leader_sequence_two_keys(KC_S, KC_H)) {
+    if (leader_sequence_two_keys(HM_S, KC_H)) {
         SEND_STRING("#!/bin/bash\n");
     }
 
