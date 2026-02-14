@@ -122,8 +122,8 @@
  *  >=    >     /     +     ==         ,     1     2     3
  */
 #define ___LOWER_L1___ KC_1, KC_2, KC_3, KC_4, KC_5
-#define ___LOWER_L2___ KC_UNDS, KC_PERC, KC_VOLU, KC_VOLD, KC_MUTE
-#define ___LOWER_L3___ KC_ASTR, KC_SLSH, KC_MPRV, KC_MPLY, KC_MNXT
+#define ___LOWER_L2___ KC_LTEQ, KC_LT, KC_ASTR, KC_MINS, KC_EQL
+#define ___LOWER_L3___ KC_GTEQ, KC_GT, KC_SLSH, KC_PLUS, KC_EQEQ
 
 #define ___LOWER_R1___ KC_6, KC_7, KC_8, KC_9, KC_0
 #define ___LOWER_R2___ KC_DOT, KC_4, KC_5, KC_6, KC_COMM
@@ -151,11 +151,11 @@
  *  _     _     Vol-  Vol+  Mute       _     _     _     _     _
  *  _     _     Prev  Play  Next       _     _     _     _     _
  */
-#define ___ADJUST_L1___ TG(_BASE), TG(_GAMING), _______, _______, KC_CAPS
-#define ___ADJUST_L2___ _______, _______, _______, _______, KC_NUM
-#define ___ADJUST_L3___ _______, _______, _______, _______, _______
+#define ___ADJUST_L1___ _______, _______, _______, _______, KC_CAPS
+#define ___ADJUST_L2___ _______, _______, KC_VOLD, KC_VOLU, KC_MUTE
+#define ___ADJUST_L3___ _______, _______, KC_MPRV, KC_MPLY, KC_MNXT
 
-#define ___ADJUST_R1___ _______, _______, _______, _______, NK_TOGG
+#define ___ADJUST_R1___ KC_NUM, _______, _______, _______, NK_TOGG
 #define ___ADJUST_R2___ _______, _______, _______, _______, _______
 #define ___ADJUST_R3___ _______, _______, _______, _______, _______
 

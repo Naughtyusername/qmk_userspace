@@ -163,6 +163,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KC_ASSIGN:
             SEND_STRING(":=");
             return false;
+
+        // Less than or equal <=
+        case KC_LTEQ:
+            SEND_STRING("<=");
+            return false;
+
+        // Greater than or equal >=
+        case KC_GTEQ:
+            SEND_STRING(">=");
+            return false;
+
+        // Equality comparison ==
+        case KC_EQEQ:
+            SEND_STRING("==");
+            return false;
         }
     }
 

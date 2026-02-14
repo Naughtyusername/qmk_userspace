@@ -50,6 +50,9 @@ enum userspace_keycodes {
     KC_DCLN,             // ::  (Double colon - C++/Odin)
     KC_RANGE,            // ..= (Odin range operator)
     KC_HMDR,             // ~/  (Home directory shortcut)
+    KC_LTEQ,             // <=  (Less than or equal)
+    KC_GTEQ,             // >=  (Greater than or equal)
+    KC_EQEQ,             // ==  (Equality comparison)
 
     NUMWORD, // Num Word - combo-activated numbers layer lock
 
