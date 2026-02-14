@@ -92,6 +92,20 @@
 // make ifdef tho TODO
 
 /* ==========================================================================
+ * LEADER KEY
+ * ==========================================================================
+ * Leader key enables sequence-based shortcuts without layers.
+ *
+ * LEADER_TIMEOUT: Time window to complete sequence (ms)
+ * LEADER_PER_KEY_TIMING: Timer resets between each key (recommended)
+ *
+ * Without PER_KEY: You have 300ms total for the whole sequence
+ * With PER_KEY: You have 300ms between each key press
+ */
+#define LEADER_TIMEOUT 300
+#define LEADER_PER_KEY_TIMING
+
+/* ==========================================================================
  * MOUSE KEYS (if enabled)
  * ==========================================================================
  * Tune these if mouse keys feel too fast/slow

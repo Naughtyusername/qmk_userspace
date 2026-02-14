@@ -62,3 +62,6 @@ would be nice to have a combo trigger a leader then we
 ** TODO modifier key plus bs_del doesnt send modified version
 similar to other issues we encoutered with hrm's, this may be fixed on our next flash tho with that change we made
 [2026-02-09 Mon 05:54]
+
+* TODO we need to set up auto mouse layer for the corne
+we also need to refine the keybinds to make them probably more useful

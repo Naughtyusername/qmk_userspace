@@ -22,6 +22,10 @@ before compilation. Required for arrays that QMK's introspection needs to find
 #include "naughtyusername.h"
 #include "numword.h"
 
+#ifdef LEADER_ENABLE
+#    include "process_leader.h"
+#endif
+
 /* ==========================================================================
  * TAPPING TERM PER KEY
  * ==========================================================================
@@ -154,6 +158,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             tap_code16(KC_COLON);
             tap_code16(KC_COLON);
             return false;
+
+        // Assignment operator := (Odin, Go, Pascal)
+        case KC_ASSIGN:
+            SEND_STRING(":=");
+            return false;
         }
     }
 
@@ -195,3 +204,69 @@ void matrix_scan_user(void) { matrix_scan_keymap(); }
  * default states, RGB modes, etc.
  */
 void keyboard_post_init_user(void) { keyboard_post_init_keymap(); }
+
+#ifdef LEADER_ENABLE
+/* ==========================================================================
+ * LEADER KEY SEQUENCES
+ * ==========================================================================
+ * Leader key enables sequence-based shortcuts. Press the leader combo (GB),
+ * then type a sequence of keys to trigger actions.
+ *
+ * How sequence detection works:
+ *   leader_sequence_one_key(KC_X) - checks if last key pressed was X
+ *   leader_sequence_two_keys(KC_X, KC_Y) - checks if last 2 keys were X, Y
+ *   leader_sequence_three_keys(KC_X, KC_Y, KC_Z) - checks last 3 keys
+ *
+ * The functions check the sequence in order from MOST recent to LEAST recent.
+ * So leader_sequence_two_keys(KC_E, KC_M) means: "E was pressed, THEN M"
+ */
+
+/**
+ * Called when leader key is activated
+ * Optional - useful for visual/audio feedback
+ */
+void leader_start_user(void) {
+    // Could add visual feedback here (LED blink, etc.)
+    // For now, just a silent start
+}
+
+/**
+ * Called when leader sequence ends (timeout or sequence matched)
+ * This is where we detect and execute sequences
+ */
+void leader_end_user(void) {
+    // ===== TEXT SNIPPETS =====
+
+    // E + M = Email address
+    if (leader_sequence_two_keys(KC_E, KC_M)) {
+        SEND_STRING("whatsahardscope@gmail.com");
+    }
+
+    // G + H + N = GitHub username (GHN to distinguish from other GH* sequences)
+    if (leader_sequence_three_keys(KC_G, KC_H, KC_N)) {
+        SEND_STRING("github.com/Naughtyusername");
+    }
+
+    // ===== VIM-STYLE EDITING =====
+
+    // D + D = Delete line (vim dd)
+    // Cmd+Backspace works on macOS, Ctrl+Shift+K on most editors
+    if (leader_sequence_two_keys(KC_D, KC_D)) {
+        tap_code16(LGUI(KC_BSPC));  // macOS line delete
+        // For Linux/Windows: tap_code16(C(S(KC_K)));
+    }
+
+    // ===== PROGRAMMING SHORTCUTS =====
+
+    // S + H = Shebang for bash scripts
+    if (leader_sequence_two_keys(KC_S, KC_H)) {
+        SEND_STRING("#!/bin/bash\n");
+    }
+
+    // You can add more sequences here as you discover what you use frequently:
+    //
+    // if (leader_sequence_two_keys(KC_F, KC_N)) {
+    //     SEND_STRING("fn main() {\n\t\n}" SS_TAP(X_UP) SS_TAP(X_END));
+    // }
+}
+#endif // LEADER_ENABLE

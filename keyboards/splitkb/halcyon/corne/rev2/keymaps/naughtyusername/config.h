@@ -73,10 +73,9 @@
 #define CIRQUE_PINNACLE_ATTENUATION EXTREG__TRACK_ADCCONFIG__ADC_ATTENUATE_2X
 
 // Auto mouse layer - automatically switch to mouse layer when trackpad active
-// Uncomment if you want this behavior
-// #define POINTING_DEVICE_AUTO_MOUSE_ENABLE
-// #define AUTO_MOUSE_DEFAULT_LAYER _LAYERWITHMICE
-// #define AUTO_MOUSE_TIME 650
+#define POINTING_DEVICE_AUTO_MOUSE_ENABLE
+#define AUTO_MOUSE_DEFAULT_LAYER 10  // _MOUSE layer (see naughtyusername.h line 35)
+#define AUTO_MOUSE_TIME 650  // Timeout in ms - adjust based on preference
 
 // SPI pins for Cirque (if not already defined by keyboard)
 // this is defined correctly above this ifdef block.

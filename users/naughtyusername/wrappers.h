@@ -118,8 +118,8 @@
  * LOWER LAYER - Numbers and Media
  * --------------------------------------------------------------------------
  *  1     2     3     4     5          6     7     8     9     0
- *  _     %    Vol+  Vol-  Mute        .     4     5     6     ,
- *  *     /    Prev  Play  Next        +     1     2     3     -
+ *  <=    <     *     -     =          .     4     5     6
+ *  >=    >     /     +     ==         ,     1     2     3
  */
 #define ___LOWER_L1___ KC_1, KC_2, KC_3, KC_4, KC_5
 #define ___LOWER_L2___ KC_UNDS, KC_PERC, KC_VOLU, KC_VOLD, KC_MUTE
@@ -147,9 +147,9 @@
 /* --------------------------------------------------------------------------
  * ADJUST LAYER - System (Tri-layer: LOWER + RAISE)
  * --------------------------------------------------------------------------
- * Base  Game   _     _    Caps        _     _     _     _    NKRO
- *  _     _     _     _    NumLk       _     _     _     _     _
- *  _     _     _     _     _          _     _     _     _     _
+ *  _     _     _     _     Caps     NumLk   _     _     _    NKRO
+ *  _     _     Vol-  Vol+  Mute       _     _     _     _     _
+ *  _     _     Prev  Play  Next       _     _     _     _     _
  */
 #define ___ADJUST_L1___ TG(_BASE), TG(_GAMING), _______, _______, KC_CAPS
 #define ___ADJUST_L2___ _______, _______, _______, _______, KC_NUM
@@ -221,19 +221,22 @@
 #define ___SYS_R3___ _______, _______, _______, _______, _______
 
 /* --------------------------------------------------------------------------
- * MOUSE LAYER - Mouse movement and buttons
+ * MOUSE LAYER - Optimized for trackpad use (Halcyon Corne Cirque)
  * --------------------------------------------------------------------------
- * WhlL  WhlD  WhlU  WhlR   _          _    Btn1  Btn2  Btn3   _
- * Acl0  MsL   MsD   MsU   MsR        MsL   MsD   MsU   MsR   Acl0
- * Acl1  Acl2  Btn1  Btn2  Btn3        _    Btn1  Btn2  Acl2  Acl1
+ * Left hand: buttons and controls (trackpad hand is right, so left is active)
+ * Right hand: transparent (hand is busy using the trackpad)
+ *
+ *  _    Btn4  Btn5  Btn3   _          _     _     _     _     _
+ *  _    Acl2  Acl1  Acl0   _          _     _     _     _     _
+ *  _    Shift Ctrl  Alt    _          _     _     _     _     _
  */
-#define ___MOUSE_L1___ MS_WHLL, MS_WHLD, MS_WHLU, MS_WHLR, _______
-#define ___MOUSE_L2___ MS_ACL0, MS_LEFT, MS_DOWN, MS_UP, MS_RGHT
-#define ___MOUSE_L3___ MS_ACL1, MS_ACL2, MS_BTN1, MS_BTN2, MS_BTN3
+#define ___MOUSE_L1___ _______, MS_BTN4, MS_BTN5, MS_BTN3, _______
+#define ___MOUSE_L2___ _______, MS_ACL2, MS_ACL1, MS_ACL0, _______
+#define ___MOUSE_L3___ _______, KC_LSFT, KC_LCTL, KC_LALT, _______
 
-#define ___MOUSE_R1___ _______, MS_BTN1, MS_BTN2, MS_BTN3, _______
-#define ___MOUSE_R2___ MS_LEFT, MS_DOWN, MS_UP, MS_RGHT, MS_ACL0
-#define ___MOUSE_R3___ _______, MS_BTN1, MS_BTN2, MS_ACL2, MS_ACL1
+#define ___MOUSE_R1___ _______, _______, _______, _______, _______
+#define ___MOUSE_R2___ _______, _______, _______, _______, _______
+#define ___MOUSE_R3___ _______, _______, _______, _______, _______
 
 /* --------------------------------------------------------------------------
  * BLANK TEMPLATE - For new layers

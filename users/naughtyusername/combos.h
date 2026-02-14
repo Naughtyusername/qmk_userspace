@@ -76,11 +76,11 @@
  *  │  COMBO_AS_BSPC         │ A+S  │ KC_BSPC    │ MED     │ BASE VIM         │
  *  │  COMBO_ZX_DEL          │ Z+X  │ KC_DEL     │ MED     │ BASE VIM         │
  *  │                        │      │            │         │                  │
- *  │  COMBO_CV_MINS         │ C+V  │ KC_MINS    │ MED     │ BASE VIM         │
- *  │  COMBO_FV_EQUAL        │ F+V  │ KC_EQUAL   │ MED     │ BASE VIM         │
- *  │  COMBO_DC_ASSEQL       │ D+C  │ ASSEQL  := │ MED     │ BASE VIM         │
- *  │// TODO Make this macro │      │            │         │                  │
- *  │  COMBO_XC_             │ X+C  │ KC_        │ MED     │ BASE VIM         │
+ *  │  COMBO_CV_MINS         │ C+V  │ KC_MINS    │ SLOW    │ BASE VIM         │
+ *  │  COMBO_ZX_DEL          │ Z+X  │ KC_DEL     │ SLOW    │ BASE VIM         │
+ *  │  COMBO_DC_ASSEQL       │ D+C  │ :=         │ SLOW    │ BASE VIM         │
+ *  │  COMBO_GB_LEADER       │ G+B  │ QK_LEADER  │ SLOW    │ BASE VIM         │
+ *  │  // XC - Reserved for future use                     │                  │
  *  │                        │      │            │         │                  │
  *  │  COMBO_KL_SQT          │ K+L  │ KC_QUOT    │ MED     │ BASE VIM         │
  *  │  COMBO_JKL_DQT         │ JKL  │ "          │ MED     │ BASE VIM         │
@@ -144,10 +144,12 @@ enum combo_names {
     COMBO_FG_TAB,      // F + G        = TAB
     COMBO_DF_UNDS,     // D + F        = Underscore
     COMBO_CV_MINS,     // C + V        = Minus
+    COMBO_ZX_DEL,      // Z + X        = Delete
+    COMBO_DC_ASSEQL,   // D + C        = := (assignment operator)
+    COMBO_GB_LEADER,   // G + B        = Leader key start
 
     // COMBO_SD_MINS,     // C + V        = Minus
 
-    // COMBO_ZX_XXX,      // Z + X        = LEADER START
     // COMBO_XC_XXX,      // X + C        =
     // COMBO_VB_XXX,      // V + B        =
 
@@ -214,6 +216,9 @@ const uint16_t PROGMEM combo_jk[] = {HM_J, HM_K, COMBO_END};
 const uint16_t PROGMEM combo_lscln[] = {HM_L, HM_SCLN, COMBO_END};
 const uint16_t PROGMEM combo_df[] = {HM_D, HM_F, COMBO_END};
 const uint16_t PROGMEM combo_cv[] = {KC_C, KC_V, COMBO_END};
+const uint16_t PROGMEM combo_zx[] = {KC_Z, KC_X, COMBO_END};
+const uint16_t PROGMEM combo_dc[] = {HM_D, KC_C, COMBO_END};
+const uint16_t PROGMEM combo_gb[] = {KC_G, KC_B, COMBO_END};
 const uint16_t PROGMEM combo_fg[] = {HM_F, KC_G, COMBO_END};
 const uint16_t PROGMEM combo_as[] = {HM_A, HM_S, COMBO_END};
 
@@ -270,6 +275,11 @@ combo_t key_combos[COMBO_LENGTH] = {
     [COMBO_FG_TAB] = COMBO(combo_fg, KC_TAB),
     [COMBO_AS_BSPC] = COMBO(combo_as, KC_BSPC),
     [COMBO_CV_MINS] = COMBO(combo_cv, KC_MINS),
+    [COMBO_ZX_DEL] = COMBO(combo_zx, KC_DEL),
+    [COMBO_DC_ASSEQL] = COMBO(combo_dc, KC_ASSIGN),
+#ifdef LEADER_ENABLE
+    [COMBO_GB_LEADER] = COMBO(combo_gb, QK_LEADER),
+#endif
     [COMBO_KL_SQT] = COMBO(combo_kl, KC_QUOT),
 
     [COMBO_JKL_DQT] = COMBO_ACTION(combo_jkl),
@@ -376,6 +386,7 @@ uint16_t get_combo_term(uint16_t combo_index, combo_t *combo) {
         return COMBO_FAST; // 18ms
 
     // Three-finger layer switches need more time
+    // Bottom row combos get forgiving timing too
     case COMBO_QWE_TO_BASE:
     case COMBO_ASD_TO_GAMING:
     case COMBO_YUI_TO_GAMING2:
@@ -384,6 +395,10 @@ uint16_t get_combo_term(uint16_t combo_index, combo_t *combo) {
     case COMBO_HJK_TO_GAMING:
     case COMBO_NM_COMM_TO_VIM:
     case COMBO_NM_COMM_TO_BASE:
+    case COMBO_ZX_DEL:
+    case COMBO_CV_MINS:
+    case COMBO_DC_ASSEQL:
+    case COMBO_GB_LEADER:
         return COMBO_SLOW; // 50ms
 
     // Everything else uses medium timing
@@ -487,6 +502,9 @@ bool combo_should_trigger(uint16_t combo_index, combo_t *combo,
     case COMBO_FG_TAB:
     case COMBO_AS_BSPC:
     case COMBO_CV_MINS:
+    case COMBO_ZX_DEL:
+    case COMBO_DC_ASSEQL:
+    case COMBO_GB_LEADER:
     case COMBO_KL_SQT:
     case COMBO_NM_PARENS:
     case COMBO_MCOMM_BRACES:

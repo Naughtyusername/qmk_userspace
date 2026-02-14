@@ -27,6 +27,7 @@ COMBO_ENABLE = yes          # For J+K = Escape
 KEY_OVERRIDE_ENABLE = yes   # For Shift+Bksp = Delete
 TRI_LAYER_ENABLE = yes      # For LOWER + RAISE = ADJUST
 EXTRAKEY_ENABLE = yes       # Media keys, volume control
+LEADER_ENABLE = yes         # Sequence-based shortcuts
 
 # NKRO for unlimited simultaneous keys
 NKRO_ENABLE = yes
