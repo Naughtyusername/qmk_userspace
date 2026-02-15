@@ -70,16 +70,15 @@
  *  │  COMBO_YH_NUMWORD      │ Y+H  │ NUMWORD    │ MED     │ BASE VIM         │
  *  │  COMBO_JK_ESC          │ J+K  │ KC_ESC     │ MED     │ BASE VIM         │
  *  │  COMBO_LSCLN_ENT       │ L+;  │ KC_ENT     │ MED     │ BASE VIM         │
- *  │  COMBO_FG_TAB          │ F+G  │ KC_TAB     │ MED     │ BASE VIM         │
- *  │  COMBO_DF_UNDS         │ D+F  │ KC_UNDS    │ MED     │ BASE VIM         │
- *  │  COMBO_VB_SPACE        │ V+B  │ KC_SPACE   │ MED     │ BASE VIM         │
- *  │  COMBO_AS_BSPC         │ A+S  │ KC_BSPC    │ MED     │ BASE VIM         │
- *  │  COMBO_ZX_DEL          │ Z+X  │ KC_DEL     │ MED     │ BASE VIM         │
+ *  │  COMBO_FG_TAB          │ F+G  │ KC_TAB     │ MED     │ BASE VIM LOWER   │
+ *  │  COMBO_DF_UNDS         │ D+F  │ KC_UNDS    │ MED     │ BASE VIM LOWER   │
+ *  │  COMBO_AS_BSPC         │ A+S  │ KC_BSPC    │ MED     │ BASE VIM LOWER   │
+ *  │  COMBO_HN_EQUAL        │ H+N  │ KC_EQUAL   │ MED     │ BASE VIM LOWER   │
  *  │                        │      │            │         │                  │
- *  │  COMBO_CV_MINS         │ C+V  │ KC_MINS    │ SLOW    │ BASE VIM         │
- *  │  COMBO_ZX_DEL          │ Z+X  │ KC_DEL     │ SLOW    │ BASE VIM         │
- *  │  COMBO_DC_ASSEQL       │ D+C  │ :=         │ SLOW    │ BASE VIM         │
- *  │  COMBO_GB_LEADER       │ G+B  │ QK_LEADER  │ SLOW    │ BASE VIM         │
+ *  │  COMBO_CV_MINS         │ C+V  │ KC_MINS    │ SLOW    │ BASE VIM LOWER   │
+ *  │  COMBO_ZX_DEL          │ Z+X  │ KC_DEL     │ SLOW    │ BASE VIM LOWER   │
+ *  │  COMBO_DC_ASSEQL       │ D+C  │ :=         │ SLOW    │ BASE VIM LOWER   │
+ *  │  COMBO_GB_LEADER       │ G+B  │ QK_LEADER  │ SLOW    │ BASE VIM LOWER   │
  *  │  // XC - Reserved for future use                     │                  │
  *  │                        │      │            │         │                  │
  *  │  COMBO_KL_SQT          │ K+L  │ KC_QUOT    │ MED     │ BASE VIM         │
@@ -125,7 +124,7 @@
  *    2-key:  ZX, XC, VB, SD       (left hand)
  yet)
  *    3-key:  ZXC, ERT, DFG, CVB, IOP, ,./
- *    vert:   QA, WS, ED, RF, TG, UJ, IK, OL, P;, HN, L., ;/
+ *    vert:   QA, WS, ED, RF, TG, UJ, IK, OL, P;, L., ;/
  *    cross:  A;, SL, DK, FJ
  *
  * ==========================================================================
@@ -139,6 +138,7 @@ enum combo_names {
     COMBO_JK_ESC,      // J + K        = Escape
     COMBO_LSCLN_ENT,   // L + ;        = Enter
     COMBO_AS_BSPC,     // A + S        = Backspace
+    COMBO_HN_EQUAL,    // H + N        = Equals
 
     COMBO_KL_SQT,      // K + L        = Single Quote
     COMBO_FG_TAB,      // F + G        = TAB
@@ -221,6 +221,7 @@ const uint16_t PROGMEM combo_dc[] = {HM_D, KC_C, COMBO_END};
 const uint16_t PROGMEM combo_gb[] = {KC_G, KC_B, COMBO_END};
 const uint16_t PROGMEM combo_fg[] = {HM_F, KC_G, COMBO_END};
 const uint16_t PROGMEM combo_as[] = {HM_A, HM_S, COMBO_END};
+const uint16_t PROGMEM combo_hn[] = {KC_H, KC_N, COMBO_END};
 
 const uint16_t PROGMEM combo_kl[] = {HM_K, HM_L, COMBO_END};
 const uint16_t PROGMEM combo_yh[] = {KC_Y, KC_H, COMBO_END};
@@ -274,6 +275,7 @@ combo_t key_combos[COMBO_LENGTH] = {
     [COMBO_DF_UNDS] = COMBO(combo_df, KC_UNDS),
     [COMBO_FG_TAB] = COMBO(combo_fg, KC_TAB),
     [COMBO_AS_BSPC] = COMBO(combo_as, KC_BSPC),
+    [COMBO_HN_EQUAL] = COMBO(combo_hn, KC_EQL),
     [COMBO_CV_MINS] = COMBO(combo_cv, KC_MINS),
     [COMBO_ZX_DEL] = COMBO(combo_zx, KC_DEL),
     [COMBO_DC_ASSEQL] = COMBO(combo_dc, KC_ASSIGN),
@@ -493,18 +495,23 @@ bool combo_should_trigger(uint16_t combo_index, combo_t *combo,
     case COMBO_NM_COMM_TO_BASE:
         return layer_state_is(_VIM);
 
+    // ===== UTILITY COMBOS (LEFT HAND) =====
+    // These work on BASE, VIM, and LOWER (useful while holding LOWER with right hand)
+    case COMBO_DF_UNDS:
+    case COMBO_FG_TAB:
+    case COMBO_AS_BSPC:
+    case COMBO_HN_EQUAL:
+    case COMBO_CV_MINS:
+    case COMBO_ZX_DEL:
+    case COMBO_DC_ASSEQL:
+    case COMBO_GB_LEADER:
+        return layer_state_is(_BASE) || layer_state_is(_VIM) || layer_state_is(_LOWER);
+
     // ===== UTILITY & AUTO-PAIR COMBOS =====
     // These work on BASE and VIM only
     case COMBO_HJ_CAPSWORD:
     case COMBO_JK_ESC:
     case COMBO_LSCLN_ENT:
-    case COMBO_DF_UNDS:
-    case COMBO_FG_TAB:
-    case COMBO_AS_BSPC:
-    case COMBO_CV_MINS:
-    case COMBO_ZX_DEL:
-    case COMBO_DC_ASSEQL:
-    case COMBO_GB_LEADER:
     case COMBO_KL_SQT:
     case COMBO_NM_PARENS:
     case COMBO_MCOMM_BRACES:

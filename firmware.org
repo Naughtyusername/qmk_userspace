@@ -23,3 +23,13 @@ this is a wild and weird idea and actually might be a burdern on qmk becuase the
 
 but what we could do for the lower layer is add a bunch of unique to that layer combos. might not be worth it but just thought about it
 [2026-02-08 Sun 02:23]
+
+** TODO we forgot to do vb space in zmk but did it in qmk im pretty sure
+
+[2026-02-13 Fri 22:10]
+
+** TODO yh num layer, if we make that combo pass through we can use it to turn it off also.
+[2026-02-14 Sat 00:27]
+
+** TODO we should make : ^ also do a one shot mod shift that way i dont have to hold shift after to cap the pointer name
+[2026-02-14 Sat 00:51]
