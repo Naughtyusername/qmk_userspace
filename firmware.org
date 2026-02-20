@@ -33,3 +33,11 @@ but what we could do for the lower layer is add a bunch of unique to that layer 
 
 ** TODO we should make : ^ also do a one shot mod shift that way i dont have to hold shift after to cap the pointer name
 [2026-02-14 Sat 00:51]
+
+** TODO THREE_FINGER_COMBOS
+if dfg and cvb aren't used yet we could use them to do _ shift and - shift to make_This_Work-Like that, niche, and probably less value than a different combo perhaps, but certainly in consideration for camel case stuff.
+[2026-02-17 Tue 01:34]
+
+** TODO CAPS word
+should : continue? evaluate continue lists again, (same for numword)
+[2026-02-18 Wed 18:32]
