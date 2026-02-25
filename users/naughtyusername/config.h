@@ -34,7 +34,7 @@
  * FLOW_TAP_TERM: Time window for fast typing to register as taps
  */
 #define CHORDAL_HOLD
-// #define PERMISSIVE_HOLD
+#define PERMISSIVE_HOLD
 // #define SPECULATIVE_HOLD
 
 // Flow Tap prevents misfires during fast typing
@@ -51,7 +51,7 @@
  *
  * TAPPING_TERM_PER_KEY: Enables get_tapping_term() function for per-key tuning
  */
-#define TAPPING_TERM 125
+#define TAPPING_TERM 175
 #define TAPPING_TERM_PER_KEY
 
 // Quick tap: If you tap a key twice rapidly, the second tap is always a tap
