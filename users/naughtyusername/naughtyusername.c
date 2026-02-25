@@ -96,6 +96,7 @@ bool is_flow_tap_key(uint16_t keycode) {
     case KC_COMM:
     case KC_SCLN:
     case KC_SLSH:
+    case KC_SPC:
         return true;
     }
     return false;

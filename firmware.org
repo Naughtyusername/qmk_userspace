@@ -41,3 +41,6 @@ if dfg and cvb aren't used yet we could use them to do _ shift and - shift to ma
 ** TODO CAPS word
 should : continue? evaluate continue lists again, (same for numword)
 [2026-02-18 Wed 18:32]
+
+** TODO We did pick up the GB for the bullet tiny kb, we should write out some firmware for that soon, it will use a different keymap, slightly.
+[2026-02-21 Sat 22:03]
