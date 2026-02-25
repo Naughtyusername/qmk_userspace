@@ -56,8 +56,8 @@
 
 // Quick tap: If you tap a key twice rapidly, the second tap is always a tap
 // This prevents accidental holds when double-tapping
-// Commented out to let QMK auto-set it to TAPPING_TERM
-// #define QUICK_TAP_TERM 145
+// Lower value = faster typist, higher = more forgiving. 120ms allows tight rolling.
+#define QUICK_TAP_TERM 120
 
 /* ==========================================================================
  * TRI-LAYER

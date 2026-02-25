@@ -54,6 +54,24 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 }
 
 /* ==========================================================================
+ * QUICK TAP TERM PER KEY
+ * ==========================================================================
+ * Quick tap prevents accidental holds when double-tapping a key.
+ * For layer keys (Space/Enter), we disable it so every hold is intentional.
+ * Flow Tap already handles rolling protection for these keys.
+ */
+uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case SP_RAI:
+        case SP_LOW:
+        case ENT_LOW:
+            return 0; // disable quick tap — every hold is intentional, Flow Tap handles rolling
+        default:
+            return QUICK_TAP_TERM;
+    }
+}
+
+/* ==========================================================================
  * CHORDAL HOLD CONFIGURATION
  * ==========================================================================
  * Chordal hold is a QMK feature that helps with home row mods.
