@@ -51,12 +51,13 @@
  *
  * TAPPING_TERM_PER_KEY: Enables get_tapping_term() function for per-key tuning
  */
-#define TAPPING_TERM 175
+#define TAPPING_TERM 125
 #define TAPPING_TERM_PER_KEY
 
 // Quick tap: If you tap a key twice rapidly, the second tap is always a tap
 // This prevents accidental holds when double-tapping
-#define QUICK_TAP_TERM 150
+// Commented out to let QMK auto-set it to TAPPING_TERM
+// #define QUICK_TAP_TERM 145
 
 /* ==========================================================================
  * TRI-LAYER
@@ -104,6 +105,14 @@
  */
 #define LEADER_TIMEOUT 300
 #define LEADER_PER_KEY_TIMING
+
+/* ==========================================================================
+ * DEBOUNCE
+ * ==========================================================================
+ * Default is 5ms. Increasing helps with switch chatter/ghosting.
+ * The sweep (wireless) may need higher debounce.
+ */
+#define DEBOUNCE 10
 
 /* ==========================================================================
  * MOUSE KEYS (if enabled)
