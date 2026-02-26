@@ -10,6 +10,33 @@ A unified QMK userspace providing a consistent typing experience across multiple
 - **Planck EZ Glow** (47 keys) - Ortholinear with RGB matrix
 - **Zima** (12 keys) - Macropad with encoder and OLED
 
+## Keymaps
+
+<details>
+<summary>Kyria — 50-key split with encoders</summary>
+<img src="images/keymaps/kyria.svg" width="900">
+</details>
+
+<details>
+<summary>Mitosis — Wireless 36-key split</summary>
+<img src="images/keymaps/mitosis.svg" width="900">
+</details>
+
+<details>
+<summary>Corne — 42-key split with display/trackpad</summary>
+<img src="images/keymaps/corne.svg" width="900">
+</details>
+
+<details>
+<summary>Zima — 12-key macropad</summary>
+<img src="images/keymaps/zima.svg" width="900">
+</details>
+
+<details>
+<summary>Planck — Ortholinear 48-key with RGB</summary>
+<img src="images/keymaps/planck.svg" width="900">
+</details>
+
 ## Core Features
 
 - **Home Row Mods (GACS)** - Gui/Alt/Ctrl/Shift on home row with intelligent timing

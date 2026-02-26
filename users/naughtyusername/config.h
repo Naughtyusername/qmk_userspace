@@ -34,7 +34,7 @@
  * FLOW_TAP_TERM: Time window for fast typing to register as taps
  */
 #define CHORDAL_HOLD
-#define PERMISSIVE_HOLD
+// #define PERMISSIVE_HOLD
 // #define SPECULATIVE_HOLD
 
 // Flow Tap prevents misfires during fast typing
