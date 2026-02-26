@@ -112,7 +112,7 @@
  * Default is 5ms. Increasing helps with switch chatter/ghosting.
  * The sweep (wireless) may need higher debounce.
  */
-#define DEBOUNCE 10
+#define DEBOUNCE 12
 
 /* ==========================================================================
  * MOUSE KEYS (if enabled)
