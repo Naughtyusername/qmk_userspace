@@ -22,6 +22,7 @@ CAPS_WORD_ENABLE = yes
 TAP_DANCE_ENABLE = no      # Disabled to save space (~500 bytes)
 COMBO_ENABLE = yes
 KEY_OVERRIDE_ENABLE = no   # Disabled to save space (~300 bytes)
+LEADER_ENABLE = no         # Disabled to save space (~400 bytes) - reclaim for eager debounce
 # too much space on kyria :( - saves about 1200 bytes turning this off
 MOUSEKEY_ENABLE = no
 

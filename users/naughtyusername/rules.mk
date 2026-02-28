@@ -27,7 +27,7 @@ COMBO_ENABLE = yes          # For J+K = Escape
 KEY_OVERRIDE_ENABLE = yes   # For Shift+Bksp = Delete
 TRI_LAYER_ENABLE = yes      # For LOWER + RAISE = ADJUST
 EXTRAKEY_ENABLE = yes       # Media keys, volume control
-LEADER_ENABLE = yes         # Sequence-based shortcuts
+LEADER_ENABLE ?= yes        # Sequence-based shortcuts (keymaps can override)
 
 # NKRO for unlimited simultaneous keys
 NKRO_ENABLE = yes
@@ -60,3 +60,13 @@ ifneq ($(filter $(strip $(KEYBOARD)), splitkb/halcyon/kyria/rev4 \
                                       splitkb/halcyon/corne/rev2),)
     include $(USER_PATH)/splitkb/rules.mk
 endif
+
+# =============================================================================
+# DEBOUNCE
+# =============================================================================
+# Asymmetric eager/defer per-key debounce:
+#   Press  = reported instantly (0ms latency), key locked for DEBOUNCE ms
+#   Release = deferred (waits DEBOUNCE ms of stability)
+# Matches ZMK eager-press behavior, eliminates ~12ms press latency from
+# the default sym_defer_g algorithm.
+DEBOUNCE_TYPE = asym_eager_defer_pk

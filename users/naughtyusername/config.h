@@ -34,7 +34,7 @@
  * FLOW_TAP_TERM: Time window for fast typing to register as taps
  */
 #define CHORDAL_HOLD
-// #define PERMISSIVE_HOLD
+#define PERMISSIVE_HOLD
 // #define SPECULATIVE_HOLD
 
 // Flow Tap prevents misfires during fast typing
@@ -54,10 +54,9 @@
 #define TAPPING_TERM 175
 #define TAPPING_TERM_PER_KEY
 
-// Quick tap: If you tap a key twice rapidly, the second tap is always a tap
-// This prevents accidental holds when double-tapping
-// Lower value = faster typist, higher = more forgiving. 135ms balances speed and roll tolerance.
-#define QUICK_TAP_TERM 135
+// Quick tap: If you tap a key twice within this window, second is always a tap.
+// 150ms matches ZMK quick-tap for consistent cross-firmware behavior.
+#define QUICK_TAP_TERM 150
 
 /* ==========================================================================
  * TRI-LAYER
@@ -109,10 +108,10 @@
 /* ==========================================================================
  * DEBOUNCE
  * ==========================================================================
- * Default is 5ms. Increasing helps with switch chatter/ghosting.
- * The sweep (wireless) may need higher debounce.
+ * With asym_eager_defer_pk, this only affects RELEASE debounce (press is
+ * instant). 8ms matches ZMK wireless boards. Override per-board if needed.
  */
-#define DEBOUNCE 12
+#define DEBOUNCE 8
 
 /* ==========================================================================
  * MOUSE KEYS (if enabled)
