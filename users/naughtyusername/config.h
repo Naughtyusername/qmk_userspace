@@ -40,7 +40,7 @@
 // Flow Tap prevents misfires during fast typing
 // Lower = more aggressive (may miss intended holds)
 // Higher = less aggressive (may have more misfires)
-#define FLOW_TAP_TERM 150
+#define FLOW_TAP_TERM 125
 
 /* ==========================================================================
  * TAPPING TERMS
@@ -90,6 +90,9 @@
  */
 // #define ONESHOT_TAP_TOGGLE 2 // i dont think we need this at the moment. can
 // make ifdef tho TODO
+#ifndef ONESHOT_TIMEOUT
+#define ONESHOT_TIMEOUT 1000
+#endif
 
 /* ==========================================================================
  * LEADER KEY
@@ -143,3 +146,11 @@
 #ifdef NKRO_ENABLE
 #define NKRO_DEFAULT_ON true
 #endif
+
+/* ==========================================================================
+ * USB POLLING RATE
+ * ==========================================================================
+ * QMK defaults to 10ms (100Hz). 1ms = 1000Hz polling, matches ZMK.
+ * Eliminates up to 9ms of latency per keypress.
+ */
+#define USB_POLLING_INTERVAL_MS 1

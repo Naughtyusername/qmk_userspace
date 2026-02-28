@@ -460,11 +460,12 @@ MS_BTN1, MS_BTN2, _______, _______, _______
  * Format: 5 left keys, spacebar, 5 right keys (11 total)
  *
  * Base layer bottom row:
- * Ctrl  GUI   Alt   CapsW Raise    [Space]    Lower Left  Down  Up   Right
+ * GUI   Alt   Ctrl  Shift Raise    [Space]    Lower Left  Down  Up   Right
+ * (GACS one-shot mods mirror HRM order on ASDF)
  */
 // clang-format off
 #define ___PLANCK_BOTTOM_BASE___                                               \
-    KC_LCTL, KC_LGUI, KC_LALT, CW_TOGG, MO(_RAISE),                            \
+    OSM(MOD_LGUI), OSM(MOD_LALT), OSM(MOD_LCTL), OSM(MOD_LSFT), MO(_RAISE),   \
     KC_SPC,                                                                    \
     MO(_LOWER), KC_LEFT, KC_DOWN, KC_UP, KC_RGHT
 
