@@ -8,7 +8,8 @@ USER_NAME := naughtyusername
 OLED_ENABLE = yes          # Enable OLED display
 ENCODER_ENABLE = no       # Enabled - we have enough space now!
 RGB_MATRIX_ENABLE = no     # Disable keyboard RGB matrix, as it is enabled by default on rev3
-RGBLIGHT_ENABLE = yes      # Enable keyboard RGB underglow
+# RGBLIGHT_ENABLE = yes    # Disabled — forever being fucked by bytes on ATmega32U4
+RGBLIGHT_ENABLE = no
 
 # Custom changes - above is the defaults - 2026, first time back into qmk in 6 years!
 SPLIT_KEYBOARD = yes

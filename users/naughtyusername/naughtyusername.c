@@ -48,6 +48,11 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     case HM_K:
     case HM_L:
         return 175;
+
+    // SYS layer access — 1 second deliberate hold
+    case LT(_SYS, KC_Z):
+    case LT(_SYS, KC_SLSH):
+        return 1000;
     default:
         return TAPPING_TERM; // Use default from config.h
     }
@@ -65,6 +70,8 @@ uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record) {
         case SP_RAI:
         case SP_LOW:
         case ENT_LOW:
+        case LT(_SYS, KC_Z):
+        case LT(_SYS, KC_SLSH):
             return 0; // disable quick tap — every hold is intentional, Flow Tap handles rolling
         default:
             return QUICK_TAP_TERM;

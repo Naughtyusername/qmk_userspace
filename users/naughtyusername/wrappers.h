@@ -77,11 +77,11 @@
  */
 #define ___BASE_L1___ KC_Q, KC_W, KC_E, KC_R, KC_T
 #define ___BASE_L2___ HM_A, HM_S, HM_D, HM_F, KC_G
-#define ___BASE_L3___ KC_Z, KC_X, KC_C, KC_V, KC_B
+#define ___BASE_L3___ LT(_SYS, KC_Z), KC_X, KC_C, KC_V, KC_B
 
 #define ___BASE_R1___ KC_Y, KC_U, KC_I, KC_O, KC_P
 #define ___BASE_R2___ KC_H, HM_J, HM_K, HM_L, HM_SCLN
-#define ___BASE_R3___ KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH
+#define ___BASE_R3___ KC_N, KC_M, KC_COMM, KC_DOT, LT(_SYS, KC_SLSH)
 
 /* --------------------------------------------------------------------------
  * VIM LAYER - Plain QWERTY without home row mods (for Vimium, etc.)
