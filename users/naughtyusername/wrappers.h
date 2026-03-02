@@ -353,12 +353,12 @@
  * ==========================================================================
  * The Corne has fewer thumb keys, so we need to prioritize.
  *
- * Left:  Esc    Bksp   Spc/Rai
- * Right: Ent/Lo  '     Tab
+ * Left:  OCtl   Bksp   Spc/Rai
+ * Right: Ent/Lo  Tab/Fn  OSft
  */
 
 #define ___CORNE_THUMB_BASE___                                                 \
-    KC_ESC, KC_BSPC, SP_RAI, ENT_LOW, KC_QUOT, KC_TAB
+    OSM(MOD_LCTL), KC_BSPC, SP_RAI, ENT_LOW, FUN_TAB, OSM(MOD_LSFT)
 
 #define ___CORNE_THUMB_RAISE___                                                \
     _______, KC_HMDR, _______, SP_LOW, KC_ASSIGN, KC_ARROP
@@ -405,9 +405,10 @@
  */
 
 // clang-format off
+// Left:  ___  ___  OCtl  Bksp  Spc/Rai  |  Right: Ent/Low  Tab/Fn  OSft  ___  ___
 #define ___KYRIA_THUMB_BASE___                                                 \
-_______, _______, KC_ESC, KC_BSPC, SP_RAI,                                     \
-ENT_LOW, KC_QUOT, KC_TAB, _______, _______
+_______, _______, OSM(MOD_LCTL), KC_BSPC, SP_RAI,                              \
+ENT_LOW, FUN_TAB, OSM(MOD_LSFT), _______, _______
 
 #define ___KYRIA_THUMB_RAISE___                                                \
 _______, _______, _______, KC_HMDR, _______,                                   \

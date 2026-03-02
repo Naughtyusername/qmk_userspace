@@ -64,9 +64,11 @@
  * When LOWER and RAISE are both active, automatically activate ADJUST.
  * This is handled by update_tri_layer_state() in naughtyusername.c
  */
-#define TRI_LAYER_LOWER_LAYER 1  // _LOWER
-#define TRI_LAYER_UPPER_LAYER 2  // _RAISE
-#define TRI_LAYER_ADJUST_LAYER 4 // _ADJUST
+// Must match enum userspace_layers in naughtyusername.h
+// These are raw numbers because tri_layer.c doesn't include our headers.
+#define TRI_LAYER_LOWER_LAYER 2  // _LOWER
+#define TRI_LAYER_UPPER_LAYER 3  // _RAISE
+#define TRI_LAYER_ADJUST_LAYER 5 // _ADJUST
 
 /* ==========================================================================
  * COMBOS
