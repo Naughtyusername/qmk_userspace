@@ -24,6 +24,7 @@ SRC += $(USER_PATH)/numword.c
 TAP_DANCE_ENABLE = no       # Probs remove
 CAPS_WORD_ENABLE = yes      # Better than Caps Lock
 COMBO_ENABLE = yes          # For J+K = Escape
+REPEAT_KEY_ENABLE = yes     # QK_REP - repeat last key (ER combo on BASE)
 KEY_OVERRIDE_ENABLE = yes   # For Shift+Bksp = Delete
 TRI_LAYER_ENABLE = yes      # For LOWER + RAISE = ADJUST
 EXTRAKEY_ENABLE = yes       # Media keys, volume control

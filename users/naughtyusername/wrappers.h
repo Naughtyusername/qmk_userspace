@@ -115,15 +115,15 @@
 #define ___RAISE_R3___ KC_RCBR, KC_AT, KC_LT, KC_GT, KC_QUES
 
 /* --------------------------------------------------------------------------
- * LOWER LAYER - Numbers and Media
+ * LOWER LAYER - Symbols (mirrors RAISE left) + Numpad (right)
  * --------------------------------------------------------------------------
- *  1     2     3     4     5          6     7     8     9     0
- *  <=    <     *     -     =          .     4     5     6
- *  >=    >     /     +     ==         ,     1     2     3
+ *  \     $     |     -     [          6     7     8     9     0
+ *  ~     &     *     =     (          .     4     5     6     ,
+ *  `     !     '     "     {          +     1     2     3     -
  */
-#define ___LOWER_L1___ KC_1, KC_2, KC_3, KC_4, KC_5
-#define ___LOWER_L2___ KC_LTEQ, KC_LT, KC_ASTR, KC_MINS, KC_EQL
-#define ___LOWER_L3___ KC_GTEQ, KC_GT, KC_SLSH, KC_PLUS, KC_EQEQ
+#define ___LOWER_L1___ KC_BSLS, KC_DLR, KC_PIPE, KC_MINS, KC_LBRC
+#define ___LOWER_L2___ KC_TILD, KC_AMPR, KC_ASTR, KC_EQL, KC_LPRN
+#define ___LOWER_L3___ KC_GRV, KC_EXLM, KC_QUOT, KC_DQT, KC_LCBR
 
 #define ___LOWER_R1___ KC_6, KC_7, KC_8, KC_9, KC_0
 #define ___LOWER_R2___ KC_DOT, KC_4, KC_5, KC_6, KC_COMM

@@ -73,7 +73,7 @@
  *  │  COMBO_FG_TAB          │ F+G  │ KC_TAB     │ MED     │ BASE VIM LOWER   │
  *  │  COMBO_DF_UNDS         │ D+F  │ KC_UNDS    │ MED     │ BASE VIM LOWER   │
  *  │  COMBO_AS_BSPC         │ A+S  │ KC_BSPC    │ MED     │ BASE VIM LOWER   │
- *  │  COMBO_HN_EQUAL        │ H+N  │ KC_EQUAL   │ MED     │ BASE VIM LOWER   │
+ *  │  COMBO_UI_EQUAL         │ U+I  │ KC_EQL     │ FAST    │ BASE LOWER       │
  *  │                        │      │            │         │                  │
  *  │  COMBO_CV_MINS         │ C+V  │ KC_MINS    │ SLOW    │ BASE VIM LOWER   │
  *  │  COMBO_ZX_DEL          │ Z+X  │ KC_DEL     │ SLOW    │ BASE VIM LOWER   │
@@ -96,12 +96,16 @@
  *  │ ONE-SHOT MODS (GACS)   │      │            │         │                  │
  *  │  COMBO_RT_OSM_LSFT     │ R+T  │ OSM SHIFT  │ FAST    │ BASE VIM         │
  *  │  COMBO_YU_OSM_RSFT     │ Y+U  │ OSM SHIFT  │ FAST    │ BASE VIM         │
- *  │  COMBO_QW_OSM_LGUI     │ Q+W  │ OSM GUI    │ FAST    │ VIM (freed BASE) │
- *  │  COMBO_WE_OSM_LALT     │ W+E  │ OSM ALT    │ FAST    │ VIM (freed BASE) │
- *  │  COMBO_ER_OSM_LCTL     │ E+R  │ OSM CTRL   │ FAST    │ VIM (freed BASE) │
- *  │  COMBO_UI_OSM_RCTL     │ U+I  │ OSM CTRL   │ FAST    │ VIM (freed BASE) │
- *  │  COMBO_IO_OSM_RALT     │ I+O  │ OSM ALT    │ FAST    │ VIM (freed BASE) │
- *  │  COMBO_OP_OSM_RGUI     │ O+P  │ OSM GUI    │ FAST    │ VIM (freed BASE) │
+ *  │  COMBO_QW_OSM_LGUI     │ Q+W  │ OSM GUI    │ FAST    │ VIM              │
+ *  │  COMBO_QW_NEQL         │ Q+W  │ !=         │ FAST    │ BASE             │
+ *  │  COMBO_WE_OSM_LALT     │ W+E  │ OSM ALT    │ FAST    │ VIM              │
+ *  │  COMBO_ER_OSM_LCTL     │ E+R  │ OSM CTRL   │ FAST    │ VIM              │
+ *  │  COMBO_ER_REPEAT       │ E+R  │ QK_REP     │ FAST    │ BASE             │
+ *  │  COMBO_UI_OSM_RCTL     │ U+I  │ OSM CTRL   │ FAST    │ VIM              │
+ *  │  COMBO_UI_EQUAL         │ U+I  │ KC_EQL     │ FAST    │ BASE LOWER       │
+ *  │  COMBO_IO_OSM_RALT     │ I+O  │ OSM ALT    │ FAST    │ VIM              │
+ *  │  COMBO_IO_COLON        │ I+O  │ KC_COLN    │ FAST    │ BASE             │
+ *  │  COMBO_OP_OSM_RGUI     │ O+P  │ OSM GUI    │ FAST    │ VIM              │
  *  ├────────────────────────┼──────┼────────────┼─────────┼──────────────────┤
  *  │ LAYER SWITCHING        │      │            │         │                  │
  *  │  COMBO_QWE_TO_BASE     │ QWE  │ TO(BASE)   │ SLOW    │ !BASE (anywhere) │
@@ -123,9 +127,9 @@
  *
  *  OPEN SLOTS (no combo assigned):
  *    2-key:  XC, SD       (left hand)
- *    2-key:  QW, WE, ER, UI, IO, OP  (top row — AVAILABLE ON BASE ONLY, reserved for future use)
+ *    2-key:  WE, OP  (top row — AVAILABLE ON BASE ONLY)
  *    3-key:  ZXC, ERT, DFG, CVB, IOP, ,./
- *    vert:   QA, WS, ED, RF, TG, UJ, IK, OL, P;, L., ;/
+ *    vert:   QA, WS, ED, RF, TG, HN, UJ, IK, OL, P;, L., ;/
  *    cross:  A;, SL, DK, FJ
  *
  * ==========================================================================
@@ -139,7 +143,7 @@ enum combo_names {
     COMBO_JK_ESC,      // J + K        = Escape
     COMBO_LSCLN_ENT,   // L + ;        = Enter
     COMBO_AS_BSPC,     // A + S        = Backspace
-    COMBO_HN_EQUAL,    // H + N        = Equals
+    COMBO_UI_EQUAL,    // U + I        = Equals (BASE/LOWER, shares keys with UI_OSM_RCTL)
 
     COMBO_KL_SQT,      // K + L        = Single Quote
     COMBO_FG_TAB,      // F + G        = TAB
@@ -165,6 +169,11 @@ enum combo_names {
     COMBO_COMMDOT_BRACKETS, // , + . = [] with cursor inside
     COMBO_KCOMM_DQUOTES,    // K + , = "" with cursor inside
     COMBO_JM_SQUOTES,       // J + M = '' with cursor inside
+
+    // ===== TOP ROW UTILITY COMBOS (BASE only, shares keys with VIM OSM combos) =====
+    COMBO_QW_NEQL,     // Q + W        = != (not equal)
+    COMBO_ER_REPEAT,   // E + R        = Repeat Key
+    COMBO_IO_COLON,    // I + O        = Colon
 
     // ===== ONE-SHOT MODIFIER COMBOS (top row, GACS order) =====
     // Left hand
@@ -223,7 +232,7 @@ const uint16_t PROGMEM combo_gb[] = {KC_G, KC_B, COMBO_END};
 const uint16_t PROGMEM combo_vb[] = {KC_V, KC_B, COMBO_END};
 const uint16_t PROGMEM combo_fg[] = {HM_F, KC_G, COMBO_END};
 const uint16_t PROGMEM combo_as[] = {HM_A, HM_S, COMBO_END};
-const uint16_t PROGMEM combo_hn[] = {KC_H, KC_N, COMBO_END};
+
 
 const uint16_t PROGMEM combo_kl[] = {HM_K, HM_L, COMBO_END};
 const uint16_t PROGMEM combo_yh[] = {KC_Y, KC_H, COMBO_END};
@@ -277,7 +286,7 @@ combo_t key_combos[COMBO_LENGTH] = {
     [COMBO_DF_UNDS] = COMBO(combo_df, KC_UNDS),
     [COMBO_FG_TAB] = COMBO(combo_fg, KC_TAB),
     [COMBO_AS_BSPC] = COMBO(combo_as, KC_BSPC),
-    [COMBO_HN_EQUAL] = COMBO(combo_hn, KC_EQL),
+    [COMBO_UI_EQUAL] = COMBO(combo_ui, KC_EQL),
     [COMBO_CV_MINS] = COMBO(combo_cv, KC_MINS),
     [COMBO_ZX_DEL] = COMBO(combo_zx, KC_DEL),
     [COMBO_DC_ASSEQL] = COMBO(combo_dc, KC_ASSIGN),
@@ -296,6 +305,11 @@ combo_t key_combos[COMBO_LENGTH] = {
     [COMBO_COMMDOT_BRACKETS] = COMBO_ACTION(combo_commdot),
     [COMBO_KCOMM_DQUOTES] = COMBO_ACTION(combo_kcomm),
     [COMBO_JM_SQUOTES] = COMBO_ACTION(combo_jm),
+
+    // ===== TOP ROW UTILITY COMBOS (BASE only) =====
+    [COMBO_QW_NEQL] = COMBO_ACTION(combo_qw),
+    [COMBO_ER_REPEAT] = COMBO(combo_er, QK_REP),
+    [COMBO_IO_COLON] = COMBO(combo_io, KC_COLN),
 
     // ===== ONE-SHOT MODIFIER COMBOS =====
     // Left hand
@@ -370,6 +384,9 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         // Type '' and move cursor inside
         SEND_STRING("''" SS_TAP(X_LEFT));
         break;
+    case COMBO_QW_NEQL:
+        SEND_STRING("!=");
+        break;
     }
 }
 
@@ -381,13 +398,20 @@ uint16_t get_combo_term(uint16_t combo_index, combo_t *combo) {
     switch (combo_index) {
     // One-shot mods need very tight timing to prevent misfires
     // during normal typing (we, er, etc. are common bigrams)
+    // Top row combos must all share COMBO_FAST timing — combos on the same
+    // physical keys need identical timing or the rejected combo's early
+    // resolution can swallow keypresses before the other combo's window fires.
     case COMBO_QW_OSM_LGUI:
+    case COMBO_QW_NEQL:
     case COMBO_WE_OSM_LALT:
     case COMBO_ER_OSM_LCTL:
+    case COMBO_ER_REPEAT:
     case COMBO_RT_OSM_LSFT:
     case COMBO_YU_OSM_RSFT:
     case COMBO_UI_OSM_RCTL:
+    case COMBO_UI_EQUAL:
     case COMBO_IO_OSM_RALT:
+    case COMBO_IO_COLON:
     case COMBO_OP_OSM_RGUI:
         return COMBO_FAST; // 18ms
 
@@ -505,7 +529,6 @@ bool combo_should_trigger(uint16_t combo_index, combo_t *combo,
     case COMBO_DF_UNDS:
     case COMBO_FG_TAB:
     case COMBO_AS_BSPC:
-    case COMBO_HN_EQUAL:
     case COMBO_CV_MINS:
     case COMBO_ZX_DEL:
     case COMBO_DC_ASSEQL:
@@ -535,7 +558,7 @@ bool combo_should_trigger(uint16_t combo_index, combo_t *combo,
     case COMBO_YU_OSM_RSFT:
         return layer_state_is(_BASE) || layer_state_is(_VIM);
 
-    // GUI/ALT/CTRL combos scoped to VIM only (frees top row on BASE for future use)
+    // GUI/ALT/CTRL combos scoped to VIM only (BASE top row used for utility combos)
     case COMBO_QW_OSM_LGUI:
     case COMBO_WE_OSM_LALT:
     case COMBO_ER_OSM_LCTL:
@@ -543,6 +566,16 @@ bool combo_should_trigger(uint16_t combo_index, combo_t *combo,
     case COMBO_IO_OSM_RALT:
     case COMBO_OP_OSM_RGUI:
         return layer_state_is(_VIM);
+
+    // ===== TOP ROW UTILITY COMBOS (BASE only, paired with VIM OSM combos above) =====
+    case COMBO_QW_NEQL:
+    case COMBO_ER_REPEAT:
+    case COMBO_IO_COLON:
+        return layer_state_is(_BASE);
+
+    // ===== EQUALS COMBO (BASE + LOWER) =====
+    case COMBO_UI_EQUAL:
+        return layer_state_is(_BASE) || layer_state_is(_LOWER);
 
     // Default: allow combo
     default:
