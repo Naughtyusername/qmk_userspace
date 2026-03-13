@@ -1,6 +1,7 @@
 # Build artifacts
 .clang_complete
 .clangd
+.claude
 *.cache
 compile_commands.json
 .build/
