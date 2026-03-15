@@ -553,19 +553,24 @@ bool combo_should_trigger(uint16_t combo_index, combo_t *combo,
         return layer_state_is(_BASE) || layer_state_is(_VIM);
 
     // ===== ONE-SHOT MOD COMBOS =====
-    // Shift combos work on BASE and VIM (useful for both regular typing and VIM)
+    // Shift combos: BASE, VIM, and all gaming layers
     case COMBO_RT_OSM_LSFT:
     case COMBO_YU_OSM_RSFT:
-        return layer_state_is(_BASE) || layer_state_is(_VIM);
+        return layer_state_is(_BASE) || layer_state_is(_VIM) ||
+               layer_state_is(_GAMING) || layer_state_is(_GAMING2) || layer_state_is(_ROGUELIKE);
 
-    // GUI/ALT/CTRL combos scoped to VIM only (BASE top row used for utility combos)
+    // GUI/ALT left-hand: VIM only (BASE top row used for utility combos)
     case COMBO_QW_OSM_LGUI:
     case COMBO_WE_OSM_LALT:
+        return layer_state_is(_VIM);
+
+    // CTRL/ALT/GUI: VIM + all gaming layers
     case COMBO_ER_OSM_LCTL:
     case COMBO_UI_OSM_RCTL:
     case COMBO_IO_OSM_RALT:
     case COMBO_OP_OSM_RGUI:
-        return layer_state_is(_VIM);
+        return layer_state_is(_VIM) ||
+               layer_state_is(_GAMING) || layer_state_is(_GAMING2) || layer_state_is(_ROGUELIKE);
 
     // ===== TOP ROW UTILITY COMBOS (BASE only, paired with VIM OSM combos above) =====
     case COMBO_QW_NEQL:
