@@ -161,8 +161,8 @@
 #define ___ADJUST_L3___ _______, _______, KC_MPRV, KC_MPLY, KC_MNXT
 
 #define ___ADJUST_R1___ KC_NUM, _______, _______, _______, NK_TOGG
-#define ___ADJUST_R2___ RGB_TOG, RGB_MOD, RGB_HUI, RGB_VAI, RGB_SPI
-#define ___ADJUST_R3___ _______, RGB_RMOD, RGB_HUD, RGB_VAD, RGB_SPD
+#define ___ADJUST_R2___ RM_TOGG, RM_NEXT, RM_HUEU, RM_VALU, RM_SPDU
+#define ___ADJUST_R3___ _______, RM_PREV, RM_HUED, RM_VALD, RM_SPDD
 
 /* --------------------------------------------------------------------------
  * GAMING LAYER - No home row mods, standard QWERTY
@@ -363,7 +363,7 @@
  */
 
 #define ___CORNE_THUMB_BASE___                                                 \
-    OSM(MOD_LCTL), KC_BSPC, SP_RAI, ENT_LOW, FUN_TAB, OSM(MOD_LSFT)
+    MO(_MOUSE), KC_BSPC, SP_RAI, ENT_LOW, FUN_TAB, OSM(MOD_LSFT)
 
 #define ___CORNE_THUMB_RAISE___                                                \
     _______, KC_HMDR, _______, SP_LOW, KC_ASSIGN, KC_ARROP

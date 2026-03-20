@@ -52,9 +52,8 @@
 // #define POINTING_DEVICE_ROTATION_180
 // #define POINTING_DEVICE_ROTATION_270
 
-// Invert axes if needed
-#define POINTING_DEVICE_INVERT_X
-#define POINTING_DEVICE_INVERT_Y
+// Axis inversion not needed — the module config already sets ROTATION_180
+// which is equivalent to inverting both axes
 
 // Sensitivity - higher = faster cursor
 // Default is 1024, adjust to taste
@@ -69,7 +68,7 @@
 // Attenuation (sensitivity filter) - lower = more sensitive
 // Default is 4X, use 2X for thicker overlays (like curved)
 // Options: CIRQUE_PINNACLE_ATTENUATION_1X, _2X, _3X, _4X
-#define CIRQUE_PINNACLE_ATTENUATION EXTREG__TRACK_ADCCONFIG__ADC_ATTENUATE_2X
+#define CIRQUE_PINNACLE_ATTENUATION EXTREG__TRACK_ADCCONFIG__ADC_ATTENUATE_3X
 
 // Auto mouse layer - automatically switch to mouse layer when trackpad active
 #define POINTING_DEVICE_AUTO_MOUSE_ENABLE

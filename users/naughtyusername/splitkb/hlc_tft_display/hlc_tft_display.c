@@ -1,59 +1,124 @@
 // Copyright 2024 splitkb.com (support@splitkb.com)
+// Copyright 2025 naughtyusername
 // SPDX-License-Identifier: GPL-2.0-or-later
+//
+// Halcyon Corne TFT Display — Cyberpunk-neon theme
+//
+// Layout (135×240 display, portrait):
+//   y=5    Layer name (text, colored per layer)
+//   y=40   WPM counter ("XXX wpm", magenta)
+//   y=75   Lock indicators (Cap Num Scr, cyan)
+//   y=140  Tux pixel art (100×100, cyan/magenta recolor)
+//
+// Idle animation: Game of Life fills the full display after 30s,
+// snaps back to info display on any input.
 
 #include "halcyon.h"
 #include "hlc_tft_display.h"
+#include "naughtyusername.h"
 
 #include "hardware/structs/rosc.h"
+#include <stdio.h>
 
-// Fonts mono2
+// Font
 #include "graphics/fonts/Retron2000-27.qff.h"
 #include "graphics/fonts/Retron2000-underline-27.qff.h"
 
-// Numbers mono2
-#include "graphics/numbers/0.qgf.h"
-#include "graphics/numbers/1.qgf.h"
-#include "graphics/numbers/2.qgf.h"
-#include "graphics/numbers/3.qgf.h"
-#include "graphics/numbers/4.qgf.h"
-#include "graphics/numbers/5.qgf.h"
-#include "graphics/numbers/6.qgf.h"
-#include "graphics/numbers/7.qgf.h"
-#include "graphics/numbers/8.qgf.h"
-#include "graphics/numbers/9.qgf.h"
-#include "graphics/numbers/undef.qgf.h"
+// Tux image (mono4 palette — 4-shade grayscale, recolorable)
+#include "graphics/tux_100.qgf.h"
 
-static const char *caps =        "Caps";
-static const char *num =         "Num";
-static const char *scroll =      "Scroll";
+// ==========================================================================
+// Layer names and colors
+// ==========================================================================
+// These must match the enum userspace_layers order in naughtyusername.h.
+// If you add/remove/reorder layers, update both arrays.
 
-static painter_font_handle_t Retron27;
-static painter_font_handle_t Retron27_underline;
-static painter_image_handle_t layer_number;
+static const char *layer_names[] = {
+    "BASE",    // _BASE
+    "VIM",     // _VIM
+    "LOWER",   // _LOWER
+    "RAISE",   // _RAISE
+    "FUNC",    // _FUNCTION
+    "ADJUST",  // _ADJUST
+    "GAMING",  // _GAMING
+    "GAME2",   // _GAMING2
+    "ROGUE",   // _ROGUELIKE
+    "SYS",     // _SYS
+    "MOUSE",   // _MOUSE
+};
+
+#define NUM_LAYERS (sizeof(layer_names) / sizeof(layer_names[0]))
+
+// HSV color per layer — cyberpunk palette cycling through cyan/blue/purple/magenta
+typedef struct { uint8_t h, s, v; } display_hsv_t;
+
+static const display_hsv_t layer_colors[] = {
+    {128, 255, 255},  // BASE     - Cyan (home base, calm)
+    {170, 255, 255},  // VIM      - Blue
+    {191, 255, 255},  // LOWER    - Purple
+    {213, 255, 255},  // RAISE    - Magenta
+    {148, 255, 255},  // FUNC     - Teal
+    {200, 255, 255},  // ADJUST   - Blue-purple
+    {85,  255, 255},  // GAMING   - Green (stands out from work layers)
+    {85,  200, 200},  // GAMING2  - Green (dimmer variant)
+    {43,  255, 255},  // ROGUE    - Yellow/amber
+    {0,   255, 255},  // SYS      - Red (danger zone)
+    {213, 200, 255},  // MOUSE    - Magenta (lighter)
+};
+
+// Lock indicator labels — single letters to fit cleanly across 135px
+static const char *lock_labels[] = { "C", "N", "S" };
+
+// ==========================================================================
+// Display objects and state
+// ==========================================================================
+
+static painter_font_handle_t font;
+static painter_font_handle_t font_underline;
 
 static uint8_t lcd_surface_fb[SURFACE_REQUIRED_BUFFER_BYTE_SIZE(135, 240, 16)];
-
-int color_value = 0;
 
 painter_device_t lcd;
 painter_device_t lcd_surface;
 
-led_t last_led_usb_state = {0};
-layer_state_t last_layer_state = {0};
+// State tracking — only redraw what changed
+static led_t last_led_state = {0};
+static layer_state_t last_layer = 0;
+static uint8_t last_wpm = 255;  // Impossible initial value forces first draw
+static bool tux_drawn = false;
+static bool idle_mode = false;
+static bool fonts_loaded = false;
 
-#define GRID_WIDTH 27
+// ==========================================================================
+// Layout constants
+// ==========================================================================
+
+#define LAYER_NAME_Y  8
+#define WPM_Y         42
+#define LOCK_Y        76
+#define TUX_X         17    // (135 - 100) / 2 = 17.5, rounded down
+#define TUX_Y         112   // Tight after locks, leaves 28px bottom padding
+#define IDLE_TIMEOUT  30000 // 30 seconds of no input → Game of Life
+
+// ==========================================================================
+// Game of Life — idle animation
+// ==========================================================================
+// Grid fills the entire 135×240 display. Cells are 4px + 1px outline = 5px.
+// 135/5 = 27 columns, 240/5 = 48 rows. Colors cycle through layer palette.
+
+#define GRID_WIDTH  27
 #define GRID_HEIGHT 48
-#define CELL_SIZE 4  // Cell size excluding outline
+#define CELL_SIZE   4
 #define OUTLINE_SIZE 1
+#define INITIAL_ALIVE_PROBABILITY 0.2
 
-// Define the probability factor for initial alive cells
-#define INITIAL_ALIVE_PROBABILITY 0.2  // 20% chance of being alive
+static int color_value = 0;
 
-bool grid[GRID_HEIGHT][GRID_WIDTH];  // Current state
-bool new_grid[GRID_HEIGHT][GRID_WIDTH];  // Next state
-bool changed_grid[GRID_HEIGHT][GRID_WIDTH]; // Tracks changed cells
+static bool grid[GRID_HEIGHT][GRID_WIDTH];
+static bool new_grid[GRID_HEIGHT][GRID_WIDTH];
+static bool changed_grid[GRID_HEIGHT][GRID_WIDTH];
 
-uint32_t get_random_32bit(void) {
+static uint32_t get_random_32bit(void) {
     uint32_t random_value = 0;
     for (int i = 0; i < 32; i++) {
         wait_ms(1);
@@ -62,77 +127,46 @@ uint32_t get_random_32bit(void) {
     return random_value;
 }
 
-void init_grid() {
-    // Initialize grid with alive cells
+static void init_grid(void) {
     for (int y = 0; y < GRID_HEIGHT; y++) {
         for (int x = 0; x < GRID_WIDTH; x++) {
-            grid[y][x] = (rand() < INITIAL_ALIVE_PROBABILITY * RAND_MAX);  // Use probability factor
-            changed_grid[y][x] = true;      // Mark all as changed initially
+            grid[y][x] = (rand() < INITIAL_ALIVE_PROBABILITY * RAND_MAX);
+            changed_grid[y][x] = true;
         }
     }
 }
 
-void draw_grid() {
-    uint8_t hue = 0;  // Hue for alive cells
-    uint8_t sat = 0;  // Saturation for alive cells
-    uint8_t val_dead = 0;  // Brightness for dead cells
-
+static void draw_grid(void) {
     for (int y = 0; y < GRID_HEIGHT; y++) {
         for (int x = 0; x < GRID_WIDTH; x++) {
-            if (changed_grid[y][x]) { // Only update changed cells
-                uint16_t left = x * (CELL_SIZE + OUTLINE_SIZE);
-                uint16_t top = y * (CELL_SIZE + OUTLINE_SIZE);
-                uint16_t right = left + CELL_SIZE + OUTLINE_SIZE;
+            if (changed_grid[y][x]) {
+                uint16_t left   = x * (CELL_SIZE + OUTLINE_SIZE);
+                uint16_t top    = y * (CELL_SIZE + OUTLINE_SIZE);
+                uint16_t right  = left + CELL_SIZE + OUTLINE_SIZE;
                 uint16_t bottom = top + CELL_SIZE + OUTLINE_SIZE;
 
-                // Draw the outline
-                qp_rect(lcd_surface, left, top, right, bottom, hue, sat, val_dead, true);
+                // Black outline
+                qp_rect(lcd_surface, left, top, right, bottom, 0, 0, 0, true);
 
-                // Draw the filled cell inside the outline if it's alive
+                // Alive cells get the current cyberpunk color
                 if (grid[y][x]) {
-                    switch (color_value) {
-                    case 0:
-                        qp_rect(lcd_surface, left + OUTLINE_SIZE, top + OUTLINE_SIZE, right - OUTLINE_SIZE, bottom - OUTLINE_SIZE, HSV_LAYER_0, true);
-                        break;
-                    case 1:
-                        qp_rect(lcd_surface, left + OUTLINE_SIZE, top + OUTLINE_SIZE, right - OUTLINE_SIZE, bottom - OUTLINE_SIZE, HSV_LAYER_1, true);
-                        break;
-                    case 2:
-                        qp_rect(lcd_surface, left + OUTLINE_SIZE, top + OUTLINE_SIZE, right - OUTLINE_SIZE, bottom - OUTLINE_SIZE, HSV_LAYER_2, true);
-                        break;
-                    case 3:
-                        qp_rect(lcd_surface, left + OUTLINE_SIZE, top + OUTLINE_SIZE, right - OUTLINE_SIZE, bottom - OUTLINE_SIZE, HSV_LAYER_3, true);
-                        break;
-                    case 4:
-                        qp_rect(lcd_surface, left + OUTLINE_SIZE, top + OUTLINE_SIZE, right - OUTLINE_SIZE, bottom - OUTLINE_SIZE, HSV_LAYER_4, true);
-                        break;
-                    case 5:
-                        qp_rect(lcd_surface, left + OUTLINE_SIZE, top + OUTLINE_SIZE, right - OUTLINE_SIZE, bottom - OUTLINE_SIZE, HSV_LAYER_5, true);
-                        break;
-                    case 6:
-                        qp_rect(lcd_surface, left + OUTLINE_SIZE, top + OUTLINE_SIZE, right - OUTLINE_SIZE, bottom - OUTLINE_SIZE, HSV_LAYER_6, true);
-                        break;
-                    case 7:
-                        qp_rect(lcd_surface, left + OUTLINE_SIZE, top + OUTLINE_SIZE, right - OUTLINE_SIZE, bottom - OUTLINE_SIZE, HSV_LAYER_7, true);
-                        break;
-                    default:
-                        qp_rect(lcd_surface, left + OUTLINE_SIZE, top + OUTLINE_SIZE, right - OUTLINE_SIZE, bottom - OUTLINE_SIZE, HSV_LAYER_UNDEF, true);
-                    }
+                    display_hsv_t c = layer_colors[color_value % NUM_LAYERS];
+                    qp_rect(lcd_surface, left + OUTLINE_SIZE, top + OUTLINE_SIZE,
+                            right - OUTLINE_SIZE, bottom - OUTLINE_SIZE,
+                            c.h, c.s, c.v, true);
                 }
             }
         }
     }
 }
 
-void update_grid() {
+static void update_grid(void) {
     for (int y = 0; y < GRID_HEIGHT; y++) {
         for (int x = 0; x < GRID_WIDTH; x++) {
             int alive_neighbors = 0;
-
-            // Count alive neighbors
             for (int dy = -1; dy <= 1; dy++) {
                 for (int dx = -1; dx <= 1; dx++) {
-                    if (dy == 0 && dx == 0) continue;  // Skip the current cell
+                    if (dy == 0 && dx == 0) continue;
                     int ny = y + dy;
                     int nx = x + dx;
                     if (ny >= 0 && ny < GRID_HEIGHT && nx >= 0 && nx < GRID_WIDTH) {
@@ -140,22 +174,14 @@ void update_grid() {
                     }
                 }
             }
-
-            // Apply the rules of the Game of Life
             if (grid[y][x]) {
-                // Any live cell with two or three live neighbours survives.
                 new_grid[y][x] = (alive_neighbors == 2 || alive_neighbors == 3);
             } else {
-                // Any dead cell with exactly three live neighbours becomes a live cell.
                 new_grid[y][x] = (alive_neighbors == 3);
             }
-
-            // Track changed cells
             changed_grid[y][x] = (grid[y][x] != new_grid[y][x]);
         }
     }
-
-    // Copy new grid state to current grid
     for (int y = 0; y < GRID_HEIGHT; y++) {
         for (int x = 0; x < GRID_WIDTH; x++) {
             grid[y][x] = new_grid[y][x];
@@ -163,160 +189,231 @@ void update_grid() {
     }
 }
 
-// Function to add a cluster of cells at a random position
-void add_cell_cluster() {
-    int cluster_size = 3;  // Size of the cluster (3x3)
+static void add_cell_cluster(void) {
+    int cluster_size = 3;
     int x = rand() % (GRID_WIDTH - cluster_size);
     int y = rand() % (GRID_HEIGHT - cluster_size);
-
     for (int dy = 0; dy < cluster_size; dy++) {
         for (int dx = 0; dx < cluster_size; dx++) {
-            bool is_alive = rand() % 2; // Randomly choose between 0 and 1
-            grid[y + dy][x + dx] = is_alive;  // Set the cell to be alive
-            changed_grid[y + dy][x + dx] = true; // Mark the cell as changed
+            grid[y + dy][x + dx] = rand() % 2;
+            changed_grid[y + dy][x + dx] = true;
         }
     }
 }
 
-void update_display(void) {
-    static bool first_run_led = false;
-    static bool first_run_layer = false;
+// ==========================================================================
+// Info display — layer name, WPM, locks, Tux
+// ==========================================================================
+// Each draw function only redraws when its state changes, except on
+// force=true (used when waking from idle mode to repaint everything).
 
-    if( first_run_layer == false) {
-        // Load fonts
-        Retron27 = qp_load_font_mem(font_Retron2000_27);
-        Retron27_underline = qp_load_font_mem(font_Retron2000_underline_27);
-    }
+static void draw_layer_name(bool force) {
+    if (last_layer != layer_state || force) {
+        // Clear just the text area (full width to handle variable-length names)
+        qp_rect(lcd_surface, 0, LAYER_NAME_Y, LCD_WIDTH - 1, LAYER_NAME_Y + font->line_height, 0, 0, 0, true);
 
-    if(last_led_usb_state.raw != host_keyboard_led_state().raw || first_run_led == false) {
-        led_t led_usb_state = host_keyboard_led_state();
+        uint8_t layer = get_highest_layer(layer_state | default_layer_state);
+        const char *name = (layer < NUM_LAYERS) ? layer_names[layer] : "???";
+        display_hsv_t c = (layer < NUM_LAYERS)
+            ? layer_colors[layer]
+            : (display_hsv_t){0, 255, 255};
 
-        led_usb_state.caps_lock   ? qp_drawtext_recolor(lcd_surface, 5, LCD_HEIGHT - Retron27->line_height * 3 - 15, Retron27_underline, caps,   HSV_CAPS_ON,   HSV_BLACK) : qp_drawtext_recolor(lcd_surface, 5, LCD_HEIGHT - Retron27->line_height * 3 - 15, Retron27, caps,   HSV_CAPS_OFF,   HSV_BLACK);
-        led_usb_state.num_lock    ? qp_drawtext_recolor(lcd_surface, 5, LCD_HEIGHT - Retron27->line_height * 2 - 10, Retron27_underline, num,    HSV_NUM_ON,    HSV_BLACK) : qp_drawtext_recolor(lcd_surface, 5, LCD_HEIGHT - Retron27->line_height * 2 - 10, Retron27, num,    HSV_NUM_OFF,    HSV_BLACK);
-        led_usb_state.scroll_lock ? qp_drawtext_recolor(lcd_surface, 5, LCD_HEIGHT - Retron27->line_height - 5,      Retron27_underline, scroll, HSV_SCROLL_ON, HSV_BLACK) : qp_drawtext_recolor(lcd_surface, 5, LCD_HEIGHT - Retron27->line_height - 5,      Retron27, scroll, HSV_SCROLL_OFF, HSV_BLACK);
+        // Center the text horizontally
+        int16_t text_w = qp_textwidth(font, name);
+        int16_t text_x = (LCD_WIDTH - text_w) / 2;
+        qp_drawtext_recolor(lcd_surface, text_x, LAYER_NAME_Y, font, name,
+                            c.h, c.s, c.v, 0, 0, 0);
 
-        last_led_usb_state = led_usb_state;
-        first_run_led = true;
-    }
-
-    if(last_layer_state != layer_state || first_run_layer == false) {
-        switch (get_highest_layer(layer_state|default_layer_state)) {
-        case 0:
-            layer_number = qp_load_image_mem(gfx_0);
-            qp_drawimage_recolor(lcd_surface, 5, 5, layer_number, HSV_LAYER_0, HSV_BLACK);
-            break;
-        case 1:
-            layer_number = qp_load_image_mem(gfx_1);
-            qp_drawimage_recolor(lcd_surface, 5, 5, layer_number, HSV_LAYER_1, HSV_BLACK);
-            break;
-        case 2:
-            layer_number = qp_load_image_mem(gfx_2);
-            qp_drawimage_recolor(lcd_surface, 5, 5, layer_number, HSV_LAYER_2, HSV_BLACK);
-            break;
-        case 3:
-            layer_number = qp_load_image_mem(gfx_3);
-            qp_drawimage_recolor(lcd_surface, 5, 5, layer_number, HSV_LAYER_3, HSV_BLACK);
-            break;
-        case 4:
-            layer_number = qp_load_image_mem(gfx_4);
-            qp_drawimage_recolor(lcd_surface, 5, 5, layer_number, HSV_LAYER_4, HSV_BLACK);
-            break;
-        case 5:
-            layer_number = qp_load_image_mem(gfx_5);
-            qp_drawimage_recolor(lcd_surface, 5, 5, layer_number, HSV_LAYER_5, HSV_BLACK);
-            break;
-        case 6:
-            layer_number = qp_load_image_mem(gfx_6);
-            qp_drawimage_recolor(lcd_surface, 5, 5, layer_number, HSV_LAYER_6, HSV_BLACK);
-            break;
-        case 7:
-            layer_number = qp_load_image_mem(gfx_7);
-            qp_drawimage_recolor(lcd_surface, 5, 5, layer_number, HSV_LAYER_7, HSV_BLACK);
-            break;
-        default:
-            layer_number = qp_load_image_mem(gfx_undef);
-            qp_drawimage_recolor(lcd_surface, 5, 5, layer_number, HSV_LAYER_UNDEF, HSV_BLACK);
-        }
-        qp_close_image(layer_number);
-        last_layer_state = layer_state;
-        first_run_layer = true;
+        last_layer = layer_state;
     }
 }
 
-// Called from halcyon.c
+static void draw_wpm(bool force) {
+#ifdef WPM_ENABLE
+    uint8_t current_wpm = get_current_wpm();
+    if (current_wpm != last_wpm || force) {
+        // Clear just the WPM text area
+        qp_rect(lcd_surface, 0, WPM_Y, LCD_WIDTH - 1, WPM_Y + font->line_height, 0, 0, 0, true);
+
+        char wpm_str[12];
+        snprintf(wpm_str, sizeof(wpm_str), "%d wpm", current_wpm);
+
+        int16_t text_w = qp_textwidth(font, wpm_str);
+        int16_t text_x = (LCD_WIDTH - text_w) / 2;
+        qp_drawtext_recolor(lcd_surface, text_x, WPM_Y, font, wpm_str,
+                            HSV_WPM, 0, 0, 0);
+
+        last_wpm = current_wpm;
+    }
+#endif
+}
+
+static void draw_locks(bool force) {
+    led_t current = host_keyboard_led_state();
+    if (current.raw != last_led_state.raw || force) {
+        // Clear just the lock text area
+        qp_rect(lcd_surface, 0, LOCK_Y, LCD_WIDTH - 1, LOCK_Y + font->line_height, 0, 0, 0, true);
+
+        // Three lock states mapped to the three labels
+        bool lock_active[] = { current.caps_lock, current.num_lock, current.scroll_lock };
+
+        // Spread evenly across the display width (thirds)
+        int16_t third = LCD_WIDTH / 3;
+
+        for (int i = 0; i < 3; i++) {
+            painter_font_handle_t f = lock_active[i] ? font_underline : font;
+            int16_t tw = qp_textwidth(f, lock_labels[i]);
+            int16_t tx = (third * i) + (third - tw) / 2;
+
+            if (lock_active[i]) {
+                qp_drawtext_recolor(lcd_surface, tx, LOCK_Y, f, lock_labels[i],
+                                    HSV_LOCK_ON, 0, 0, 0);
+            } else {
+                qp_drawtext_recolor(lcd_surface, tx, LOCK_Y, f, lock_labels[i],
+                                    HSV_LOCK_OFF, 0, 0, 0);
+            }
+        }
+
+        last_led_state = current;
+    }
+}
+
+static void draw_tux(void) {
+    if (!tux_drawn) {
+        // Load → draw → close. The image data lives in flash (gfx_tux_100),
+        // we only need the handle briefly to draw it once.
+        painter_image_handle_t tux_img = qp_load_image_mem(gfx_tux_100);
+        qp_drawimage_recolor(lcd_surface, TUX_X, TUX_Y, tux_img,
+                             HSV_TUX_FG,   // Light pixels → Cyan
+                             HSV_TUX_BG);  // Dark pixels  → Magenta
+        qp_close_image(tux_img);
+        tux_drawn = true;
+    }
+}
+
+// Full redraw — called when waking from idle mode
+static void force_redraw_info(void) {
+    // Ensure fonts are loaded (may not be if we went idle before first active draw)
+    if (!fonts_loaded) {
+        font = qp_load_font_mem(font_Retron2000_27);
+        font_underline = qp_load_font_mem(font_Retron2000_underline_27);
+        fonts_loaded = true;
+    }
+
+    qp_rect(lcd_surface, 0, 0, LCD_WIDTH - 1, LCD_HEIGHT - 1, 0, 0, 0, true);
+
+    // Invalidate all cached state so every draw function runs
+    last_layer = ~layer_state;
+    last_wpm = 255;
+    last_led_state.raw = ~host_keyboard_led_state().raw;
+    tux_drawn = false;
+
+    draw_layer_name(true);
+    draw_wpm(true);
+    draw_locks(true);
+    draw_tux();
+}
+
+// Incremental update — only redraws changed elements
+static void update_info_display(void) {
+    if (!fonts_loaded) {
+        font = qp_load_font_mem(font_Retron2000_27);
+        font_underline = qp_load_font_mem(font_Retron2000_underline_27);
+        fonts_loaded = true;
+    }
+
+    draw_layer_name(false);
+    draw_wpm(false);
+    draw_locks(false);
+    draw_tux();
+}
+
+// ==========================================================================
+// Module callbacks — called from halcyon.c
+// ==========================================================================
+
 void module_suspend_power_down_kb(void) {
     qp_power(lcd, false);
 }
 
-// Called from halcyon.c
 void module_suspend_wakeup_init_kb(void) {
     qp_power(lcd, true);
 }
 
-// Called from halcyon.c
 bool module_post_init_kb(void) {
-    // Turn on backlight
     backlight_enable();
 
-    // Make the devices
-    lcd = qp_st7789_make_spi_device(LCD_WIDTH, LCD_HEIGHT, LCD_CS_PIN, LCD_DC_PIN, LCD_RST_PIN, LCD_SPI_DIVISOR, LCD_SPI_MODE);
+    // Create the ST7789 SPI device and the offscreen surface buffer
+    lcd = qp_st7789_make_spi_device(LCD_WIDTH, LCD_HEIGHT, LCD_CS_PIN,
+                                     LCD_DC_PIN, LCD_RST_PIN,
+                                     LCD_SPI_DIVISOR, LCD_SPI_MODE);
     lcd_surface = qp_make_rgb565_surface(LCD_WIDTH, LCD_HEIGHT, lcd_surface_fb);
 
-    // Initialise the LCD
+    // Initialize LCD hardware
     qp_init(lcd, LCD_ROTATION);
     qp_set_viewport_offsets(lcd, LCD_OFFSET_X, LCD_OFFSET_Y);
     qp_clear(lcd);
-    qp_rect(lcd, 0, 0, LCD_WIDTH - 1, LCD_HEIGHT - 1, HSV_BLACK, true);
+    qp_rect(lcd, 0, 0, LCD_WIDTH - 1, LCD_HEIGHT - 1, 0, 0, 0, true);
     qp_power(lcd, true);
     qp_flush(lcd);
 
-    // Initialise the LCD surface
+    // Initialize the offscreen surface
     qp_init(lcd_surface, LCD_ROTATION);
-    qp_rect(lcd_surface, 0, 0, LCD_WIDTH - 1, LCD_HEIGHT - 1, HSV_BLACK, true);
+    qp_rect(lcd_surface, 0, 0, LCD_WIDTH - 1, LCD_HEIGHT - 1, 0, 0, 0, true);
     qp_surface_draw(lcd_surface, lcd, 0, 0, 0);
     qp_flush(lcd);
 
-    if(!module_post_init_user()) { return false; }
+    if (!module_post_init_user()) { return false; }
 
     return true;
 }
 
-// Called from halcyon.c
+// Main display loop — called every cycle from halcyon.c housekeeping_task_kb
 bool display_module_housekeeping_task_kb(bool second_display) {
-    if(!display_module_housekeeping_task_user(second_display)) { return false; }
+    if (!display_module_housekeeping_task_user(second_display)) { return false; }
 
-    if(second_display) {
-        static uint32_t last_draw = 0;
-        static bool second_display_set = false;
-        static uint32_t previous_matrix_activity_time = 0;
+    if (!second_display) {
+        // This is the master (left half) — our only display
+        uint32_t idle_time = last_input_activity_elapsed();
 
-        if(!second_display_set) {
-            srand(get_random_32bit());
-            init_grid();
-            color_value = rand() % 8;
-            second_display_set = true;
-        }
-
-        if (timer_elapsed32(last_draw) >= 100) { // Throttle to 10 fps
-            draw_grid();
-            update_grid();
-
-            if (previous_matrix_activity_time != last_matrix_activity_time()) {
-                color_value = rand() % 8;
-                add_cell_cluster();
-                previous_matrix_activity_time = last_matrix_activity_time();
+        if (idle_time > IDLE_TIMEOUT) {
+            // ---- Idle: Game of Life fills the screen ----
+            if (!idle_mode) {
+                idle_mode = true;
+                srand(get_random_32bit());
+                init_grid();
+                color_value = rand() % NUM_LAYERS;
             }
 
-            last_draw = timer_read32();
+            static uint32_t last_gol_draw = 0;
+            if (timer_elapsed32(last_gol_draw) >= 100) { // 10 fps
+                draw_grid();
+                update_grid();
+
+                // Slowly cycle colors every 5 seconds while idle
+                static uint32_t last_color_change = 0;
+                if (timer_elapsed32(last_color_change) >= 5000) {
+                    color_value = (color_value + 1) % NUM_LAYERS;
+                    add_cell_cluster();
+                    last_color_change = timer_read32();
+                }
+
+                last_gol_draw = timer_read32();
+            }
+        } else {
+            // ---- Active: info display ----
+            if (idle_mode) {
+                // Just woke up — repaint everything
+                idle_mode = false;
+                force_redraw_info();
+            } else {
+                // Normal incremental update
+                update_info_display();
+            }
         }
     }
 
-    // Update display information (layers, numlock, etc.)
-    if(!second_display) {
-        update_display();
-    }
-
-    // Move surface to lcd
+    // Flush the offscreen surface to the physical LCD
     qp_surface_draw(lcd_surface, lcd, 0, 0, 0);
     qp_flush(lcd);
 

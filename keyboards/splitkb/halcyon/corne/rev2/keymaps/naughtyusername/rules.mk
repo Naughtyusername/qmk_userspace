@@ -39,13 +39,16 @@ POINTING_DEVICE_DRIVER = cirque_pinnacle_spi
 # The Halcyon Corne has RGB, enable if you want it
 RGB_MATRIX_ENABLE = yes
 
+# WPM counter for TFT display
+WPM_ENABLE = yes
+
 # ==========================================================================
 # FIRMWARE SIZE OPTIMIZATION
 # ==========================================================================
 # The RP2040 has plenty of flash (16MB on Halcyon), but if you hit limits:
 
 # Disable features you don't use
-MOUSEKEY_ENABLE = no      # We use pointing device instead
+MOUSEKEY_ENABLE = yes     # Needed for mouse buttons/accel on MOUSE layer (Cirque trackpad)
 # GRAVE_ESCAPE_ENABLE = no
 
 # Link-time optimization (usually already enabled)
