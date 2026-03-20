@@ -88,6 +88,7 @@ static uint8_t last_wpm = 255;  // Impossible initial value forces first draw
 static bool tux_drawn = false;
 static bool idle_mode = false;
 static bool fonts_loaded = false;
+static bool display_dirty = true; // Only flush surface to LCD when something changed
 
 // ==========================================================================
 // Layout constants
@@ -225,6 +226,7 @@ static void draw_layer_name(bool force) {
                             c.h, c.s, c.v, 0, 0, 0);
 
         last_layer = layer_state;
+        display_dirty = true;
     }
 }
 
@@ -244,6 +246,7 @@ static void draw_wpm(bool force) {
                             HSV_WPM, 0, 0, 0);
 
         last_wpm = current_wpm;
+        display_dirty = true;
     }
 #endif
 }
@@ -275,6 +278,7 @@ static void draw_locks(bool force) {
         }
 
         last_led_state = current;
+        display_dirty = true;
     }
 }
 
@@ -288,6 +292,7 @@ static void draw_tux(void) {
                              HSV_TUX_BG);  // Dark pixels  → Magenta
         qp_close_image(tux_img);
         tux_drawn = true;
+        display_dirty = true;
     }
 }
 
@@ -312,6 +317,7 @@ static void force_redraw_info(void) {
     draw_wpm(true);
     draw_locks(true);
     draw_tux();
+    display_dirty = true;
 }
 
 // Incremental update — only redraws changed elements
@@ -380,6 +386,8 @@ bool display_module_housekeeping_task_kb(bool second_display) {
             // ---- Idle: Game of Life fills the screen ----
             if (!idle_mode) {
                 idle_mode = true;
+                // Clear the display before Game of Life takes over
+                qp_rect(lcd_surface, 0, 0, LCD_WIDTH - 1, LCD_HEIGHT - 1, 0, 0, 0, true);
                 srand(get_random_32bit());
                 init_grid();
                 color_value = rand() % NUM_LAYERS;
@@ -399,6 +407,7 @@ bool display_module_housekeeping_task_kb(bool second_display) {
                 }
 
                 last_gol_draw = timer_read32();
+                display_dirty = true;
             }
         } else {
             // ---- Active: info display ----
@@ -413,9 +422,12 @@ bool display_module_housekeeping_task_kb(bool second_display) {
         }
     }
 
-    // Flush the offscreen surface to the physical LCD
-    qp_surface_draw(lcd_surface, lcd, 0, 0, 0);
-    qp_flush(lcd);
+    // Only flush to LCD when the surface actually changed
+    if (display_dirty) {
+        qp_surface_draw(lcd_surface, lcd, 0, 0, 0);
+        qp_flush(lcd);
+        display_dirty = false;
+    }
 
     return true;
 }
