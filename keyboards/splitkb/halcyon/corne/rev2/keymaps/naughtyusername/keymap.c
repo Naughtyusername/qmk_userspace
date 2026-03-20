@@ -44,6 +44,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                          ___CORNE_THUMB_BASE___
     ),
 
+    /* VIM - Plain QWERTY without home row mods */
+    [_VIM] = LAYOUT_corne_wrapper(
+        ___VIM_L1_6___,                     ___VIM_R1_6___,
+        ___VIM_L2_6___,                     ___VIM_R2_6___,
+        ___VIM_L3_6___,                     ___VIM_R3_6___,
+                         ___CORNE_THUMB_VIM___
+    ),
+
     /* LOWER - Numbers and Media */
     [_LOWER] = LAYOUT_corne_wrapper(
         ___LOWER_L1_6___,                   ___LOWER_R1_6___,
@@ -84,20 +92,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                          ___CORNE_THUMB_GAMING___
     ),
 
+    /* GAMING2 - Number/F-key overlay for gaming */
+    [_GAMING2] = LAYOUT_corne_wrapper(
+        ___GAMING2_L1_6___,                 ___GAMING2_R1_6___,
+        ___GAMING2_L2_6___,                 ___GAMING2_R2_6___,
+        ___GAMING2_L3_6___,                 ___GAMING2_R3_6___,
+                         ___CORNE_THUMB_GAMING___
+    ),
+
     /* ROGUELIKE - Numpad for 8-directional movement */
     [_ROGUELIKE] = LAYOUT_corne_wrapper(
         ___ROGUELIKE_L1_6___,               ___ROGUELIKE_R1_6___,
         ___ROGUELIKE_L2_6___,               ___ROGUELIKE_R2_6___,
         ___ROGUELIKE_L3_6___,               ___ROGUELIKE_R3_6___,
                          ___CORNE_THUMB_ROGUELIKE___
-    ),
-
-    /* VIM - Plain QWERTY without home row mods */
-    [_VIM] = LAYOUT_corne_wrapper(
-        ___VIM_L1_6___,                     ___VIM_R1_6___,
-        ___VIM_L2_6___,                     ___VIM_R2_6___,
-        ___VIM_L3_6___,                     ___VIM_R3_6___,
-                         ___CORNE_THUMB_VIM___
     ),
 
     /* SYS - System settings */

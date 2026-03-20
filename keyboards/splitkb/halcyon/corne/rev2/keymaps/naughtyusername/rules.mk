@@ -22,10 +22,14 @@ QUANTUM_PAINTER_ENABLE = yes  # Requires significant additional configuration
 # OLED Display (left half) cant use here, tft display not usual oled. below is the correct way for this board
 OLED_ENABLE = no
 
-# Enable specific modules (examples)
-# HLC_ENCODER = 1       # If you have an encoder module
-HLC_TFT_DISPLAY = 1   # If you have a TFT RGB display
-HLC_CIRQUE_TRACKPAD = 1 # If you have a Cirque trackpad
+# Module selection — do NOT set these here!
+# Each half needs a separate build with the correct module passed via -e flag:
+#   Left:  qmk compile ... -e HLC_TFT_DISPLAY=1
+#   Right: qmk compile ... -e HLC_CIRQUE_TRACKPAD=1
+# Setting both here causes pin conflicts (both claim GP13 as SPI CS).
+# HLC_ENCODER = 1
+# HLC_TFT_DISPLAY = 1
+# HLC_CIRQUE_TRACKPAD = 1
 
 # Cirque Trackpad (right half)
 POINTING_DEVICE_ENABLE = yes

@@ -40,7 +40,12 @@
 #define LAYOUT_mitosis_wrapper(...) LAYOUT(__VA_ARGS__)
 
 // Corne (Halcyon): 3x6 + 3 thumb keys per side = 42 keys
-#define LAYOUT_corne_wrapper(...) LAYOUT_split_3x6_3(__VA_ARGS__)
+// The Halcyon module system redefines MATRIX_ROWS to 10 (5 per side) and
+// provides LAYOUT_corne_hlc (52 keys) instead of LAYOUT_split_3x6_3 (42 keys).
+// The extra 10 keys are encoder/VIK module rows (5 per side) — we fill with KC_NO.
+#define LAYOUT_corne_wrapper(...) LAYOUT_corne_hlc(__VA_ARGS__, \
+    KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, \
+    KC_NO, KC_NO, KC_NO, KC_NO, KC_NO)
 
 // Kyria: 3x6 + 5 thumb keys per side + encoders = 50 keys
 #define LAYOUT_kyria_wrapper(...) LAYOUT_split_3x6_5(__VA_ARGS__)
