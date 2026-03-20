@@ -161,8 +161,8 @@
 #define ___ADJUST_L3___ _______, _______, KC_MPRV, KC_MPLY, KC_MNXT
 
 #define ___ADJUST_R1___ KC_NUM, _______, _______, _______, NK_TOGG
-#define ___ADJUST_R2___ _______, _______, _______, _______, _______
-#define ___ADJUST_R3___ _______, _______, _______, _______, _______
+#define ___ADJUST_R2___ RGB_TOG, RGB_MOD, RGB_HUI, RGB_VAI, RGB_SPI
+#define ___ADJUST_R3___ _______, RGB_RMOD, RGB_HUD, RGB_VAD, RGB_SPD
 
 /* --------------------------------------------------------------------------
  * GAMING LAYER - No home row mods, standard QWERTY

@@ -62,7 +62,6 @@
 
 // Tap to click - enable gestures
 #define CIRQUE_PINNACLE_TAP_ENABLE
-#define POINTING_DEVICE_GESTURES_CURSOR_GLIDE_ENABLE
 
 // Circular scroll - drag finger around edge to scroll
 #define POINTING_DEVICE_GESTURES_SCROLL_ENABLE
@@ -75,7 +74,7 @@
 // Auto mouse layer - automatically switch to mouse layer when trackpad active
 #define POINTING_DEVICE_AUTO_MOUSE_ENABLE
 #define AUTO_MOUSE_DEFAULT_LAYER 10  // _MOUSE layer (see naughtyusername.h line 35)
-#define AUTO_MOUSE_TIME 650  // Timeout in ms - adjust based on preference
+#define AUTO_MOUSE_TIME 1000  // Timeout in ms - how long mouse layer stays active after last motion
 
 // SPI pins for Cirque (if not already defined by keyboard)
 // this is defined correctly above this ifdef block.
@@ -110,19 +109,16 @@
  */
 
 #ifdef RGB_MATRIX_ENABLE
-// Startup settings
+// Startup settings — deep purple solid
 #define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_SOLID_COLOR
-#define RGB_MATRIX_DEFAULT_HUE 170 // Blue-ish
+#define RGB_MATRIX_DEFAULT_HUE 200 // Deep purple
 #define RGB_MATRIX_DEFAULT_SAT 255
-#define RGB_MATRIX_DEFAULT_VAL 128 // 50% brightness
+#define RGB_MATRIX_DEFAULT_VAL 100 // ~40% brightness
+#define RGB_MATRIX_DEFAULT_SPD 127
 
 // Sleep behavior
 #define RGB_MATRIX_SLEEP
-
-// Disable some effects to save firmware space if needed
-// #define DISABLE_RGB_MATRIX_ALPHAS_MODS
-// #define DISABLE_RGB_MATRIX_GRADIENT_UP_DOWN
-// ...etc
+#define RGB_MATRIX_TIMEOUT 300000 // Auto-off after 5 min idle
 #endif
 
 /* ==========================================================================
