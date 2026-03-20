@@ -424,7 +424,7 @@ bool display_module_housekeeping_task_kb(bool second_display) {
 
     // Only flush to LCD when the surface actually changed
     if (display_dirty) {
-        qp_surface_draw(lcd_surface, lcd, 0, 0, 0);
+        qp_surface_draw(lcd_surface, lcd, 0, 0, true);
         qp_flush(lcd);
         display_dirty = false;
     }
